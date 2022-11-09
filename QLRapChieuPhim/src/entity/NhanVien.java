@@ -17,7 +17,7 @@ public class NhanVien {
     private boolean GioiTinh;
     private Date NgaySinh;
     private Date NgayVaoLam;
-    private boolean ChucVu;
+    private String ChucVu;
     private String Hinh;
     private String GhiChu;
     private String MatKhau;
@@ -26,7 +26,7 @@ public class NhanVien {
     public NhanVien() {
     }
 
-    public NhanVien(String MaNV, String HoTen, boolean GioiTinh, Date NgaySinh, Date NgayVaoLam, boolean ChucVu, String Hinh, String GhiChu, String MatKhau, int Luong) {
+    public NhanVien(String MaNV, String HoTen, boolean GioiTinh, Date NgaySinh, Date NgayVaoLam, String ChucVu, String Hinh, String GhiChu, String MatKhau, int Luong) {
         this.MaNV = MaNV;
         this.HoTen = HoTen;
         this.GioiTinh = GioiTinh;
@@ -79,11 +79,11 @@ public class NhanVien {
         this.NgayVaoLam = NgayVaoLam;
     }
 
-    public boolean getChucVu() {
+    public String getChucVu() {
         return ChucVu;
     }
 
-    public void setChucVu(boolean ChucVu) {
+    public void setChucVu(String ChucVu) {
         this.ChucVu = ChucVu;
     }
 
@@ -119,6 +119,5 @@ public class NhanVien {
         this.Luong = Luong;
     }
 
-   
-   
+
 }
