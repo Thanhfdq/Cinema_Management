@@ -31,7 +31,7 @@ create table NhanVien(
 	Luong int not null check (luong>0),
 	Hinh nvarchar(100),
 	GhiChu nvarchar(200),
-	MatKhau nvarchar(50) not null
+	MatKhau nvarchar(50)
 )
 
 --bang phim
