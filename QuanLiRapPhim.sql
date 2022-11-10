@@ -122,3 +122,5 @@ create table Ve(
 )
 
 
+insert into NhanVien (Hoten, gioitinh, ngaysinh, ngayvaolam, chucvu, luong, matkhau) values
+(N'ĐỒng ',1,'2003-01-01','2022-01-02','quan ly', 3000000, '0000');
