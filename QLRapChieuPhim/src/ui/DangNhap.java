@@ -16,6 +16,7 @@ public class DangNhap extends javax.swing.JFrame {
      */
     public DangNhap() {
         initComponents();
+        init();
     }
 
     /**
@@ -28,22 +29,127 @@ public class DangNhap extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        lblName = new javax.swing.JLabel();
+        lblPass = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        btnLogin = new javax.swing.JButton();
+        btnQuenPass = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        btnShowPass = new javax.swing.JToggleButton();
+        txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sign in");
+
+        lblName.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lblName.setText("User name:");
+
+        lblPass.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        lblPass.setText("Password:");
+
+        txtName.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+
+        btnLogin.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        btnLogin.setText("LOGIN");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        btnQuenPass.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        btnQuenPass.setText("Forgot password");
+        btnQuenPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuenPassActionPerformed(evt);
+            }
+        });
+
+        lblTitle.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("GROUP 6 CINEMA");
+
+        btnShowPass.setText("Show");
+        btnShowPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowPassActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(163, 163, 163)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnQuenPass)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnLogin)
+                                        .addGap(26, 26, 26))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblName)
+                                    .addComponent(lblPass))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtName)
+                                    .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnShowPass)))
+                        .addGap(0, 42, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 595, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(lblTitle)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblName)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPass)
+                    .addComponent(btnShowPass)
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
+                .addComponent(btnLogin)
+                .addGap(18, 18, 18)
+                .addComponent(btnQuenPass)
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        dangNhap();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnQuenPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenPassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnQuenPassActionPerformed
+
+    private void btnShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPassActionPerformed
+        if (txtPass.getEchoChar() == (char) 0) {
+            btnShowPass.setText("Show");
+            txtPass.setEchoChar('\u25cf');
+        } else {
+            btnShowPass.setText("Hide");
+            txtPass.setEchoChar((char) 0);
+        }
+    }//GEN-LAST:event_btnShowPassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -81,6 +187,24 @@ public class DangNhap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnQuenPass;
+    private javax.swing.JToggleButton btnShowPass;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPass;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
+
+    void init(){
+        txtPass.setEchoChar('\u25cf');
+    }
+    
+    void dangNhap(){
+        
+    }
+    
+    
 }
