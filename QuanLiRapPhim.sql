@@ -1,4 +1,4 @@
-﻿create database Duanrapchieu
+﻿create database Duan1_QLRP
 go
 use  Duan1_QLRP
 go
@@ -98,7 +98,7 @@ create table HoaDonCT(
 
 --bang lich chieu
 create table LichChieu(
-	MaLichChieu nvarchar(20) primary key not null, /* PK */
+	MaLichChieu int IDENTITY(1,1) primary key not null, /* PK */
 	MaPhim nvarchar(10) not null,	/* Fk */
 	GioChieu int not null,
 	NgayChieu date not null DEFAULT getdate(),
@@ -339,7 +339,7 @@ Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 ('4','15','1');
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('5','18','1');
+('5','17','1');
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 ('12','16','4');
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
@@ -365,27 +365,28 @@ Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 ('16','2','2');
 
+
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC01','P001',16,'2022-07-13','PC09');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC02','P012',10,'2022-01-29','PC11');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC03','P004',9,'2022-11-01','PC08');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC04','P010',17,'2021-12-30','PC03');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC05','P003',8,'2022-09-15','PC10');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC06','P008',15,'2022-02-10','PC07');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC07','P002',18,'2022-08-12','PC01');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC08','P005',20,'2021-01-22','PC02');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC09','P009',13,'2021-11-15','PC05');
-insert into LichChieu(MaLichChieu,MaPhim,GioChieu,NgayChieu,MaPhong)values
-('LC10','P015',19,'2022-05-30','PC04');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P001',16,'2022-07-13','PC09');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P012',10,'2022-01-29','PC11');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P004',9,'2022-11-01','PC08');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P010',17,'2021-12-30','PC03');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P003',8,'2022-09-15','PC10');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P008',15,'2022-02-10','PC07');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P002',18,'2022-08-12','PC01');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P005',20,'2021-01-22','PC02');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P009',13,'2021-11-15','PC05');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P015',19,'2022-05-30','PC04');
 
 
 --Nhập Dữ Liệu Vào Bảng Vé
@@ -418,7 +419,7 @@ insert into Ve(MaVe,MaNV,NgayLap,MaGhe,MaPhong,MaPhim)values
 
 
 
-DELETE FROM Ve
+
 
 
 
