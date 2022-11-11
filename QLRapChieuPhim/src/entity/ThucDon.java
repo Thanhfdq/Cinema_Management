@@ -5,7 +5,7 @@
 package entity;
 
 public class ThucDon {
-    private String maMon;
+    private int maMon;
     private String tenMon;
     private float donGia;
     private String donViTinh;
@@ -16,7 +16,7 @@ public class ThucDon {
     public ThucDon() {
     }
 
-    public ThucDon(String maMon, String tenMon, float donGia, String donViTinh, String Loai, String Hinh, String ghiChu) {
+    public ThucDon(int maMon, String tenMon, float donGia, String donViTinh, String Loai, String Hinh, String ghiChu) {
         this.maMon = maMon;
         this.tenMon = tenMon;
         this.donGia = donGia;
@@ -26,11 +26,11 @@ public class ThucDon {
         this.ghiChu = ghiChu;
     }
 
-    public String getMaMon() {
+    public int getMaMon() {
         return maMon;
     }
 
-    public void setMaMon(String maMon) {
+    public void setMaMon(int maMon) {
         this.maMon = maMon;
     }
 
@@ -81,6 +81,6 @@ public class ThucDon {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
-    
+
     
 }

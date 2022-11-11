@@ -7,7 +7,7 @@ package entity;
 import java.util.Date;
 
 public class LichChieu {
-    private String maLichChieu;
+    private int maLichChieu;
     private String maPhim;
     private int gioChieu;
     private Date ngayChieu;
@@ -16,7 +16,7 @@ public class LichChieu {
     public LichChieu() {
     }
 
-    public LichChieu(String maLichChieu, String maPhim, int gioChieu, Date ngayChieu, String maPhong) {
+    public LichChieu(int maLichChieu, String maPhim, int gioChieu, Date ngayChieu, String maPhong) {
         this.maLichChieu = maLichChieu;
         this.maPhim = maPhim;
         this.gioChieu = gioChieu;
@@ -24,11 +24,11 @@ public class LichChieu {
         this.maPhong = maPhong;
     }
 
-    public String getMaLichChieu() {
+    public int getMaLichChieu() {
         return maLichChieu;
     }
 
-    public void setMaLichChieu(String maLichChieu) {
+    public void setMaLichChieu(int maLichChieu) {
         this.maLichChieu = maLichChieu;
     }
 
@@ -63,6 +63,7 @@ public class LichChieu {
     public void setMaPhong(String maPhong) {
         this.maPhong = maPhong;
     }
-    
+
+
     
 }
