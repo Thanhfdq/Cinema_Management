@@ -90,4 +90,8 @@ public class NhanVienDAO {
         }
         return list;
     }
+    public List<NhanVien> selectByKeyword(String keyword){
+        String sql="SELECT * FROM NhanVien WHERE HoTen LIKE ?";
+        return this.selectBySql(sql, "%"+keyword+"%");
+    }
 }

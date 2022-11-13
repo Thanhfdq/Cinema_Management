@@ -5,7 +5,21 @@
  */
 package ui;
 
+import dao.NhanVienDAO;
+import dao.PhongChieuDao;
+import entity.NhanVien;
+import entity.PhongChieu;
 import java.awt.Color;
+import static java.nio.file.Files.list;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import until.MsgBox;
+import until.XDate;
+import until.XJdbc;
 
 /**
  *
@@ -226,7 +240,6 @@ public class QuanLy extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản Lý");
 
-        pnlChinh.setBackground(new java.awt.Color(240, 240, 240));
         pnlChinh.setRoundTopLeft(50);
 
         btnThem.setBackground(new java.awt.Color(153, 153, 0));
@@ -240,7 +253,6 @@ public class QuanLy extends javax.swing.JFrame {
         });
 
         btnQLNhanVien.setBackground(new java.awt.Color(51, 51, 255));
-        btnQLNhanVien.setForeground(new java.awt.Color(0, 0, 0));
         btnQLNhanVien.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnQLNhanVien.setText("Quản lý nhân viên");
         btnQLNhanVien.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -259,7 +271,6 @@ public class QuanLy extends javax.swing.JFrame {
         });
 
         btnQLThucDon.setBackground(new java.awt.Color(255, 255, 255));
-        btnQLThucDon.setForeground(new java.awt.Color(0, 0, 0));
         btnQLThucDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnQLThucDon.setText("Quản lý thực đơn");
         btnQLThucDon.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -276,7 +287,6 @@ public class QuanLy extends javax.swing.JFrame {
         });
 
         btnQLPhongChieu.setBackground(new java.awt.Color(255, 255, 255));
-        btnQLPhongChieu.setForeground(new java.awt.Color(0, 0, 0));
         btnQLPhongChieu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnQLPhongChieu.setText("Quản lý phòng chiếu");
         btnQLPhongChieu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -293,7 +303,6 @@ public class QuanLy extends javax.swing.JFrame {
         });
 
         btnPhim.setBackground(new java.awt.Color(255, 255, 255));
-        btnPhim.setForeground(new java.awt.Color(0, 0, 0));
         btnPhim.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnPhim.setText("Danh sách phim");
         btnPhim.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -310,7 +319,6 @@ public class QuanLy extends javax.swing.JFrame {
         });
 
         btnThongKe.setBackground(new java.awt.Color(255, 255, 255));
-        btnThongKe.setForeground(new java.awt.Color(0, 0, 0));
         btnThongKe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnThongKe.setText("Thống kê");
         btnThongKe.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -330,15 +338,12 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.setLayout(new java.awt.CardLayout());
 
-        pnlQLNhanVien.setBackground(new java.awt.Color(240, 240, 240));
-
         pnlTabNV.setRoundBottomLeft(30);
         pnlTabNV.setRoundBottomRight(30);
         pnlTabNV.setRoundTopLeft(30);
         pnlTabNV.setRoundTopRight(30);
         pnlTabNV.setLayout(new javax.swing.OverlayLayout(pnlTabNV));
 
-        pnlDanhSachNV.setBackground(new java.awt.Color(240, 240, 240));
         pnlDanhSachNV.setRoundBottomLeft(30);
         pnlDanhSachNV.setRoundBottomRight(30);
         pnlDanhSachNV.setRoundTopLeft(30);
@@ -350,15 +355,12 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound16.setRoundTopRight(30);
 
         jLabel36.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(0, 0, 0));
         jLabel36.setText("Chức vụ");
 
         jLabel37.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel37.setForeground(new java.awt.Color(0, 0, 0));
         jLabel37.setText("Giới tính");
 
         jLabel38.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel38.setForeground(new java.awt.Color(0, 0, 0));
         jLabel38.setText("Năm sinh");
 
         cboLocChucVu.setBackground(new java.awt.Color(0, 102, 204));
@@ -374,11 +376,9 @@ public class QuanLy extends javax.swing.JFrame {
         cboLocNamSinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel57.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel57.setForeground(new java.awt.Color(0, 0, 0));
         jLabel57.setText("Năm vào làm");
 
         jLabel58.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel58.setForeground(new java.awt.Color(0, 0, 0));
         jLabel58.setText("Mức lương");
 
         cboLocNamVaoLam.setBackground(new java.awt.Color(0, 102, 204));
@@ -471,14 +471,12 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound18.setRoundTopLeft(50);
         panelRound18.setRoundTopRight(50);
 
-        txtTimKiemNV.setBackground(new java.awt.Color(255, 255, 255));
         txtTimKiemNV.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         txtTimKiemNV.setText("jTextField1");
         txtTimKiemNV.setBorder(null);
 
         btnXoaTimKiemNV.setBackground(new java.awt.Color(255, 255, 255));
         btnXoaTimKiemNV.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnXoaTimKiemNV.setForeground(new java.awt.Color(0, 0, 0));
         btnXoaTimKiemNV.setText("✕");
         btnXoaTimKiemNV.setBorderPainted(false);
         btnXoaTimKiemNV.setContentAreaFilled(false);
@@ -528,13 +526,13 @@ public class QuanLy extends javax.swing.JFrame {
         tblDanhSachNV.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         tblDanhSachNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaNV", "HoTen", "GioiTinh", "NgaySinh", "NgayVaoLam", "ChucVu", "Luong", "Hinh", "GhiChu", "MatKhau"
             }
         ));
         tblDanhSachNV.setRowHeight(35);
@@ -593,7 +591,6 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlTabNV.add(pnlDanhSachNV);
 
-        pnlChiTietNV.setBackground(new java.awt.Color(240, 240, 240));
         pnlChiTietNV.setRoundBottomLeft(30);
         pnlChiTietNV.setRoundBottomRight(30);
         pnlChiTietNV.setRoundTopLeft(30);
@@ -613,29 +610,23 @@ public class QuanLy extends javax.swing.JFrame {
         lblAnhNV.setRoundTopRight(190);
 
         jLabel43.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel43.setForeground(new java.awt.Color(0, 0, 0));
         jLabel43.setText("Giới tính");
 
         jLabel44.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel44.setForeground(new java.awt.Color(0, 0, 0));
         jLabel44.setText("Ngày sinh");
 
         lblIdNV.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
-        lblIdNV.setForeground(new java.awt.Color(0, 0, 0));
         lblIdNV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIdNV.setText("jLabel13");
 
         lblHoTenNV.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        lblHoTenNV.setForeground(new java.awt.Color(0, 0, 0));
         lblHoTenNV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHoTenNV.setText("jLabel14");
 
         lblGioiTinhNV.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblGioiTinhNV.setForeground(new java.awt.Color(0, 0, 0));
         lblGioiTinhNV.setText("jLabel15");
 
         lblNgaySinhNV.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblNgaySinhNV.setForeground(new java.awt.Color(0, 0, 0));
         lblNgaySinhNV.setText("jLabel16");
 
         javax.swing.GroupLayout panelRound20Layout = new javax.swing.GroupLayout(panelRound20);
@@ -687,27 +678,21 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound21.setRoundTopRight(30);
 
         jLabel45.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel45.setForeground(new java.awt.Color(0, 0, 0));
         jLabel45.setText("Ngày vào làm");
 
         jLabel48.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel48.setForeground(new java.awt.Color(0, 0, 0));
         jLabel48.setText("Chức vụ");
 
         jLabel49.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel49.setForeground(new java.awt.Color(0, 0, 0));
         jLabel49.setText("Mức lương hiện tại");
 
         lblNgayVaoLam.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblNgayVaoLam.setForeground(new java.awt.Color(0, 0, 0));
         lblNgayVaoLam.setText("jLabel20");
 
         lblChucVu.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblChucVu.setForeground(new java.awt.Color(0, 0, 0));
         lblChucVu.setText("jLabel21");
 
         lblMucLuongHienTai.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblMucLuongHienTai.setForeground(new java.awt.Color(0, 0, 0));
         lblMucLuongHienTai.setText("jLabel22");
 
         jLabel51.setFont(new java.awt.Font("Calibri", 2, 14)); // NOI18N
@@ -761,19 +746,15 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound22.setRoundTopRight(30);
 
         jLabel52.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel52.setForeground(new java.awt.Color(0, 0, 0));
         jLabel52.setText("Số điện thoại");
 
         jLabel53.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel53.setForeground(new java.awt.Color(0, 0, 0));
         jLabel53.setText("Email");
 
         lblSoDIenThoai.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblSoDIenThoai.setForeground(new java.awt.Color(0, 0, 0));
         lblSoDIenThoai.setText("jLabel25");
 
         lblEmail.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblEmail.setForeground(new java.awt.Color(0, 0, 0));
         lblEmail.setText("jLabel26");
 
         jLabel54.setFont(new java.awt.Font("Calibri", 2, 14)); // NOI18N
@@ -993,15 +974,12 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.add(pnlQLNhanVien, "card8");
 
-        pnlQLThucDon.setBackground(new java.awt.Color(240, 240, 240));
-
         pnlTabTD.setRoundBottomLeft(30);
         pnlTabTD.setRoundBottomRight(30);
         pnlTabTD.setRoundTopLeft(30);
         pnlTabTD.setRoundTopRight(30);
         pnlTabTD.setLayout(new javax.swing.OverlayLayout(pnlTabTD));
 
-        pnlDanhSachTD.setBackground(new java.awt.Color(240, 240, 240));
         pnlDanhSachTD.setRoundBottomLeft(30);
         pnlDanhSachTD.setRoundBottomRight(30);
         pnlDanhSachTD.setRoundTopLeft(30);
@@ -1013,15 +991,12 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound7.setRoundTopRight(30);
 
         jLabel27.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(0, 0, 0));
         jLabel27.setText("Loại");
 
         jLabel28.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(0, 0, 0));
         jLabel28.setText("Đơn vị tính");
 
         jLabel29.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel29.setForeground(new java.awt.Color(0, 0, 0));
         jLabel29.setText("Đơn giá");
 
         cboLocLoaiTD.setBackground(new java.awt.Color(0, 102, 204));
@@ -1106,14 +1081,12 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound14.setRoundTopLeft(50);
         panelRound14.setRoundTopRight(50);
 
-        txtTimKiemTD.setBackground(new java.awt.Color(255, 255, 255));
         txtTimKiemTD.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         txtTimKiemTD.setText("jTextField1");
         txtTimKiemTD.setBorder(null);
 
         btnXoaTimKiemTD.setBackground(new java.awt.Color(255, 255, 255));
         btnXoaTimKiemTD.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnXoaTimKiemTD.setForeground(new java.awt.Color(0, 0, 0));
         btnXoaTimKiemTD.setText("✕");
         btnXoaTimKiemTD.setBorderPainted(false);
         btnXoaTimKiemTD.setContentAreaFilled(false);
@@ -1181,7 +1154,7 @@ public class QuanLy extends javax.swing.JFrame {
             panelRound15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound15Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(TD, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE))
+                .addComponent(TD, javax.swing.GroupLayout.DEFAULT_SIZE, 766, Short.MAX_VALUE))
         );
         panelRound15Layout.setVerticalGroup(
             panelRound15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1228,7 +1201,6 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlTabTD.add(pnlDanhSachTD);
 
-        pnlChiTietTD.setBackground(new java.awt.Color(240, 240, 240));
         pnlChiTietTD.setRoundBottomLeft(30);
         pnlChiTietTD.setRoundBottomRight(30);
         pnlChiTietTD.setRoundTopLeft(30);
@@ -1248,12 +1220,10 @@ public class QuanLy extends javax.swing.JFrame {
         lblAnhTD.setRoundTopRight(30);
 
         lblTenMon.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        lblTenMon.setForeground(new java.awt.Color(0, 0, 0));
         lblTenMon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTenMon.setText("jLabel14");
 
         lblLoaiTD.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblLoaiTD.setForeground(new java.awt.Color(0, 0, 0));
         lblLoaiTD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLoaiTD.setText("jLabel15");
 
@@ -1288,19 +1258,15 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound9.setRoundTopRight(30);
 
         jLabel40.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(0, 0, 0));
         jLabel40.setText("Đơn vị tính");
 
         jLabel41.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(0, 0, 0));
         jLabel41.setText("Đơn giá");
 
         lblDonViTInh.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblDonViTInh.setForeground(new java.awt.Color(0, 0, 0));
         lblDonViTInh.setText("jLabel20");
 
         lblDonGia.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblDonGia.setForeground(new java.awt.Color(0, 0, 0));
         lblDonGia.setText("jLabel21");
 
         jLabel32.setFont(new java.awt.Font("Calibri", 2, 14)); // NOI18N
@@ -1338,7 +1304,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(panelRound9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel41)
                     .addComponent(lblDonGia))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         panelRound11.setBackground(new java.awt.Color(255, 255, 255));
@@ -1434,7 +1400,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel50)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1517,15 +1483,12 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.add(pnlQLThucDon, "card8");
 
-        pnlQLPhongChieu.setBackground(new java.awt.Color(240, 240, 240));
-
         pnlTabPC.setRoundBottomLeft(30);
         pnlTabPC.setRoundBottomRight(30);
         pnlTabPC.setRoundTopLeft(30);
         pnlTabPC.setRoundTopRight(30);
         pnlTabPC.setLayout(new javax.swing.OverlayLayout(pnlTabPC));
 
-        pnlDanhSachPC.setBackground(new java.awt.Color(240, 240, 240));
         pnlDanhSachPC.setRoundBottomLeft(30);
         pnlDanhSachPC.setRoundBottomRight(30);
         pnlDanhSachPC.setRoundTopLeft(30);
@@ -1537,20 +1500,16 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound25.setRoundTopRight(30);
 
         jLabel42.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(0, 0, 0));
         jLabel42.setText("TÌnh trạng");
 
         jLabel46.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel46.setForeground(new java.awt.Color(0, 0, 0));
         jLabel46.setText("Diện tích");
 
         jLabel47.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel47.setForeground(new java.awt.Color(0, 0, 0));
         jLabel47.setText("Số ghế");
 
         cboLocTinhTrang.setBackground(new java.awt.Color(0, 102, 204));
         cboLocTinhTrang.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        cboLocTinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cboLocDienTich.setBackground(new java.awt.Color(0, 102, 204));
         cboLocDienTich.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -1561,11 +1520,9 @@ public class QuanLy extends javax.swing.JFrame {
         cboLocSoGhe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel59.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel59.setForeground(new java.awt.Color(0, 0, 0));
         jLabel59.setText("Máy chiếu");
 
         jLabel60.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jLabel60.setForeground(new java.awt.Color(0, 0, 0));
         jLabel60.setText("Âm thanh");
 
         cboLocMayChieu.setBackground(new java.awt.Color(0, 102, 204));
@@ -1658,14 +1615,11 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound27.setRoundTopLeft(50);
         panelRound27.setRoundTopRight(50);
 
-        txtTimKiemPC.setBackground(new java.awt.Color(255, 255, 255));
         txtTimKiemPC.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        txtTimKiemPC.setText("jTextField1");
         txtTimKiemPC.setBorder(null);
 
         btnXoaTimKiemPC.setBackground(new java.awt.Color(255, 255, 255));
         btnXoaTimKiemPC.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnXoaTimKiemPC.setForeground(new java.awt.Color(0, 0, 0));
         btnXoaTimKiemPC.setText("✕");
         btnXoaTimKiemPC.setBorderPainted(false);
         btnXoaTimKiemPC.setContentAreaFilled(false);
@@ -1715,13 +1669,14 @@ public class QuanLy extends javax.swing.JFrame {
         tblDanhSachPC.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         tblDanhSachPC.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "MaPhong", "SoLuongGhe", "DienTich", "MayChieu", "AmThanh", "TinhTrang", "GhiChu"
             }
         ));
         tblDanhSachPC.setRowHeight(35);
@@ -1733,7 +1688,7 @@ public class QuanLy extends javax.swing.JFrame {
             panelRound28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound28Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(PC, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE))
+                .addComponent(PC, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
         );
         panelRound28Layout.setVerticalGroup(
             panelRound28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1767,7 +1722,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(pnlDanhSachPCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnChiTietPC, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel61)
-                    .addComponent(panelRound27, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelRound27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(pnlDanhSachPCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDanhSachPCLayout.createSequentialGroup()
@@ -1780,7 +1735,6 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlTabPC.add(pnlDanhSachPC);
 
-        pnlChiTietPC.setBackground(new java.awt.Color(240, 240, 240));
         pnlChiTietPC.setRoundBottomLeft(30);
         pnlChiTietPC.setRoundBottomRight(30);
         pnlChiTietPC.setRoundTopLeft(30);
@@ -1804,7 +1758,6 @@ public class QuanLy extends javax.swing.JFrame {
         lblAnhPC.setRoundTopRight(30);
 
         lblMaPhong.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        lblMaPhong.setForeground(new java.awt.Color(0, 0, 0));
         lblMaPhong.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMaPhong.setText("jLabel13");
 
@@ -1818,7 +1771,6 @@ public class QuanLy extends javax.swing.JFrame {
         labelRound1.setRoundTopLeft(20);
         labelRound1.setRoundTopRight(20);
 
-        panelRound1.setBackground(new java.awt.Color(240, 240, 240));
         panelRound1.setRoundBottomLeft(30);
         panelRound1.setRoundBottomRight(30);
         panelRound1.setRoundTopLeft(30);
@@ -1906,20 +1858,16 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound30.setRoundTopRight(30);
 
         jLabel64.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel64.setForeground(new java.awt.Color(0, 0, 0));
         jLabel64.setText("Số lượng ghế");
 
         jLabel65.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel65.setForeground(new java.awt.Color(0, 0, 0));
         jLabel65.setText("Diện tích");
 
         lblSoLuongGhe.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblSoLuongGhe.setForeground(new java.awt.Color(0, 0, 0));
-        lblSoLuongGhe.setText("jLabel20");
+        lblSoLuongGhe.setText("10");
 
         lblDienTich.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblDienTich.setForeground(new java.awt.Color(0, 0, 0));
-        lblDienTich.setText("jLabel21");
+        lblDienTich.setText("5m2");
 
         jLabel67.setFont(new java.awt.Font("Calibri", 2, 14)); // NOI18N
         jLabel67.setText("Không gian");
@@ -1966,19 +1914,15 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound31.setRoundTopRight(30);
 
         jLabel68.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel68.setForeground(new java.awt.Color(0, 0, 0));
         jLabel68.setText("Máy chiếu");
 
         jLabel69.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel69.setForeground(new java.awt.Color(0, 0, 0));
         jLabel69.setText("Âm thanh");
 
         lblMayChieu.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblMayChieu.setForeground(new java.awt.Color(0, 0, 0));
         lblMayChieu.setText("jLabel25");
 
         lblAmThanh.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        lblAmThanh.setForeground(new java.awt.Color(0, 0, 0));
         lblAmThanh.setText("jLabel26");
 
         jLabel70.setFont(new java.awt.Font("Calibri", 2, 14)); // NOI18N
@@ -2001,7 +1945,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(panelRound31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblMayChieu)
                     .addComponent(lblAmThanh))
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         panelRound31Layout.setVerticalGroup(
             panelRound31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2016,7 +1960,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(panelRound31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel69)
                     .addComponent(lblAmThanh))
-                .addContainerGap(148, Short.MAX_VALUE))
+                .addContainerGap(149, Short.MAX_VALUE))
         );
 
         panelRound32.setBackground(new java.awt.Color(255, 255, 255));
@@ -2112,7 +2056,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel71)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2198,8 +2142,6 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.add(pnlQLPhongChieu, "card8");
 
-        pnlPhim.setBackground(new java.awt.Color(240, 240, 240));
-
         javax.swing.GroupLayout pnlPhimLayout = new javax.swing.GroupLayout(pnlPhim);
         pnlPhim.setLayout(pnlPhimLayout);
         pnlPhimLayout.setHorizontalGroup(
@@ -2212,8 +2154,6 @@ public class QuanLy extends javax.swing.JFrame {
         );
 
         pnlGroupPnl.add(pnlPhim, "card8");
-
-        pnlThongKe.setBackground(new java.awt.Color(240, 240, 240));
 
         javax.swing.GroupLayout pnlThongKeLayout = new javax.swing.GroupLayout(pnlThongKe);
         pnlThongKe.setLayout(pnlThongKeLayout);
@@ -2739,12 +2679,14 @@ public class QuanLy extends javax.swing.JFrame {
     private javax.swing.JTextField txtTimKiemTD;
     // End of variables declaration//GEN-END:variables
 
-    void init() {
+void init() {
+        this.fillTablePC();
+//        this.fillComboBoxTinhTrang();
         NV.getViewport().setBackground(Color.white);
         TD.getViewport().setBackground(Color.white);
         PC.getViewport().setBackground(Color.white);
+        
     }
-
     int chucNangDangChon = 1;
 
     void chonChucNang(int chucNang) {
@@ -2794,4 +2736,37 @@ public class QuanLy extends javax.swing.JFrame {
         }
         chucNangDangChon = chucNang;
     }
+    PhongChieuDao dao = new PhongChieuDao();
+        void fillTablePC() {
+        DefaultTableModel modelPC = (DefaultTableModel) tblDanhSachPC.getModel();
+        modelPC.setRowCount(0);
+        try {
+            String keyword = txtTimKiemPC.getText();
+            List<PhongChieu> list = dao.selectByKeyword(keyword);
+            for (PhongChieu nh : list) {
+                Object[] row = {
+                    nh.getMaPhong(),
+                    nh.getSoLuongGhe(),
+                    nh.getDienTich(),
+                    nh.getMayChieu(),
+                    nh.getAmThanh(),
+                    nh.getTinhTrang(),
+                    nh.getGhiChu()
+                };
+                modelPC.addRow(row);
+            }
+        } 
+        catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+//    void fillComboBoxTinhTrang(){
+//        DefaultComboBoxModel model = (DefaultComboBoxModel) cboLocTinhTrang.getModel();
+//        model.removeAllElements();
+//        List<PhongChieu> list = dao.selectAll();
+//        for(PhongChieu cd: list){
+//            model.addElement(cd);
+//        }
+//    }
+
 }
