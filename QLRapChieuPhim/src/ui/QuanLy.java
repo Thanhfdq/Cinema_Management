@@ -5,12 +5,15 @@
  */
 package ui;
 
+import dao.NhanVienDAO;
 import dao.PhongChieuDao;
+import entity.NhanVien;
 import entity.PhongChieu;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import until.MsgBox;
+import until.XDate;
 import until.XJdbc;
 
 /**
@@ -19,16 +22,14 @@ import until.XJdbc;
  */
 public class QuanLy extends javax.swing.JFrame {
 
-
     public QuanLy() {
         initComponents();
         mKDatabase();
         init();
     }
-    
-    void mKDatabase(){
-        XJdbc.password = MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!");
-        
+
+    void mKDatabase() {
+        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
     }
 
     /**
@@ -236,6 +237,7 @@ public class QuanLy extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản Lý");
 
+        pnlChinh.setBackground(new java.awt.Color(230, 230, 230));
         pnlChinh.setRoundTopLeft(50);
 
         btnThem.setBackground(new java.awt.Color(153, 153, 0));
@@ -248,7 +250,8 @@ public class QuanLy extends javax.swing.JFrame {
             }
         });
 
-        btnQLNhanVien.setBackground(new java.awt.Color(51, 51, 255));
+        btnQLNhanVien.setBackground(new java.awt.Color(220, 20, 60));
+        btnQLNhanVien.setForeground(new java.awt.Color(255, 255, 255));
         btnQLNhanVien.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnQLNhanVien.setText("Quản lý nhân viên");
         btnQLNhanVien.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -334,12 +337,16 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.setLayout(new java.awt.CardLayout());
 
+        pnlQLNhanVien.setBackground(new java.awt.Color(230, 230, 230));
+
+        pnlTabNV.setBackground(new java.awt.Color(230, 230, 230));
         pnlTabNV.setRoundBottomLeft(30);
         pnlTabNV.setRoundBottomRight(30);
         pnlTabNV.setRoundTopLeft(30);
         pnlTabNV.setRoundTopRight(30);
         pnlTabNV.setLayout(new javax.swing.OverlayLayout(pnlTabNV));
 
+        pnlDanhSachNV.setBackground(new java.awt.Color(230, 230, 230));
         pnlDanhSachNV.setRoundBottomLeft(30);
         pnlDanhSachNV.setRoundBottomRight(30);
         pnlDanhSachNV.setRoundTopLeft(30);
@@ -359,17 +366,32 @@ public class QuanLy extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel38.setText("Năm sinh");
 
-        cboLocChucVu.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocChucVu.setBackground(new java.awt.Color(255, 0, 0));
         cboLocChucVu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        cboLocChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboLocChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Quản lí", "Bán hàng", "Soát vé", "Đặt vé", "Quản Lí Phim" }));
+        cboLocChucVu.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboLocChucVuItemStateChanged(evt);
+            }
+        });
 
-        cboLocGioiTinh.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocGioiTinh.setBackground(new java.awt.Color(255, 0, 0));
         cboLocGioiTinh.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        cboLocGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboLocGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tắt cả", "Nam", "Nữ" }));
+        cboLocGioiTinh.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboLocGioiTinhItemStateChanged(evt);
+            }
+        });
 
-        cboLocNamSinh.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocNamSinh.setBackground(new java.awt.Color(255, 0, 0));
         cboLocNamSinh.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        cboLocNamSinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboLocNamSinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tắt cả", "2003", "2002", "2001" }));
+        cboLocNamSinh.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboLocNamSinhItemStateChanged(evt);
+            }
+        });
 
         jLabel57.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel57.setText("Năm vào làm");
@@ -377,13 +399,23 @@ public class QuanLy extends javax.swing.JFrame {
         jLabel58.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel58.setText("Mức lương");
 
-        cboLocNamVaoLam.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocNamVaoLam.setBackground(new java.awt.Color(255, 0, 0));
         cboLocNamVaoLam.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        cboLocNamVaoLam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboLocNamVaoLam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "2022", "2021" }));
+        cboLocNamVaoLam.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboLocNamVaoLamItemStateChanged(evt);
+            }
+        });
 
-        cboLocMucLuong.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocMucLuong.setBackground(new java.awt.Color(255, 0, 0));
         cboLocMucLuong.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        cboLocMucLuong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboLocMucLuong.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "2000000", "3000000", "6000000" }));
+        cboLocMucLuong.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboLocMucLuongItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound16Layout = new javax.swing.GroupLayout(panelRound16);
         panelRound16.setLayout(panelRound16Layout);
@@ -468,8 +500,12 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound18.setRoundTopRight(50);
 
         txtTimKiemNV.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        txtTimKiemNV.setText("jTextField1");
         txtTimKiemNV.setBorder(null);
+        txtTimKiemNV.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemNVKeyReleased(evt);
+            }
+        });
 
         btnXoaTimKiemNV.setBackground(new java.awt.Color(255, 255, 255));
         btnXoaTimKiemNV.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -522,15 +558,23 @@ public class QuanLy extends javax.swing.JFrame {
         tblDanhSachNV.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         tblDanhSachNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "MaNV", "HoTen", "GioiTinh", "NgaySinh", "NgayVaoLam", "ChucVu", "Luong", "Hinh", "GhiChu", "MatKhau"
+                "MaNV", "HoTen", "GioiTinh", "NgaySinh", "NgayVaoLam", "ChucVu", "Luong", "MatKhau"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblDanhSachNV.setRowHeight(35);
         NV.setViewportView(tblDanhSachNV);
 
@@ -574,7 +618,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(pnlDanhSachNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnChiTietNV, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel39)
-                    .addComponent(panelRound18, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelRound18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(pnlDanhSachNVLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDanhSachNVLayout.createSequentialGroup()
@@ -587,6 +631,7 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlTabNV.add(pnlDanhSachNV);
 
+        pnlChiTietNV.setBackground(new java.awt.Color(230, 230, 230));
         pnlChiTietNV.setRoundBottomLeft(30);
         pnlChiTietNV.setRoundBottomRight(30);
         pnlChiTietNV.setRoundTopLeft(30);
@@ -970,12 +1015,16 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.add(pnlQLNhanVien, "card8");
 
+        pnlQLThucDon.setBackground(new java.awt.Color(230, 230, 230));
+
+        pnlTabTD.setBackground(new java.awt.Color(230, 230, 230));
         pnlTabTD.setRoundBottomLeft(30);
         pnlTabTD.setRoundBottomRight(30);
         pnlTabTD.setRoundTopLeft(30);
         pnlTabTD.setRoundTopRight(30);
         pnlTabTD.setLayout(new javax.swing.OverlayLayout(pnlTabTD));
 
+        pnlDanhSachTD.setBackground(new java.awt.Color(230, 230, 230));
         pnlDanhSachTD.setRoundBottomLeft(30);
         pnlDanhSachTD.setRoundBottomRight(30);
         pnlDanhSachTD.setRoundTopLeft(30);
@@ -995,15 +1044,15 @@ public class QuanLy extends javax.swing.JFrame {
         jLabel29.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel29.setText("Đơn giá");
 
-        cboLocLoaiTD.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocLoaiTD.setBackground(new java.awt.Color(255, 0, 0));
         cboLocLoaiTD.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocLoaiTD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboLocDonViTinhTD.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocDonViTinhTD.setBackground(new java.awt.Color(255, 0, 0));
         cboLocDonViTinhTD.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocDonViTinhTD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboLocDonGiaTD.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocDonGiaTD.setBackground(new java.awt.Color(255, 0, 0));
         cboLocDonGiaTD.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocDonGiaTD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -1197,6 +1246,7 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlTabTD.add(pnlDanhSachTD);
 
+        pnlChiTietTD.setBackground(new java.awt.Color(230, 230, 230));
         pnlChiTietTD.setRoundBottomLeft(30);
         pnlChiTietTD.setRoundBottomRight(30);
         pnlChiTietTD.setRoundTopLeft(30);
@@ -1479,12 +1529,16 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.add(pnlQLThucDon, "card8");
 
+        pnlQLPhongChieu.setBackground(new java.awt.Color(230, 230, 230));
+
+        pnlTabPC.setBackground(new java.awt.Color(230, 230, 230));
         pnlTabPC.setRoundBottomLeft(30);
         pnlTabPC.setRoundBottomRight(30);
         pnlTabPC.setRoundTopLeft(30);
         pnlTabPC.setRoundTopRight(30);
         pnlTabPC.setLayout(new javax.swing.OverlayLayout(pnlTabPC));
 
+        pnlDanhSachPC.setBackground(new java.awt.Color(230, 230, 230));
         pnlDanhSachPC.setRoundBottomLeft(30);
         pnlDanhSachPC.setRoundBottomRight(30);
         pnlDanhSachPC.setRoundTopLeft(30);
@@ -1504,14 +1558,14 @@ public class QuanLy extends javax.swing.JFrame {
         jLabel47.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel47.setText("Số ghế");
 
-        cboLocTinhTrang.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocTinhTrang.setBackground(new java.awt.Color(255, 0, 0));
         cboLocTinhTrang.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
-        cboLocDienTich.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocDienTich.setBackground(new java.awt.Color(255, 0, 0));
         cboLocDienTich.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocDienTich.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboLocSoGhe.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocSoGhe.setBackground(new java.awt.Color(255, 0, 0));
         cboLocSoGhe.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocSoGhe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -1521,11 +1575,11 @@ public class QuanLy extends javax.swing.JFrame {
         jLabel60.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel60.setText("Âm thanh");
 
-        cboLocMayChieu.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocMayChieu.setBackground(new java.awt.Color(255, 0, 0));
         cboLocMayChieu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocMayChieu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        cboLocAmThanh.setBackground(new java.awt.Color(0, 102, 204));
+        cboLocAmThanh.setBackground(new java.awt.Color(255, 0, 0));
         cboLocAmThanh.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboLocAmThanh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -1731,6 +1785,7 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlTabPC.add(pnlDanhSachPC);
 
+        pnlChiTietPC.setBackground(new java.awt.Color(230, 230, 230));
         pnlChiTietPC.setRoundBottomLeft(30);
         pnlChiTietPC.setRoundBottomRight(30);
         pnlChiTietPC.setRoundTopLeft(30);
@@ -2163,6 +2218,8 @@ public class QuanLy extends javax.swing.JFrame {
 
         pnlGroupPnl.add(pnlQLPhongChieu, "card8");
 
+        pnlPhim.setBackground(new java.awt.Color(230, 230, 230));
+
         javax.swing.GroupLayout pnlPhimLayout = new javax.swing.GroupLayout(pnlPhim);
         pnlPhim.setLayout(pnlPhimLayout);
         pnlPhimLayout.setHorizontalGroup(
@@ -2175,6 +2232,8 @@ public class QuanLy extends javax.swing.JFrame {
         );
 
         pnlGroupPnl.add(pnlPhim, "card8");
+
+        pnlThongKe.setBackground(new java.awt.Color(230, 230, 230));
 
         javax.swing.GroupLayout pnlThongKeLayout = new javax.swing.GroupLayout(pnlThongKe);
         pnlThongKe.setLayout(pnlThongKeLayout);
@@ -2244,7 +2303,7 @@ public class QuanLy extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("About");
 
-        lblDongHo.setBackground(new java.awt.Color(51, 51, 255));
+        lblDongHo.setBackground(new java.awt.Color(139, 0, 0));
         lblDongHo.setForeground(new java.awt.Color(255, 255, 255));
         lblDongHo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDongHo.setText("24:24");
@@ -2254,7 +2313,7 @@ public class QuanLy extends javax.swing.JFrame {
         lblDongHo.setRoundTopLeft(30);
         lblDongHo.setRoundTopRight(30);
 
-        lblNgay.setBackground(new java.awt.Color(51, 51, 255));
+        lblNgay.setBackground(new java.awt.Color(139, 0, 0));
         lblNgay.setForeground(new java.awt.Color(255, 255, 255));
         lblNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNgay.setText("01/01/2022");
@@ -2475,20 +2534,44 @@ public class QuanLy extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoaPhongChieuActionPerformed
 
     private void btnDauPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauPCMouseClicked
-        this.first();
+        this.firstPC();
     }//GEN-LAST:event_btnDauPCMouseClicked
 
     private void btnTruocPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTruocPCMouseClicked
-        this.back();
+        this.backPC();
     }//GEN-LAST:event_btnTruocPCMouseClicked
 
     private void btnSauPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSauPCMouseClicked
-        this.next();
+        this.nextPC();
     }//GEN-LAST:event_btnSauPCMouseClicked
 
     private void btnCuoiPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuoiPCMouseClicked
-        this.last();
+        this.lastPC();
     }//GEN-LAST:event_btnCuoiPCMouseClicked
+
+    private void cboLocChucVuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLocChucVuItemStateChanged
+        filterNV();
+    }//GEN-LAST:event_cboLocChucVuItemStateChanged
+
+    private void cboLocGioiTinhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLocGioiTinhItemStateChanged
+        filterNV();
+    }//GEN-LAST:event_cboLocGioiTinhItemStateChanged
+
+    private void cboLocNamSinhItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLocNamSinhItemStateChanged
+        filterNV();
+    }//GEN-LAST:event_cboLocNamSinhItemStateChanged
+
+    private void cboLocNamVaoLamItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLocNamVaoLamItemStateChanged
+        filterNV();
+    }//GEN-LAST:event_cboLocNamVaoLamItemStateChanged
+
+    private void cboLocMucLuongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLocMucLuongItemStateChanged
+        filterNV();
+    }//GEN-LAST:event_cboLocMucLuongItemStateChanged
+
+    private void txtTimKiemNVKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemNVKeyReleased
+        fillTableNV();
+    }//GEN-LAST:event_txtTimKiemNVKeyReleased
 
     /**
      * @param args the command line arguments
@@ -2720,36 +2803,37 @@ public class QuanLy extends javax.swing.JFrame {
     private javax.swing.JTextField txtTimKiemTD;
     // End of variables declaration//GEN-END:variables
 
-void init() {
-        this.fillTablePC();
-        this.
+    void init() {
+//        getContentPane().setBackground(new Color(157, 51, 51));
+        fillTablePC();
+        fillTableNV();
         NV.getViewport().setBackground(Color.white);
         TD.getViewport().setBackground(Color.white);
         PC.getViewport().setBackground(Color.white);
-        
+
     }
     int chucNangDangChon = 1;
 
     void chonChucNang(int chucNang) {
         switch (chucNang) {
             case 1:
-                btnQLNhanVien.setBackground(Color.BLUE);
+                btnQLNhanVien.setBackground(new Color(220, 20, 60));
                 btnQLNhanVien.setForeground(Color.WHITE);
                 break;
             case 2:
-                btnQLThucDon.setBackground(Color.BLUE);
+                btnQLThucDon.setBackground(new Color(220, 20, 60));
                 btnQLThucDon.setForeground(Color.WHITE);
                 break;
             case 3:
-                btnQLPhongChieu.setBackground(Color.BLUE);
+                btnQLPhongChieu.setBackground(new Color(220, 20, 60));
                 btnQLPhongChieu.setForeground(Color.WHITE);
                 break;
             case 4:
-                btnPhim.setBackground(Color.BLUE);
+                btnPhim.setBackground(new Color(220, 20, 60));
                 btnPhim.setForeground(Color.WHITE);
                 break;
             case 5:
-                btnThongKe.setBackground(Color.BLUE);
+                btnThongKe.setBackground(new Color(220, 20, 60));
                 btnThongKe.setForeground(Color.WHITE);
                 break;
         }
@@ -2777,14 +2861,122 @@ void init() {
         }
         chucNangDangChon = chucNang;
     }
-    PhongChieuDao dao = new PhongChieuDao();
-    int row = -1;
-        void fillTablePC() {
+
+    //Nhan vien
+    NhanVienDAO daoNV = new NhanVienDAO();
+    int rowNV = -1;
+
+    void fillTableNV() {
+        DefaultTableModel modelNV = (DefaultTableModel) tblDanhSachNV.getModel();
+        modelNV.setRowCount(0);
+        try {
+            String keyword = txtTimKiemNV.getText();
+            List<NhanVien> list = daoNV.selectByKeyword(keyword);
+            for (NhanVien nh : list) {
+                Object[] row = {
+                    nh.getMaNV(),
+                    nh.getHoTen(),
+                    nh.getGioiTinh(),
+                    nh.getNgaySinh(),
+                    nh.getNgayVaoLam(),
+                    nh.getChucVu(),
+                    nh.getLuong(),
+                    nh.getMatKhau()
+                };
+                modelNV.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    void filterNV() {
+        //chuc vu
+        String chucvu = "";
+        if (cboLocChucVu.getSelectedIndex() != 0) {
+            chucvu = cboLocChucVu.getSelectedItem().toString();
+        }
+        //gioi tinh
+        int gt1 = 1, gt2 = 0;
+        if (cboLocGioiTinh.getSelectedIndex() == 1) {
+            gt2 = 1;
+        }
+        if (cboLocGioiTinh.getSelectedIndex() == 2) {
+            gt1 = 0;
+        }
+        //nam sinh
+        String namSinh = "";
+        if (cboLocNamSinh.getSelectedIndex() != 0) {
+            namSinh = cboLocNamSinh.getSelectedItem().toString();
+        }
+        //nam vao lam
+        String namVaoLam = "";
+        if (cboLocNamVaoLam.getSelectedIndex() != 0) {
+            namSinh = cboLocNamVaoLam.getSelectedItem().toString();
+        }
+        //muc luong
+        int mucLuong = 0;
+        if (cboLocMucLuong.getSelectedIndex() != 0) {
+            mucLuong = Integer.parseInt(cboLocMucLuong.getSelectedItem().toString());
+        }
+
+        DefaultTableModel modelNV = (DefaultTableModel) tblDanhSachNV.getModel();
+        modelNV.setRowCount(0);
+        try {
+            List<NhanVien> list = null;
+
+            if (!"".equals(namSinh) && !"".equals(namVaoLam) && mucLuong != 0) {
+                list = daoNV.selectByFilter(1, chucvu, gt1, gt2, namSinh, namVaoLam, mucLuong);
+            }
+            if ("".equals(namSinh) && !"".equals(namVaoLam) && mucLuong != 0) {
+                list = daoNV.selectByFilter(2, chucvu, gt1, gt2, namVaoLam, mucLuong);
+            }
+            if (!"".equals(namSinh) && "".equals(namVaoLam) && mucLuong != 0) {
+                list = daoNV.selectByFilter(3, chucvu, gt1, gt2, namSinh, mucLuong);
+            }
+            if ("".equals(namSinh) && "".equals(namVaoLam) && mucLuong != 0) {
+                list = daoNV.selectByFilter(4, chucvu, gt1, gt2, mucLuong);
+            }
+            if (!"".equals(namSinh) && !"".equals(namVaoLam) && mucLuong == 0) {
+                list = daoNV.selectByFilter(5, chucvu, gt1, gt2, namSinh, namVaoLam);
+            }
+            if (!"".equals(namSinh) && "".equals(namVaoLam) && mucLuong == 0) {
+                list = daoNV.selectByFilter(6, chucvu, gt1, gt2, namSinh);
+            }
+            if ("".equals(namSinh) && !"".equals(namVaoLam) && mucLuong == 0) {
+                list = daoNV.selectByFilter(7, chucvu, gt1, gt2, namVaoLam);
+            }
+            if ("".equals(namSinh) && "".equals(namVaoLam) && mucLuong == 0) {
+                list = daoNV.selectByFilter(8, chucvu, gt1, gt2);
+            }
+
+            for (NhanVien nh : list) {
+                Object[] row = {
+                    nh.getMaNV(),
+                    nh.getHoTen(),
+                    nh.getGioiTinh() ? "Nam" : "Nữ",
+                    XDate.toString(nh.getNgaySinh(), "MM/dd/yyyy"),
+                    XDate.toString(nh.getNgayVaoLam(), "MM/dd/yyyy"),
+                    nh.getChucVu(),
+                    nh.getLuong(),
+                    nh.getMatKhau()};
+                modelNV.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+
+    //Phong chieu
+    PhongChieuDao daoPC = new PhongChieuDao();
+    int rowPC = -1;
+
+    void fillTablePC() {
         DefaultTableModel modelPC = (DefaultTableModel) tblDanhSachPC.getModel();
         modelPC.setRowCount(0);
         try {
             String keyword = txtTimKiemPC.getText();
-            List<PhongChieu> list = dao.selectByKeyword(keyword);
+            List<PhongChieu> list = daoPC.selectByKeyword(keyword);
             for (PhongChieu nh : list) {
                 Object[] row = {
                     nh.getMaPhong(),
@@ -2797,45 +2989,47 @@ void init() {
                 };
                 modelPC.addRow(row);
             }
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
-    
-        void setFormPC(PhongChieu pc){
-            lblMaPhong.setText(pc.getMaPhong());
-            lblSoLuongGhe.setText(String.valueOf(pc.getSoLuongGhe()));
-            lblDienTich.setText(pc.getDienTich());
-            lblMayChieu.setText(pc.getMayChieu());
-            lblAmThanh.setText(pc.getAmThanh());
-        }
-    void edit() {
-        String mapc = (String) tblDanhSachPC.getValueAt(this.row, 0);
-        PhongChieu pc = dao.selectById(mapc);
+
+    void setFormPC(PhongChieu pc) {
+        lblMaPhong.setText(pc.getMaPhong());
+        lblSoLuongGhe.setText(String.valueOf(pc.getSoLuongGhe()));
+        lblDienTich.setText(pc.getDienTich());
+        lblMayChieu.setText(pc.getMayChieu());
+        lblAmThanh.setText(pc.getAmThanh());
+    }
+
+    void editPC() {
+        String mapc = (String) tblDanhSachPC.getValueAt(this.rowPC, 0);
+        PhongChieu pc = daoPC.selectById(mapc);
         this.setFormPC(pc);
     }
-    
-    void first(){
-        this.row = 0;
-        this.edit();
+
+    void firstPC() {
+        this.rowPC = 0;
+        this.editPC();
     }
-    void back(){
-        if(this.row > 0){
-            this.row--;
-            this.edit();
+
+    void backPC() {
+        if (this.rowPC > 0) {
+            this.rowPC--;
+            this.editPC();
         }
     }
-    void next(){
-        if(this.row < tblDanhSachPC.getRowCount() - 1){
-            this.row++;
-            this.edit();
+
+    void nextPC() {
+        if (this.rowPC < tblDanhSachPC.getRowCount() - 1) {
+            this.rowPC++;
+            this.editPC();
         }
     }
-    void last(){
-         this.row = tblDanhSachPC.getRowCount() - 1;
-        this.edit();
+
+    void lastPC() {
+        this.rowPC = tblDanhSachPC.getRowCount() - 1;
+        this.editPC();
     }
-    
-    
+
 }

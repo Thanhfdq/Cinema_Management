@@ -20,8 +20,29 @@ public class XJdbc {
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String dburl = "jdbc:sqlserver://localhost;database=Duan1_QLRP";
     private static String username = "sa";
-    public static String password = "";
+    private static String password = "";
 
+    public static String getDriver() {
+        return driver;
+    }
+
+    public static String getDburl() {
+        return dburl;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        XJdbc.password = password;
+    }
+
+    
     /*
      * Nạp driver
      */
