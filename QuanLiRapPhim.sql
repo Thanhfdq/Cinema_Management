@@ -37,6 +37,12 @@ BEGIN
 END
 
 
+create table Role(
+	MaRole int primary key,
+	VaiTro nvarchar(100)
+
+)
+
 --bang nhan vien
 create table Users(
 	MaUser nvarchar(10) primary key constraint idnv default dbo.AUTO_IDUS(), /* Pk */
@@ -54,11 +60,6 @@ create table Users(
 	constraint fk_rl_us FOREIGN KEY (MaRole) REFERENCES Role(MaRole) on update cascade
 )
 
-create table Role(
-	MaRole int primary key,
-	VaiTro nvarchar(100)
-
-)
 
 --bang phim
 create table Phim(
@@ -394,33 +395,33 @@ Insert into HoaDon(MaUser,NgayLap) values
 
 --Nhập Dữ Liệu Vào Bảng Hóa Đơn Chi Tiết
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('18','2','2');
+(1,2,2);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('20','15','1');
+(2,15,1);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('17','17','1');
+(7,17,1);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('28','16','4');
+(8,16,4);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('21','2','2');
+(11,2,2);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('22','11','2');
+(12,11,2);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('19','18','1');
+(14,17,1);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('23','10','3');
+(12,10,3);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('25','12','2');
+(12,12,2);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('30','3','1');
+(3,3,1);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('26','5','2');
+(6,5,2);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('29','8','2');
+(9,8,2);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('27','17','1');
+(2,1,1);
 Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
-('16','2','2');
+(6,2,2);
 
 
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
