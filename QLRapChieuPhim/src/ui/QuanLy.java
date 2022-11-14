@@ -5,20 +5,12 @@
  */
 package ui;
 
-import dao.NhanVienDAO;
 import dao.PhongChieuDao;
-import entity.NhanVien;
 import entity.PhongChieu;
 import java.awt.Color;
-import static java.nio.file.Files.list;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import until.MsgBox;
-import until.XDate;
 import until.XJdbc;
 
 /**
@@ -27,12 +19,16 @@ import until.XJdbc;
  */
 public class QuanLy extends javax.swing.JFrame {
 
-    /**
-     * Creates new form QuanLy
-     */
+
     public QuanLy() {
         initComponents();
+        mKDatabase();
         init();
+    }
+    
+    void mKDatabase(){
+        XJdbc.password = MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!");
+        
     }
 
     /**
@@ -1974,22 +1970,47 @@ public class QuanLy extends javax.swing.JFrame {
 
         btnXoaPhongChieu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnXoaPhongChieu.setText("Xóa nhân viên");
+        btnXoaPhongChieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaPhongChieuActionPerformed(evt);
+            }
+        });
 
         btnCuoiPC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnCuoiPC.setText("▶∣");
         btnCuoiPC.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        btnCuoiPC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCuoiPCMouseClicked(evt);
+            }
+        });
 
         btnSauPC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnSauPC.setText("▶");
         btnSauPC.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        btnSauPC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSauPCMouseClicked(evt);
+            }
+        });
 
         btnTruocPC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnTruocPC.setText("◀");
         btnTruocPC.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        btnTruocPC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTruocPCMouseClicked(evt);
+            }
+        });
 
         btnDauPC.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnDauPC.setText("Ι◀");
         btnDauPC.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        btnDauPC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDauPCMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound32Layout = new javax.swing.GroupLayout(panelRound32);
         panelRound32.setLayout(panelRound32Layout);
@@ -2449,6 +2470,26 @@ public class QuanLy extends javax.swing.JFrame {
         pnlDanhSachPC.setVisible(true);
     }//GEN-LAST:event_btnDanhSachPCMouseClicked
 
+    private void btnXoaPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaPhongChieuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaPhongChieuActionPerformed
+
+    private void btnDauPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauPCMouseClicked
+        this.first();
+    }//GEN-LAST:event_btnDauPCMouseClicked
+
+    private void btnTruocPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTruocPCMouseClicked
+        this.back();
+    }//GEN-LAST:event_btnTruocPCMouseClicked
+
+    private void btnSauPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSauPCMouseClicked
+        this.next();
+    }//GEN-LAST:event_btnSauPCMouseClicked
+
+    private void btnCuoiPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCuoiPCMouseClicked
+        this.last();
+    }//GEN-LAST:event_btnCuoiPCMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2681,7 +2722,7 @@ public class QuanLy extends javax.swing.JFrame {
 
 void init() {
         this.fillTablePC();
-//        this.fillComboBoxTinhTrang();
+        this.
         NV.getViewport().setBackground(Color.white);
         TD.getViewport().setBackground(Color.white);
         PC.getViewport().setBackground(Color.white);
@@ -2737,6 +2778,7 @@ void init() {
         chucNangDangChon = chucNang;
     }
     PhongChieuDao dao = new PhongChieuDao();
+    int row = -1;
         void fillTablePC() {
         DefaultTableModel modelPC = (DefaultTableModel) tblDanhSachPC.getModel();
         modelPC.setRowCount(0);
@@ -2760,13 +2802,40 @@ void init() {
             MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
         }
     }
-//    void fillComboBoxTinhTrang(){
-//        DefaultComboBoxModel model = (DefaultComboBoxModel) cboLocTinhTrang.getModel();
-//        model.removeAllElements();
-//        List<PhongChieu> list = dao.selectAll();
-//        for(PhongChieu cd: list){
-//            model.addElement(cd);
-//        }
-//    }
-
+    
+        void setFormPC(PhongChieu pc){
+            lblMaPhong.setText(pc.getMaPhong());
+            lblSoLuongGhe.setText(String.valueOf(pc.getSoLuongGhe()));
+            lblDienTich.setText(pc.getDienTich());
+            lblMayChieu.setText(pc.getMayChieu());
+            lblAmThanh.setText(pc.getAmThanh());
+        }
+    void edit() {
+        String mapc = (String) tblDanhSachPC.getValueAt(this.row, 0);
+        PhongChieu pc = dao.selectById(mapc);
+        this.setFormPC(pc);
+    }
+    
+    void first(){
+        this.row = 0;
+        this.edit();
+    }
+    void back(){
+        if(this.row > 0){
+            this.row--;
+            this.edit();
+        }
+    }
+    void next(){
+        if(this.row < tblDanhSachPC.getRowCount() - 1){
+            this.row++;
+            this.edit();
+        }
+    }
+    void last(){
+         this.row = tblDanhSachPC.getRowCount() - 1;
+        this.edit();
+    }
+    
+    
 }
