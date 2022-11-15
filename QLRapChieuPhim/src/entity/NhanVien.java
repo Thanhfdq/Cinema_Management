@@ -12,12 +12,14 @@ import java.util.Date;
  * @author quoct
  */
 public class NhanVien {
-    private String MaNV;
+    private String MaUser;
     private String HoTen;
+    private String SoDT;
+    private String Email;
     private boolean GioiTinh;
     private Date NgaySinh;
     private Date NgayVaoLam;
-    private String ChucVu;
+    private int ChucVu;
     private String Hinh;
     private String GhiChu;
     private String MatKhau;
@@ -26,9 +28,11 @@ public class NhanVien {
     public NhanVien() {
     }
 
-    public NhanVien(String MaNV, String HoTen, boolean GioiTinh, Date NgaySinh, Date NgayVaoLam, String ChucVu, String Hinh, String GhiChu, String MatKhau, int Luong) {
-        this.MaNV = MaNV;
+    public NhanVien(String MaUser, String HoTen, String SoDT, String Email, boolean GioiTinh, Date NgaySinh, Date NgayVaoLam, int ChucVu, String Hinh, String GhiChu, String MatKhau, int Luong) {
+        this.MaUser = MaUser;
         this.HoTen = HoTen;
+        this.SoDT = SoDT;
+        this.Email = Email;
         this.GioiTinh = GioiTinh;
         this.NgaySinh = NgaySinh;
         this.NgayVaoLam = NgayVaoLam;
@@ -39,12 +43,12 @@ public class NhanVien {
         this.Luong = Luong;
     }
 
-    public String getMaNV() {
-        return MaNV;
+    public String getMaUser() {
+        return MaUser;
     }
 
-    public void setMaNV(String MaNV) {
-        this.MaNV = MaNV;
+    public void setMaUser(String MaUser) {
+        this.MaUser = MaUser;
     }
 
     public String getHoTen() {
@@ -54,6 +58,23 @@ public class NhanVien {
     public void setHoTen(String HoTen) {
         this.HoTen = HoTen;
     }
+
+    public String getSoDT() {
+        return SoDT;
+    }
+
+    public void setSoDT(String SoDT) {
+        this.SoDT = SoDT;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+    
 
     public boolean getGioiTinh() {
         return GioiTinh;
@@ -79,11 +100,11 @@ public class NhanVien {
         this.NgayVaoLam = NgayVaoLam;
     }
 
-    public String getChucVu() {
+    public int getChucVu() {
         return ChucVu;
     }
 
-    public void setChucVu(String ChucVu) {
+    public void setChucVu(int ChucVu) {
         this.ChucVu = ChucVu;
     }
 

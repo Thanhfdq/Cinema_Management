@@ -513,6 +513,11 @@ public class QuanLy extends javax.swing.JFrame {
         btnXoaTimKiemNV.setBorderPainted(false);
         btnXoaTimKiemNV.setContentAreaFilled(false);
         btnXoaTimKiemNV.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoaTimKiemNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaTimKiemNVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound18Layout = new javax.swing.GroupLayout(panelRound18);
         panelRound18.setLayout(panelRound18Layout);
@@ -558,17 +563,17 @@ public class QuanLy extends javax.swing.JFrame {
         tblDanhSachNV.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         tblDanhSachNV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "MaNV", "HoTen", "GioiTinh", "NgaySinh", "NgayVaoLam", "ChucVu", "Luong", "MatKhau"
+                "MaNV", "HoTen", "GioiTinh", "NgaySinh", "Số điện thoại", "Email", "Chức vụ"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -2573,6 +2578,11 @@ public class QuanLy extends javax.swing.JFrame {
         fillTableNV();
     }//GEN-LAST:event_txtTimKiemNVKeyReleased
 
+    private void btnXoaTimKiemNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTimKiemNVActionPerformed
+        txtTimKiemNV.setText("");
+        fillTableNV();
+    }//GEN-LAST:event_btnXoaTimKiemNVActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2862,7 +2872,7 @@ public class QuanLy extends javax.swing.JFrame {
         chucNangDangChon = chucNang;
     }
 
-    //Nhan vien
+//Nhan vien ---------------------------------------------------------------
     NhanVienDAO daoNV = new NhanVienDAO();
     int rowNV = -1;
 
@@ -2873,16 +2883,26 @@ public class QuanLy extends javax.swing.JFrame {
             String keyword = txtTimKiemNV.getText();
             List<NhanVien> list = daoNV.selectByKeyword(keyword);
             for (NhanVien nh : list) {
+                String chucvu;
+                if (nh.getChucVu() == 1) {
+                    chucvu = "Quản lý rạp";
+                } else if (nh.getChucVu() == 2) {
+                    chucvu = "Nhân viên bán hàng";
+                } else if (nh.getChucVu() == 2) {
+                    chucvu = "Nhân viên đặt vé";
+                } else if (nh.getChucVu() == 2) {
+                    chucvu = "Nhân viên quản lý phim";
+                } else {
+                    chucvu = "Nhân viên soát vé";
+                }
                 Object[] row = {
-                    nh.getMaNV(),
+                    nh.getMaUser(),
                     nh.getHoTen(),
-                    nh.getGioiTinh(),
-                    nh.getNgaySinh(),
-                    nh.getNgayVaoLam(),
-                    nh.getChucVu(),
-                    nh.getLuong(),
-                    nh.getMatKhau()
-                };
+                    nh.getGioiTinh() ? "Nam" : "Nữ",
+                    XDate.toString(nh.getNgaySinh(), "MM/dd/yyyy"),
+                    nh.getSoDT(),
+                    nh.getEmail(),
+                    chucvu,};
                 modelNV.addRow(row);
             }
         } catch (Exception e) {
@@ -2892,74 +2912,68 @@ public class QuanLy extends javax.swing.JFrame {
 
     void filterNV() {
         //chuc vu
-        String chucvu = "";
+        int chucvu;
+        String locChucVu = "";
         if (cboLocChucVu.getSelectedIndex() != 0) {
-            chucvu = cboLocChucVu.getSelectedItem().toString();
+            chucvu = cboLocChucVu.getSelectedIndex();
+            locChucVu = " and MaRole like " + chucvu;
         }
         //gioi tinh
-        int gt1 = 1, gt2 = 0;
+        int gt = 2;
+        String locGioiTinh = "";
         if (cboLocGioiTinh.getSelectedIndex() == 1) {
-            gt2 = 1;
+            gt = 1;
         }
         if (cboLocGioiTinh.getSelectedIndex() == 2) {
-            gt1 = 0;
+            gt = 0;
+        }
+        if (gt != 2) {
+            locGioiTinh = " and gioitinh like " + gt;
         }
         //nam sinh
-        String namSinh = "";
+        String locNamSinh = "";
         if (cboLocNamSinh.getSelectedIndex() != 0) {
-            namSinh = cboLocNamSinh.getSelectedItem().toString();
+            locNamSinh = " and year(ngaysinh) = " + cboLocNamSinh.getSelectedItem().toString();
         }
         //nam vao lam
-        String namVaoLam = "";
+        String locNamVaoLam = "";
         if (cboLocNamVaoLam.getSelectedIndex() != 0) {
-            namSinh = cboLocNamVaoLam.getSelectedItem().toString();
+            locNamVaoLam = " and year(ngayvaolam) = " + cboLocNamVaoLam.getSelectedItem().toString();
         }
         //muc luong
-        int mucLuong = 0;
+        String locMucLuong = "";
         if (cboLocMucLuong.getSelectedIndex() != 0) {
-            mucLuong = Integer.parseInt(cboLocMucLuong.getSelectedItem().toString());
+            int luong = Integer.parseInt(cboLocMucLuong.getSelectedItem().toString());
+            locMucLuong = " and luong >= " + luong + " and luong < " + luong + " +1000000";
         }
 
+        System.out.println("\n- " + locChucVu + "\n- " + locGioiTinh + "\n- " + locNamSinh + "\n- " + locNamVaoLam + "\n- " + locMucLuong);
         DefaultTableModel modelNV = (DefaultTableModel) tblDanhSachNV.getModel();
         modelNV.setRowCount(0);
         try {
-            List<NhanVien> list = null;
-
-            if (!"".equals(namSinh) && !"".equals(namVaoLam) && mucLuong != 0) {
-                list = daoNV.selectByFilter(1, chucvu, gt1, gt2, namSinh, namVaoLam, mucLuong);
-            }
-            if ("".equals(namSinh) && !"".equals(namVaoLam) && mucLuong != 0) {
-                list = daoNV.selectByFilter(2, chucvu, gt1, gt2, namVaoLam, mucLuong);
-            }
-            if (!"".equals(namSinh) && "".equals(namVaoLam) && mucLuong != 0) {
-                list = daoNV.selectByFilter(3, chucvu, gt1, gt2, namSinh, mucLuong);
-            }
-            if ("".equals(namSinh) && "".equals(namVaoLam) && mucLuong != 0) {
-                list = daoNV.selectByFilter(4, chucvu, gt1, gt2, mucLuong);
-            }
-            if (!"".equals(namSinh) && !"".equals(namVaoLam) && mucLuong == 0) {
-                list = daoNV.selectByFilter(5, chucvu, gt1, gt2, namSinh, namVaoLam);
-            }
-            if (!"".equals(namSinh) && "".equals(namVaoLam) && mucLuong == 0) {
-                list = daoNV.selectByFilter(6, chucvu, gt1, gt2, namSinh);
-            }
-            if ("".equals(namSinh) && !"".equals(namVaoLam) && mucLuong == 0) {
-                list = daoNV.selectByFilter(7, chucvu, gt1, gt2, namVaoLam);
-            }
-            if ("".equals(namSinh) && "".equals(namVaoLam) && mucLuong == 0) {
-                list = daoNV.selectByFilter(8, chucvu, gt1, gt2);
-            }
+            List<NhanVien> list = daoNV.selectByFilter(locChucVu, locGioiTinh, locNamSinh, locNamVaoLam, locMucLuong);
 
             for (NhanVien nh : list) {
+                String VaiTro;
+                if (nh.getChucVu() == 1) {
+                    VaiTro = "Quản lý rạp";
+                } else if (nh.getChucVu() == 2) {
+                    VaiTro = "Nhân viên bán hàng";
+                } else if (nh.getChucVu() == 2) {
+                    VaiTro = "Nhân viên đặt vé";
+                } else if (nh.getChucVu() == 2) {
+                    VaiTro = "Nhân viên quản lý phim";
+                } else {
+                    VaiTro = "Nhân viên soát vé";
+                }
                 Object[] row = {
-                    nh.getMaNV(),
+                    nh.getMaUser(),
                     nh.getHoTen(),
                     nh.getGioiTinh() ? "Nam" : "Nữ",
                     XDate.toString(nh.getNgaySinh(), "MM/dd/yyyy"),
-                    XDate.toString(nh.getNgayVaoLam(), "MM/dd/yyyy"),
-                    nh.getChucVu(),
-                    nh.getLuong(),
-                    nh.getMatKhau()};
+                    nh.getSoDT(),
+                    nh.getEmail(),
+                    VaiTro,};
                 modelNV.addRow(row);
             }
         } catch (Exception e) {
@@ -2967,7 +2981,7 @@ public class QuanLy extends javax.swing.JFrame {
         }
     }
 
-    //Phong chieu
+//Phong chieu ---------------------------------------------------------------
     PhongChieuDao daoPC = new PhongChieuDao();
     int rowPC = -1;
 
@@ -3031,5 +3045,8 @@ public class QuanLy extends javax.swing.JFrame {
         this.rowPC = tblDanhSachPC.getRowCount() - 1;
         this.editPC();
     }
+//Thuc don ---------------------------------------------------------------
 
+//phim ---------------------------------------------------------------
+//Thong ke ---------------------------------------------------------------
 }
