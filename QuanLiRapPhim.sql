@@ -193,25 +193,25 @@ Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,Luong,M
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,Luong,MatKhau) values 
 (N'Trần Đức Tiến','0332341143','tienduc098@gmail.com',1,'2003-09-18','2022-09-12',2,3000000,'0000');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Nguyễn Thị Kim Anh','1237896450','kimanh112@gmail.com',0,'1968-12-01','',1,'1111');
+(N'Nguyễn Thị Kim Anh','1237896450','kimanh112@gmail.com',0,'1968-12-01','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Đặng Tấn Tài','7755462087','taidang096@gmail.com',1,'1968-11-01','',1,'1111');
+(N'Đặng Tấn Tài','7755462087','taidang096@gmail.com',1,'1968-11-01','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Mã Tiến An','4321678095','antienma23@gmail.com',1,'1998-10-11','',1,'1111');
+(N'Mã Tiến An','4321678095','antienma23@gmail.com',1,'1998-10-11','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Trần Văn Đại','1789450323','daitran665@gmail.com',1,'1997-04-01','',1,'1111');
+(N'Trần Văn Đại','1789450323','daitran665@gmail.com',1,'1997-04-01','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Mason Gỗ Xanh','1900567782','xanhmason760@gmail.com',0,'1999-09-13','',1,'1111');
+(N'Mason Gỗ Xanh','1900567782','xanhmason760@gmail.com',0,'1999-09-13','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Quý Quét Nơ','0180033889','nono886@gmail.com',1,'1993-12-01','',1,'1111');
+(N'Quý Quét Nơ','0180033889','nono886@gmail.com',1,'1993-12-01','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Đặng Mắc Hài','2094317812','danghai774@gmail.com',1,'2001-11-17','',1,'1111');
+(N'Đặng Mắc Hài','2094317812','danghai774@gmail.com',1,'2001-11-17','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Ra Phen Va Ren','5578901234','renva246@gmail.com',0,'2003-12-17','',1,'1111');
+(N'Ra Phen Va Ren','5578901234','renva246@gmail.com',0,'2003-12-17','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Cao Ri Đỗ','6572218903','dori434@gmail.com',1,'2003-11-16','',1,'1111');
+(N'Cao Ri Đỗ','6572218903','dori434@gmail.com',1,'2003-11-16','',6,'1111');
 Insert into Users(HoTen,SoDT, Email, GioiTinh,NgaySinh,NgayVaoLam,MaRole,MatKhau) values 
-(N'Phan Sa Tị','9978065541','tisa2323@gmail.com',1,'2004-06-06','',1,'1111');
+(N'Phan Sa Tị','9978065541','tisa2323@gmail.com',1,'2004-06-06','',6,'1111');
 
 
 -- Nhập Dữ Liệu Bảng Phim 
