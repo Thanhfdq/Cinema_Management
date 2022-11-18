@@ -232,7 +232,9 @@ public class DangNhap extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
         setTitle("HỆ THỐNG RẠP CHIẾU PHIM DO 6 ANH ĐẸP TRAI LÀM ");
+        new ManHinhChao(this, true).setVisible(true);
     }
+    
     NhanVienDAO dao = new NhanVienDAO();
     void dangNhap(){
         String manv = txtName.getText();
