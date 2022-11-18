@@ -10,10 +10,19 @@ package ui;
  * @author quoct
  */
 public class UpdatePC extends javax.swing.JDialog {
+    
+    public boolean themSua;
 
-    /**
-     * Creates new form UpdatePC
-     */
+    public boolean isThemSua() {
+        return themSua;
+    }
+
+    public void setThemSua(boolean themSua) {
+        this.themSua = themSua;
+    }
+    
+    
+    
     public UpdatePC(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -169,6 +178,7 @@ public class UpdatePC extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

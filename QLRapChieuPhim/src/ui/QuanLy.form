@@ -774,7 +774,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                                      <Component id="NV" pref="737" max="32767" attributes="0"/>
+                                      <Component id="NV" pref="753" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1075,7 +1075,7 @@
                                           <Component id="jLabel49" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="lblMucLuongHienTai" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace pref="97" max="32767" attributes="0"/>
+                                      <EmptySpace pref="99" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1372,7 +1372,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel55" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jScrollPane5" pref="84" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane5" pref="89" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -2530,7 +2530,7 @@
                                               </Group>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="cboLocSoGhe" alignment="0" pref="187" max="32767" attributes="0"/>
+                                                  <Component id="cboLocSoGhe" alignment="0" pref="199" max="32767" attributes="0"/>
                                                   <Component id="cboLocTinhTrang" alignment="0" max="32767" attributes="0"/>
                                                   <Component id="cboLocDienTich" alignment="0" max="32767" attributes="0"/>
                                                   <Component id="cboLocMayChieu" alignment="0" max="32767" attributes="0"/>
@@ -2736,8 +2736,8 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="btnXoaPC" min="-2" pref="51" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnXoaPC" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                                       <Component id="btnInExcelPC" min="-2" pref="50" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
@@ -2758,8 +2758,22 @@
                           </Layout>
                           <SubComponents>
                             <Component class="javax.swing.JButton" name="btnXoaPC">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="X&#xf3;a Ph&#xf2;ng Chi&#x1ebf;u"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaPCActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JButton" name="btnInExcelPC">
+                              <Properties>
+                                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                  <Color blue="4c" green="14" red="e0" type="rgb"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInExcelPCActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -2804,6 +2818,10 @@
                                   <Border info="null"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtTimKiemPCCaretUpdate"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTimKiemPCActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JButton" name="btnXoaTimKiemPC">
                               <Properties>
@@ -2820,6 +2838,9 @@
                                   <Color id="Hand Cursor"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaTimKiemPCActionPerformed"/>
+                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -2867,7 +2888,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                                      <Component id="PC" pref="768" max="32767" attributes="0"/>
+                                      <Component id="PC" pref="756" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -2908,6 +2929,9 @@
                                     </Property>
                                     <Property name="rowHeight" type="int" value="35"/>
                                   </Properties>
+                                  <Events>
+                                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblDanhSachPCMouseClicked"/>
+                                  </Events>
                                 </Component>
                               </SubComponents>
                             </Container>
@@ -3008,7 +3032,7 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="lblAnhPC" min="-2" pref="190" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="labelRound1" min="-2" pref="78" max="-2" attributes="0"/>
+                                                      <Component id="lblTinhtrang" min="-2" pref="78" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -3028,7 +3052,7 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="lblMaPhong" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="labelRound1" min="-2" pref="47" max="-2" attributes="0"/>
+                                      <Component id="lblTinhtrang" min="-2" pref="47" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="panelRound1" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -3065,7 +3089,7 @@
                                 <Property name="text" type="java.lang.String" value="jLabel13"/>
                               </Properties>
                             </Component>
-                            <Component class="ui.LabelRound" name="labelRound1">
+                            <Component class="ui.LabelRound" name="lblTinhtrang">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="66" green="cc" red="0" type="rgb"/>
@@ -3409,6 +3433,10 @@
                                 </Property>
                                 <Property name="text" type="java.lang.String" value="S&#x1eed;a th&#xf4;ng tin"/>
                               </Properties>
+                              <Events>
+                                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSuaPhongChieuMouseClicked"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaPhongChieuActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="javax.swing.JButton" name="btnXoaPhongChieu">
                               <Properties>

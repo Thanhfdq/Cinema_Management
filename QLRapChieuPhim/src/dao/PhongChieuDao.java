@@ -82,6 +82,6 @@ public class PhongChieuDao {
     } 
     public List<PhongChieu> selectByKeyword(String keyword){
         String sql="SELECT * FROM PhongChieu WHERE MaPhong LIKE ?";
-        return this.selectBySql(sql, "%"+keyword+"%");
+        return this.selectBySql(sql, "%"+keyword.toUpperCase()+"%");
     }
 }

@@ -10,8 +10,10 @@ import dao.PhongChieuDao;
 import entity.NhanVien;
 import entity.PhongChieu;
 import java.awt.Color;
+import static java.nio.file.Files.list;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import until.Auth;
 import until.MsgBox;
 import until.XDate;
 import until.XJdbc;
@@ -189,7 +191,7 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound29 = new ui.PanelRound();
         lblAnhPC = new ui.LabelRound();
         lblMaPhong = new javax.swing.JLabel();
-        labelRound1 = new ui.LabelRound();
+        lblTinhtrang = new ui.LabelRound();
         panelRound1 = new ui.PanelRound();
         jLabel4 = new javax.swing.JLabel();
         lblPhimDangChieu = new javax.swing.JLabel();
@@ -589,7 +591,7 @@ public class QuanLy extends javax.swing.JFrame {
             panelRound19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound19Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(NV, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE))
+                .addComponent(NV, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
         );
         panelRound19Layout.setVerticalGroup(
             panelRound19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -782,7 +784,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(panelRound21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel49)
                     .addComponent(lblMucLuongHienTai))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         panelRound22.setBackground(new java.awt.Color(255, 255, 255));
@@ -934,7 +936,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel55)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1604,7 +1606,7 @@ public class QuanLy extends javax.swing.JFrame {
                             .addComponent(jLabel60))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelRound25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboLocSoGhe, 0, 187, Short.MAX_VALUE)
+                            .addComponent(cboLocSoGhe, 0, 199, Short.MAX_VALUE)
                             .addComponent(cboLocTinhTrang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cboLocDienTich, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cboLocMayChieu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1643,14 +1645,28 @@ public class QuanLy extends javax.swing.JFrame {
         panelRound26.setRoundBottomRight(30);
         panelRound26.setRoundTopRight(30);
 
+        btnXoaPC.setText("Xóa Phòng Chiếu");
+        btnXoaPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaPCActionPerformed(evt);
+            }
+        });
+
+        btnInExcelPC.setBackground(new java.awt.Color(224, 20, 76));
+        btnInExcelPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInExcelPCActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelRound26Layout = new javax.swing.GroupLayout(panelRound26);
         panelRound26.setLayout(panelRound26Layout);
         panelRound26Layout.setHorizontalGroup(
             panelRound26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound26Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(btnXoaPC, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnXoaPC)
+                .addGap(41, 41, 41)
                 .addComponent(btnInExcelPC, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1672,6 +1688,16 @@ public class QuanLy extends javax.swing.JFrame {
 
         txtTimKiemPC.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         txtTimKiemPC.setBorder(null);
+        txtTimKiemPC.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTimKiemPCCaretUpdate(evt);
+            }
+        });
+        txtTimKiemPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemPCActionPerformed(evt);
+            }
+        });
 
         btnXoaTimKiemPC.setBackground(new java.awt.Color(255, 255, 255));
         btnXoaTimKiemPC.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -1679,6 +1705,11 @@ public class QuanLy extends javax.swing.JFrame {
         btnXoaTimKiemPC.setBorderPainted(false);
         btnXoaTimKiemPC.setContentAreaFilled(false);
         btnXoaTimKiemPC.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoaTimKiemPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaTimKiemPCActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound27Layout = new javax.swing.GroupLayout(panelRound27);
         panelRound27.setLayout(panelRound27Layout);
@@ -1735,6 +1766,11 @@ public class QuanLy extends javax.swing.JFrame {
             }
         ));
         tblDanhSachPC.setRowHeight(35);
+        tblDanhSachPC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDanhSachPCMouseClicked(evt);
+            }
+        });
         PC.setViewportView(tblDanhSachPC);
 
         javax.swing.GroupLayout panelRound28Layout = new javax.swing.GroupLayout(panelRound28);
@@ -1743,7 +1779,7 @@ public class QuanLy extends javax.swing.JFrame {
             panelRound28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound28Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(PC, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
+                .addComponent(PC, javax.swing.GroupLayout.DEFAULT_SIZE, 756, Short.MAX_VALUE))
         );
         panelRound28Layout.setVerticalGroup(
             panelRound28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1817,15 +1853,15 @@ public class QuanLy extends javax.swing.JFrame {
         lblMaPhong.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMaPhong.setText("jLabel13");
 
-        labelRound1.setBackground(new java.awt.Color(0, 204, 102));
-        labelRound1.setForeground(new java.awt.Color(255, 255, 255));
-        labelRound1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRound1.setText("Tốt");
-        labelRound1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        labelRound1.setRoundBottomLeft(20);
-        labelRound1.setRoundBottomRight(20);
-        labelRound1.setRoundTopLeft(20);
-        labelRound1.setRoundTopRight(20);
+        lblTinhtrang.setBackground(new java.awt.Color(0, 204, 102));
+        lblTinhtrang.setForeground(new java.awt.Color(255, 255, 255));
+        lblTinhtrang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTinhtrang.setText("Tốt");
+        lblTinhtrang.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        lblTinhtrang.setRoundBottomLeft(20);
+        lblTinhtrang.setRoundBottomRight(20);
+        lblTinhtrang.setRoundTopLeft(20);
+        lblTinhtrang.setRoundTopRight(20);
 
         panelRound1.setRoundBottomLeft(30);
         panelRound1.setRoundBottomRight(30);
@@ -1887,7 +1923,7 @@ public class QuanLy extends javax.swing.JFrame {
                         .addGroup(panelRound29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblAnhPC, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound29Layout.createSequentialGroup()
-                                .addComponent(labelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTinhtrang, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(55, 55, 55)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(panelRound1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1901,7 +1937,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblMaPhong)
                 .addGap(18, 18, 18)
-                .addComponent(labelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTinhtrang, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -2027,6 +2063,16 @@ public class QuanLy extends javax.swing.JFrame {
 
         btnSuaPhongChieu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnSuaPhongChieu.setText("Sửa thông tin");
+        btnSuaPhongChieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaPhongChieuMouseClicked(evt);
+            }
+        });
+        btnSuaPhongChieu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaPhongChieuActionPerformed(evt);
+            }
+        });
 
         btnXoaPhongChieu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         btnXoaPhongChieu.setText("Xóa nhân viên");
@@ -2535,7 +2581,7 @@ public class QuanLy extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDanhSachPCMouseClicked
 
     private void btnXoaPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaPhongChieuActionPerformed
-        // TODO add your handling code here:
+        this.deleteCtPC();
     }//GEN-LAST:event_btnXoaPhongChieuActionPerformed
 
     private void btnDauPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDauPCMouseClicked
@@ -2582,6 +2628,41 @@ public class QuanLy extends javax.swing.JFrame {
         txtTimKiemNV.setText("");
         fillTableNV();
     }//GEN-LAST:event_btnXoaTimKiemNVActionPerformed
+
+    private void tblDanhSachPCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachPCMouseClicked
+        if (evt.getClickCount() == 1) {
+            this.rowPC = tblDanhSachPC.getSelectedRow();
+            this.editPC();
+        }
+    }//GEN-LAST:event_tblDanhSachPCMouseClicked
+
+    private void btnInExcelPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInExcelPCActionPerformed
+    }//GEN-LAST:event_btnInExcelPCActionPerformed
+
+    private void txtTimKiemPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemPCActionPerformed
+    this.timKiemPc();
+    }//GEN-LAST:event_txtTimKiemPCActionPerformed
+
+    private void btnXoaPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaPCActionPerformed
+    this.deletDsPC();
+    }//GEN-LAST:event_btnXoaPCActionPerformed
+
+    private void btnSuaPhongChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaPhongChieuMouseClicked
+        new UpdatePC(this, true).setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_btnSuaPhongChieuMouseClicked
+
+    private void txtTimKiemPCCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemPCCaretUpdate
+        this.timKiemPc();
+    }//GEN-LAST:event_txtTimKiemPCCaretUpdate
+
+    private void btnXoaTimKiemPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTimKiemPCActionPerformed
+        txtTimKiemPC.setText("");
+        txtTimKiemPC.grabFocus();
+    }//GEN-LAST:event_btnXoaTimKiemPCActionPerformed
+
+    private void btnSuaPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaPhongChieuActionPerformed
+        
+    }//GEN-LAST:event_btnSuaPhongChieuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2731,7 +2812,6 @@ public class QuanLy extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private ui.LabelRound labelRound1;
     private javax.swing.JLabel lblAmThanh;
     private ui.LabelRound lblAnhNV;
     private ui.LabelRound lblAnhPC;
@@ -2758,6 +2838,7 @@ public class QuanLy extends javax.swing.JFrame {
     private javax.swing.JLabel lblSoLuongGhe;
     private javax.swing.JLabel lblTenMon;
     private ui.LabelRound lblThoiGianChieuHT;
+    private ui.LabelRound lblTinhtrang;
     private javax.swing.JLabel lblXinChao;
     private ui.PanelRound panelRound1;
     private ui.PanelRound panelRound11;
@@ -2823,6 +2904,7 @@ public class QuanLy extends javax.swing.JFrame {
 
     }
     int chucNangDangChon = 1;
+    int index = 0;
 
     void chonChucNang(int chucNang) {
         switch (chucNang) {
@@ -3014,6 +3096,7 @@ public class QuanLy extends javax.swing.JFrame {
         lblDienTich.setText(pc.getDienTich());
         lblMayChieu.setText(pc.getMayChieu());
         lblAmThanh.setText(pc.getAmThanh());
+        lblTinhtrang.setText(pc.getTinhTrang());
     }
 
     void editPC() {
@@ -3025,6 +3108,7 @@ public class QuanLy extends javax.swing.JFrame {
     void firstPC() {
         this.rowPC = 0;
         this.editPC();
+        MsgBox.alert(this, "Bạn đang ở đầu danh sách");
     }
 
     void backPC() {
@@ -3044,9 +3128,61 @@ public class QuanLy extends javax.swing.JFrame {
     void lastPC() {
         this.rowPC = tblDanhSachPC.getRowCount() - 1;
         this.editPC();
+        MsgBox.alert(this, "Bạn đang ở cuối danh sách");
     }
-//Thuc don ---------------------------------------------------------------
 
+    void clearFormPC() {
+//        lblMaPhong.setText("");
+//        lblSoLuongGhe.setText("");
+//        lblDienTich.setText("");
+//        lblMayChieu.setText("");
+//        lblAmThanh.setText("");
+//        lblTinhtrang.setText("");
+        this.setFormPC(new PhongChieu());
+        this.rowPC = -1;
+    }
+
+    void deleteCtPC() {
+        if (MsgBox.confirm(this, "Bạn có muốn xóa hay không?")) {
+            String mapc = lblMaPhong.getText();
+            System.out.println(mapc);
+            try {
+                daoPC.delete(mapc);
+                this.fillTablePC();
+                this.clearFormPC();
+                MsgBox.alert(this, "Xóa thành công!");
+            } catch (Exception e) {
+                MsgBox.alert(this, "Xóa thất bại!");
+            }
+        }
+    }
+
+    void deletDsPC() {
+        int[] rows = tblDanhSachPC.getSelectedRows();
+        if (rows.length > 0
+                && MsgBox.confirm(this, "Bạn muốn xóa phòng chiếu này?")) {
+            for (int row : rows) {
+                String mapc = (String) tblDanhSachPC.getValueAt(row, 0);
+                daoPC.delete(mapc);
+                this.fillTablePC();
+            }
+        }
+
+    }
+
+    void timKiemPc() {
+        this.fillTablePC();
+            this.clearFormPC();
+        if (tblDanhSachPC.getRowCount() == 0) {
+            MsgBox.alert(this, "Mã phòng không tồn tại");
+        }
+    }
+    
+    void suaPC(){
+        
+    }
+
+//Thuc don ---------------------------------------------------------------
 //phim ---------------------------------------------------------------
 //Thong ke ---------------------------------------------------------------
 }

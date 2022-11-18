@@ -108,4 +108,5 @@ public class NhanVienDAO {
         String sql = "SELECT * FROM users WHERE MaRole <> 6 ? ? ? ? ?";
         return this.selectBySql(sql, args);
     }
+
 }
