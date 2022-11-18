@@ -24,6 +24,8 @@ public class ManHinhChao extends javax.swing.JDialog {
     public ManHinhChao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        
         new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -34,7 +36,13 @@ public class ManHinhChao extends javax.swing.JDialog {
                 }
             }
         }).start();
+        
     }
+
+    ManHinhChao() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,7 +60,7 @@ public class ManHinhChao extends javax.swing.JDialog {
         setUndecorated(true);
 
         lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/20210521_131059.jpg"))); // NOI18N
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/chao.png"))); // NOI18N
 
         progress.setStringPainted(true);
 
@@ -118,7 +126,7 @@ public class ManHinhChao extends javax.swing.JDialog {
             }
         });
     }
-
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblLogo;
     private javax.swing.JProgressBar progress;

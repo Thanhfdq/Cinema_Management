@@ -20,7 +20,7 @@ public class XJdbc {
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String dburl = "jdbc:sqlserver://localhost;database=Duan1_QLRP";
     private static String username = "sa";
-    private static String password = "";
+    private static String password = "123456";
 
     public static String getDriver() {
         return driver;
@@ -68,15 +68,8 @@ public class XJdbc {
         return pstmt;
     }
 
-    /**
-     * Thực hiện câu lệnh SQL thao tác (INSERT, UPDATE, DELETE) hoặc thủ tục lưu
-     * thao tác dữ liệu
-     *
-     * @param sql là câu lệnh SQL chứa có thể chứa tham số. Nó có thể là một lời
-     * gọi thủ tục lưu
-     * @param args là danh sách các giá trị được cung cấp cho các tham số trong
-     * câu lệnh sql *
-     */
+    
+     
     public static void update(String sql, Object... args) {
         try {
             PreparedStatement stmt = XJdbc.getStmt(sql, args);
