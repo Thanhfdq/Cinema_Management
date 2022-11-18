@@ -245,6 +245,76 @@ Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
 ('P014',N'Ôm Hờ Yêu Thật',N'Tâm Lí,Hài Hước',90,N'Thái Lan');
 Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
 ('P015',N'Bắc Kim Thang',N'Kinh Dị',90,N'Việt Nam');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P016',N'Cô Gái Từ Qúa Khứ',N'Hành Đọng',90,N'Việt Nam');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P017',N'Đặc Vụ Xuyên Quốc Gia',N'Hành Động,Hài',120,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P018',N'Nghi Thức Cấm',N'Kinh Dị',120,N'Thái Lan');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P019',N'Khỉ Con Lon Ton Thế Gioi',N'Hoạt Hình',90,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P020',N'Thế Thân',N'Kinh Dị',60,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P021',N'Yêu Không Sợ Hãi',N'Tình Cảm,Hài',120,N'Thái Lan');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P022',N'HARRY POTTER VÀ HOÀNG TỬ LAI',N'Phiêu Lưu, Thần Thoại',120,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P023',N'Thực Đơn Bí Ẩn',N'Kinh Dị',90,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P024',N'BLACK PANTHER: WAKANDA BẤT DIỆT',N'Hành Động',150,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P025',N'LYLE: CHÚ CÁ SẤU BIẾT HÁT',N'Hoạt Hình,Hài',120,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P026',N'Doraemon: Nobita Và Cuộc Chiến Vũ Trụ Tí Hon 2021',N'Hoạt Hình,Hài',120,N'Nhật Bản');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P027',N'Hố Đen Tử Thần',N'Hành Động, Viễn Tưởng',150,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P028',N'Phi Công Siêu Đẳng Maverick',N'Hành Động,Phiêu Lưu',130,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P029',N'Điều Ước Cuối Của Tù Nhân 2037',N'Tâm Lí, Tình Cảm',126,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P030',N' Hậu Duệ Tình Người Duyên Ma',N'Kinh Dị,Hài',100,N'Thái Lan');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P031',N'Vết Nứt: Ám Hồn Trong Tranh',N'Kinh Dị',100,N'Thái Lan');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P032',N'Dòng Máu Đặc Cảnh',N'Tâm Lí , Hình Sự',120,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P033',N'Gánh Nặng Ngàn Cân Của Tài Năng Kiệt Xuất',N'Hành Động,Hài',130,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P034',N'Minions: Sự Trỗi Dậy Của Gru',N'Hoạt Hình,Hài',90,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P035',N'Ngoài Vòng Pháp Luật 2',N'Hành Động,Tội Phạm',110,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P036',N'Bản Tin Chết',N'Hình Sự',110,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P037',N'Ngôi Đền Kỳ Quái 3',N'Kinh Dị,Hài',110,N'Thái Lan');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P038',N'Sát Thủ Nhân Tạo 2: Mẫu Vật Còn Lại',N'Hành Động, Bỉ Ẩn',140,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P040',N'Cảnh Sát Vũ Trụ',N'Hoạt Hình , Viễn Tưởng',110,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P041',N'Điện Thoại Đen',N'Kinh Dị',100,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P042',N'Người Môi Giới',N'Tâm Lí',130,N'Hàn Quốc');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P043',N'Tăng Tốc... Về Phía Em',N'Tình Cả,Hài',120,N'Thái Lan');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P044',N'Thế Giới Khủng Long: Lãnh Địa	',N'Hành Động,Phiêu Lưu',150,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P045',N'Mồi Cá Mập',N'Gay Cấn , Kinh Dị',100,N'Anh');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P046',N'Người Khởi Lửa',N'Hành Động',120,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P047',N'Cuộc Chiến Đa Vũ Trụ',N'Hành Động',120,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P048',N'Ma Cà Rồng',N'Hành Động',120,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P049',N'Nhím Sonic 2',N'Hành Động',150,N'Mỹ');
+Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
+('P050',N'Batman: Vạch Trần Sự Thật',N'Hành Động',130,N'Mỹ');
+
+
 
 -- Nhập Dữ Liệu Vào Bảng Thực Đơn 
 Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
@@ -281,6 +351,7 @@ Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'My Combo(1 bắp + 1 nước)',85000,'vnd',N'Thức Ăn + Đồ Uống');
 Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'ComboXL(1 bắp + 2 nước)',105000,'vnd',N'Thức Ăn + Đồ Uống');
+
 
 -- Nhập Dữ Liệu Vào Bảng Phòng Chiếu 
 Insert into PhongChieu(MaPhong,SoluongGhe,DienTich,MayChieu,AmThanh,TinhTrang) values
@@ -425,26 +496,135 @@ Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 
 
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
+
+-- Ngày 1-11-2022
+-- Phòng 1 
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P001',16,'2022-07-13','PC09');
+('P001',8,'2022-11-01','PC01');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P012',10,'2022-01-29','PC11');
+('P002',10,'2022-11-01','PC01');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P004',9,'2022-11-01','PC08');
+('P003',13,'2022-11-01','PC01');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P010',17,'2021-12-30','PC03');
+('P004',16,'2022-11-01','PC01');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P003',8,'2022-09-15','PC10');
+('P005',20,'2022-11-01','PC01');
+--Phòng 2
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P008',15,'2022-02-10','PC07');
+('P006',8,'2022-11-01','PC02');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P002',18,'2022-08-12','PC01');
+('P007',10,'2022-11-01','PC02');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P005',20,'2021-01-22','PC02');
+('P008',13,'2022-11-01','PC02');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P009',13,'2021-11-15','PC05');
+('P009',16,'2022-11-01','PC02');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
-('P015',19,'2022-05-30','PC04');
+('P010',20,'2022-11-01','PC02');
+--Phòng 3 
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P011',8,'2022-11-01','PC03');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P012',10,'2022-11-01','PC03');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P013',13,'2022-11-01','PC03');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P014',16,'2022-11-01','PC03');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P015',20,'2022-11-01','PC03');
+--Phòng 4 
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P016',8,'2022-11-01','PC04');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P017',10,'2022-11-01','PC04');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P018',13,'2022-11-01','PC04');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P019',16,'2022-11-01','PC04');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P020',20,'2022-11-01','PC04');
+ 
+ -- Ngày 2-11-2022
+
+ -- Phòng 5 
+ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P021',8,'2022-11-02','PC05');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P006',10,'2022-11-02','PC05');-- Phim Cũ chiếu lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P011',13,'2022-11-02','PC05'); -- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P022',16,'2022-11-02','PC05');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P009',20,'2022-11-02','PC05');-- Phim Cũ Chiếu Lại
+-- Phòng 6 
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P017',8,'2022-11-02','PC06');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P023',10,'2022-11-02','PC06');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P015',13,'2022-11-02','PC06');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P001',16,'2022-11-02','PC06');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P024',20,'2022-11-02','PC06');
+-- Phòng 7
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P003',8,'2022-11-02','PC07');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P012',10,'2022-11-02','PC07');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P010',13,'2022-11-02','PC07');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P025',16,'2022-11-02','PC07');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P026',20,'2022-11-02','PC07');
+-- Phòng 8 
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P004',8,'2022-11-02','PC08');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P027',10,'2022-11-02','PC08');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P008',13,'2022-11-02','PC08');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P028',16,'2022-11-02','PC08');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P007',20,'2022-11-02','PC08');-- Phim Cũ Chiếu Lại
+
+-- Ngày 3-11-2022 
+-- Phòng 9 
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P002',8,'2022-11-03','PC09');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P005',10,'2022-11-03','PC09');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P028',13,'2022-11-03','PC09');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P013',16,'2022-11-03','PC09');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P029',20,'2022-11-03','PC09');
+
+-- Phòng 10 
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P014',8,'2022-11-03','PC10');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P030',10,'2022-11-03','PC10');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P016',13,'2022-11-03','PC10');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P018',16,'2022-11-03','PC10');-- Phim Cũ Chiếu Lại
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P031',20,'2022-11-03','PC10');
+
+
+
+
+
+
+
+
+
+
+
 
 select * from LichChieu
 --Nhập Dữ Liệu Vào Bảng Vé
