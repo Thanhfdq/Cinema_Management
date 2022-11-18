@@ -138,14 +138,14 @@ create table LichChieu(
 --bang ve
 create table Ve(
 	MaVe nvarchar(10) primary key not null constraint idmv default dbo.AUTO_IDMV(), /* Pk */
-	MaUser nvarchar(10) not null, /* Fk */
-	NgayLap date not null  DEFAULT getdate(),
+	MaUser nvarchar(10), /* Fk */
+	NgayLap date DEFAULT getdate(),
 	MaGhe nvarchar(10) not null, /* Fk */
 	MaPhong nvarchar(10) not null, /* Fk */
-	MaPhim nvarchar(10) not null, /* Fk */
+	MaLichChieu int not null, /* Fk */
 	constraint fk_ve_nv FOREIGN KEY (MaUser) REFERENCES Users(MaUser) on update cascade,	
 	constraint fk_ve_gh FOREIGN KEY (MaGhe, MaPhong) REFERENCES Ghe(MaGhe, MaPhong) on update cascade,
-	constraint fk_ve_ph FOREIGN KEY (MaPhim) REFERENCES Phim(MaPhim) on update cascade
+	constraint fk_ve_lc FOREIGN KEY (MaLichChieu) REFERENCES LichChieu(MaLichChieu) on update cascade
 )
 -- Nhập dữ liệu bảng role
 insert into Role(MaRole, VaiTro) values
@@ -446,35 +446,40 @@ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P015',19,'2022-05-30','PC04');
 
-
+select * from LichChieu
 --Nhập Dữ Liệu Vào Bảng Vé
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV01','US001','2022-08-18','A2','PC04','P005');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV02','US008','2022-08-11','A6','PC04','P015');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV014','US010','2022-07-07','C3','PC02','P007');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV05','US014','2022-01-22','A4','PC06','P002');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV06','US013','2022-06-06','A6','PC08','P011');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV07','US008','2022-11-12','F6','PC03','P006');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV08','US001','2022-01-11','G1&G2','PC02','P008');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV09','US001','2022-12-09','B3','PC01','P003');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV10','US010','2022-04-30','E4','PC09','P012');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV11','US013','2022-05-08','D6','PC01','P009');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV12','US008','2022-09-27','G5&G6','PC05','P004');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV13','US001','2022-12-01','C2','PC08','P005');
-insert into Ve(MaVe,MaUser,NgayLap,MaGhe,MaPhong,MaPhim)values
-('MV14','US010','2022-09-15','G3&G4','PC03','P013');
-
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-08-18','A2','PC04',1);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-08-11','A6','PC04',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-07-07','C3','PC02',5);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-01-22','A4','PC06',2);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-06-06','A6','PC08',5);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-11-12','F6','PC03',7);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-01-11','G1&G2','PC02',10);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-12-09','B3','PC01',1);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-04-30','E4','PC09',1);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-05-08','D6','PC01',2);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-27','G5&G6','PC05',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-12-01','C2','PC08',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-15','G3&G4','PC03',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-27','G5&G6','PC05',4);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-01-01','C2','PC08',8);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-15','G3&G4','PC03',9);
 
 
 

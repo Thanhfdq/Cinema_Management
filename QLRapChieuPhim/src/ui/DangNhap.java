@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import until.Auth;
 import until.MsgBox;
 import until.XImage;
+import until.XJdbc;
 
 
 
@@ -229,6 +230,7 @@ public class DangNhap extends javax.swing.JFrame {
     void init(){
         txtPass.setEchoChar('\u25cf');
         setLocationRelativeTo(null);
+        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
         setTitle("HỆ THỐNG RẠP CHIẾU PHIM DO 6 ANH ĐẸP TRAI LÀM ");
     }
     NhanVienDAO dao = new NhanVienDAO();

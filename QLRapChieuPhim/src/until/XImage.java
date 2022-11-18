@@ -56,7 +56,7 @@ public class XImage {
         return new ImageIcon(path.getAbsolutePath());
     }
     
-    public static Icon resizeImg(ImageIcon img, int x, int y) {
+    public static ImageIcon resizeImg(ImageIcon img, int x, int y) {
         ImageIcon image = img;
         int ix = image.getIconWidth(), iy = image.getIconHeight();
         int dx = 0, dy = 0;
