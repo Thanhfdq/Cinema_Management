@@ -38,9 +38,9 @@ public class GheDao {
         return this.selectBySql(sql);
     }
     
-    public Ghe selectById(String maghe){
-        String sql="SELECT * FROM Ghe WHERE MaGhe=?";
-        List<Ghe> list = this.selectBySql(sql, maghe);
+    public Ghe selectById(String maghe, String maPhong){
+        String sql="SELECT * FROM Ghe WHERE MaGhe=? and MaPhong=?";
+        List<Ghe> list = this.selectBySql(sql, maghe, maPhong);
         return list.size() > 0 ? list.get(0) : null;
     }
     

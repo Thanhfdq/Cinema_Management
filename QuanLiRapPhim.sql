@@ -314,8 +314,6 @@ Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
 Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
 ('P050',N'Batman: Vạch Trần Sự Thật',N'Hành Động',130,N'Mỹ');
 
-
-
 -- Nhập Dữ Liệu Vào Bảng Thực Đơn 
 Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'cocacola',25000,'vnd',N'Nước Uống');
@@ -351,7 +349,6 @@ Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'My Combo(1 bắp + 1 nước)',85000,'vnd',N'Thức Ăn + Đồ Uống');
 Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'ComboXL(1 bắp + 2 nước)',105000,'vnd',N'Thức Ăn + Đồ Uống');
-
 
 -- Nhập Dữ Liệu Vào Bảng Phòng Chiếu 
 Insert into PhongChieu(MaPhong,SoluongGhe,DienTich,MayChieu,AmThanh,TinhTrang) values
@@ -496,6 +493,63 @@ Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 
 
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P001',16,'2022-07-13','PC09');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P012',10,'2022-01-29','PC11');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P004',9,'2022-11-01','PC08');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P010',17,'2021-12-30','PC03');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P003',8,'2022-09-15','PC10');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P008',15,'2022-02-10','PC07');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P002',18,'2022-08-12','PC01');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P005',20,'2021-01-22','PC02');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P009',13,'2021-11-15','PC05');
+insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
+('P015',19,'2022-05-30','PC04');
+
+select * from LichChieu
+--Nhập Dữ Liệu Vào Bảng Vé
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-08-18','A2','PC04',1);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-08-11','A6','PC04',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-07-07','C3','PC02',5);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-01-22','A4','PC06',2);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-06-06','A6','PC08',5);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-11-12','F6','PC03',7);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-01-11','G1&G2','PC02',10);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-12-09','B3','PC01',1);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-04-30','E4','PC09',1);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-05-08','D6','PC01',2);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-27','G5&G6','PC05',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-12-01','C2','PC08',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-15','G3&G4','PC03',3);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-27','G5&G6','PC05',4);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-01-01','C2','PC08',8);
+insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-15','G3&G4','PC03',9);
+
+-- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
 
 -- Ngày 1-11-2022
 -- Phòng 1 
@@ -616,54 +670,24 @@ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P031',20,'2022-11-03','PC10');
 
 
+create trigger tg_xoaPC on phongchieu instead of delete
+as
+begin
+	delete from ve where MaPhong in (
+		select MaPhong from deleted
+	)
+	delete from LichChieu where MaPhong in (
+		select MaPhong from deleted
+	)
+	delete from Ghe where MaPhong in (
+		select MaPhong from deleted
+	)
+	delete from PhongChieu where MaPhong in (
+		select MaPhong from deleted
+	)
+end
 
-
-
-
-
-
-
-
-
-
-select * from LichChieu
---Nhập Dữ Liệu Vào Bảng Vé
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US001','2021-08-18','A2','PC04',1);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US008','2021-08-11','A6','PC04',3);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-07-07','C3','PC02',5);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US001','2021-01-22','A4','PC06',2);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US001','2021-06-06','A6','PC08',5);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US001','2021-11-12','F6','PC03',7);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US008','2021-01-11','G1&G2','PC02',10);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US008','2021-12-09','B3','PC01',1);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US008','2021-04-30','E4','PC09',1);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-05-08','D6','PC01',2);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-09-27','G5&G6','PC05',3);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-12-01','C2','PC08',3);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-09-15','G3&G4','PC03',3);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-09-27','G5&G6','PC05',4);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-01-01','C2','PC08',8);
-insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US010','2021-09-15','G3&G4','PC03',9);
-
-
-
-
-
+delete from PhongChieu
+where MaPhong = 'PC11'
 
 

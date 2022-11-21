@@ -5,6 +5,7 @@
  */
 package until;
 
+import dao.NhanVienDAO;
 import entity.NhanVien;
 
 /**
@@ -15,7 +16,7 @@ public class Auth {
     /**
      * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
      */
-    public static NhanVien user = null;
+    public static NhanVien user = new NhanVienDAO().selectById("US001");
     /**
      * Xóa thông tin của người sử dụng khi có yêu cầu đăng xuất
      */

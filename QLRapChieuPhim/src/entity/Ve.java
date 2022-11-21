@@ -7,25 +7,24 @@ package entity;
 import java.util.Date;
 
 public class Ve {
-    private String maVe;
+    private String maVe = "";
     private String maNV;
-    private Date ngayLap;
+    private Date ngayLap = new Date();
     private String maGhe;
     private String maPhong;
-    private String maPhim;
+    private int maLichChieu;
 
-    public Ve(String maVe, String maNV, Date ngayLap, String maGhe, String maPhong, String maPhim) {
-        this.maVe = maVe;
+    public Ve(String maNV, Date ngayLap, String maGhe, String maPhong, int maLichChieu) {
         this.maNV = maNV;
         this.ngayLap = ngayLap;
         this.maGhe = maGhe;
         this.maPhong = maPhong;
-        this.maPhim = maPhim;
+        this.maLichChieu = maLichChieu;
     }
 
     public Ve() {
     }
-
+    
     public String getMaVe() {
         return maVe;
     }
@@ -66,13 +65,12 @@ public class Ve {
         this.maPhong = maPhong;
     }
 
-    public String getMaPhim() {
-        return maPhim;
+    public int getMaLichChieu() {
+        return maLichChieu;
     }
 
-    public void setMaPhim(String maPhim) {
-        this.maPhim = maPhim;
+    public void setMaLichChieu(int maLichChieu) {
+        this.maLichChieu = maLichChieu;
     }
-    
-    
+
 }
