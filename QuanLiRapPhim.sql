@@ -670,6 +670,7 @@ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P031',20,'2022-11-03','PC10');
 
 
+<<<<<<< Updated upstream
 create trigger tg_xoaPC on phongchieu instead of delete
 as
 begin
@@ -689,5 +690,46 @@ end
 
 delete from PhongChieu
 where MaPhong = 'PC11'
+=======
+select * from LichChieu
+--Nhập Dữ Liệu Vào Bảng Vé 
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2022-10-30','A2','PC01',1);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-08-11','A6','PC04',3);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-07-07','C3','PC02',5);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-01-22','A4','PC06',2);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-06-06','A6','PC08',5);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US001','2021-11-12','F6','PC03',7);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-01-11','G1&G2','PC02',10);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-12-09','B3','PC01',1);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US008','2021-04-30','E4','PC09',1);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-05-08','D6','PC01',2);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-27','G5&G6','PC05',3);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-12-01','C2','PC08',3);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-15','G3&G4','PC03',3);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-27','G5&G6','PC05',4);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-01-01','C2','PC08',8);
+insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
+('US010','2021-09-15','G3&G4','PC03',9);
+
+
+
+
+
+>>>>>>> Stashed changes
 
 
