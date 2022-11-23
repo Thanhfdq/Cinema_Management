@@ -6,6 +6,8 @@
 package until;
 
 import dao.NhanVienDAO;
+import entity.HoaDon;
+
 import entity.NhanVien;
 
 /**
@@ -23,4 +25,5 @@ public class Auth {
     public static void clear() {
         Auth.user = null;
     }
+     public static HoaDon HoaDonGiaoDich = null;
 }

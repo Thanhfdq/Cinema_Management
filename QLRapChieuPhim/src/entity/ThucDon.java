@@ -4,8 +4,8 @@
  */
 package entity;
 
-public class ThucDon {
-    private int maMon;
+public class ThucDon implements Comparable<ThucDon>{
+    private Integer maMon;
     private String tenMon;
     private float donGia;
     private String donViTinh;
@@ -13,10 +13,7 @@ public class ThucDon {
     private String Hinh;
     private String ghiChu;
 
-    public ThucDon() {
-    }
-
-    public ThucDon(int maMon, String tenMon, float donGia, String donViTinh, String Loai, String Hinh, String ghiChu) {
+    public ThucDon(Integer maMon, String tenMon, float donGia, String donViTinh, String Loai, String Hinh, String ghiChu) {
         this.maMon = maMon;
         this.tenMon = tenMon;
         this.donGia = donGia;
@@ -26,11 +23,15 @@ public class ThucDon {
         this.ghiChu = ghiChu;
     }
 
-    public int getMaMon() {
+    public ThucDon() {
+    }
+
+    
+    public Integer getMaMon() {
         return maMon;
     }
 
-    public void setMaMon(int maMon) {
+    public void setMaMon(Integer maMon) {
         this.maMon = maMon;
     }
 
@@ -82,5 +83,8 @@ public class ThucDon {
         this.ghiChu = ghiChu;
     }
 
-    
+    @Override
+    public int compareTo(ThucDon o) {
+        return this.tenMon.compareTo(o.tenMon);
+    }
 }
