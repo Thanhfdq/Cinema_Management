@@ -797,7 +797,23 @@ insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US010','2021-09-15','G3&G4','PC03',9);
 
 
+create proc sp_dsghedadattheolichchieu @date date, @maphong nvarchar(10), @gioChieu int
+as begin
+select Ve.MaGhe
+from LichChieu join ve on LichChieu.MaLichChieu = ve.MaLichChieu
+where LichChieu.NgayChieu = @date
+	and LichChieu.MaPhong = @maphong
+	and LichChieu.GioChieu = @gioChieu
+end
+go
 
+create proc sp_dsphimtheongay @date date
+as begin
+	select MaLichChieu, Hinh, TenPhim, GioChieu, MaPhong
+	from LichChieu join phim on LichChieu.MaPhim = Phim.MaPhim
+	where LichChieu.NgayChieu = @date
+	group by Hinh, TenPhim, GioChieu, MaPhong, MaLichChieu
+end
 
 
 
