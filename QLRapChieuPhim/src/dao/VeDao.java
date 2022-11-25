@@ -110,7 +110,7 @@ public class VeDao {
     public String getGiaGhe(String soGhe, String soPhong) {
         String sql = "select Gia from Ghe where MaGhe = ? and MaPhong = ?";
         Object gia = XJdbc.value(sql, soGhe, soPhong);
-        System.out.println(soGhe+" "+soPhong+" "+gia);
+//        System.out.println(soGhe+" "+soPhong+" "+gia);
         return gia.toString();
     }
     

@@ -514,7 +514,7 @@ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P015',19,'2022-05-30','PC04');
 
-select * from LichChieu
+delete from ve
 --Nhập Dữ Liệu Vào Bảng Vé
 insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US001','2021-08-18','A2','PC04',1);
@@ -550,7 +550,7 @@ insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US010','2021-09-15','G3&G4','PC03',9);
 
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
-
+delete from lichchieu
 -- Ngày 1-11-2022
 -- Phòng 1 
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
