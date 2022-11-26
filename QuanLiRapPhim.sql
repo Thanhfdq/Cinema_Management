@@ -36,6 +36,23 @@ BEGIN
 	RETURN @ID
 END
 
+create trigger tg_xoaPC on phongchieu instead of delete
+as
+begin
+	delete from ve where MaPhong in (
+		select MaPhong from deleted
+	)
+	delete from LichChieu where MaPhong in (
+		select MaPhong from deleted
+	)
+	delete from Ghe where MaPhong in (
+		select MaPhong from deleted
+	)
+	delete from PhongChieu where MaPhong in (
+		select MaPhong from deleted
+	)
+end
+
 
 create table Role(
 	MaRole int primary key,
@@ -314,6 +331,8 @@ Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
 Insert into Phim(MaPhim,TenPhim,TheLoai,ThoiLuong,QuocGia) values
 ('P050',N'Batman: Vạch Trần Sự Thật',N'Hành Động',130,N'Mỹ');
 
+
+
 -- Nhập Dữ Liệu Vào Bảng Thực Đơn 
 Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'cocacola',25000,'vnd',N'Nước Uống');
@@ -349,6 +368,7 @@ Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'My Combo(1 bắp + 1 nước)',85000,'vnd',N'Thức Ăn + Đồ Uống');
 Insert Into ThucDon(TenMon,DonGia,DonViTinh,Loai) Values
 (N'ComboXL(1 bắp + 2 nước)',105000,'vnd',N'Thức Ăn + Đồ Uống');
+
 
 -- Nhập Dữ Liệu Vào Bảng Phòng Chiếu 
 Insert into PhongChieu(MaPhong,SoluongGhe,DienTich,MayChieu,AmThanh,TinhTrang) values
@@ -428,6 +448,76 @@ Insert into Ghe(MaPhong,MaGhe,Gia) values
 Insert into Ghe(MaPhong,MaGhe,Gia) values 
 (N'PC03',N'G3&G4',105000);
 
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'A1',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'A2',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'A6',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'A3',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'A5',105000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'A4',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'B1',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'B2',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'B6',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'B4',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'B5',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'C1',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'C2',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'C3',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'C4',105000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'C5',105000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'C6',105000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'D1',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'D2',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'D3',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'D4',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'D5',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'E1',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'E2',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'E3',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'E4',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'E6',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'F1',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'F2',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'F3',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'F4',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'F5',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'F6',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'G3&G4',85000);
+Insert into Ghe(MaPhong,MaGhe,Gia) values 
+(N'PC01',N'G5&G6',85000);
 
 -- Nhập Dữ Liệu Vào Bảng Hóa Đơn
 Insert into HoaDon(MaUser,NgayLap) values 
@@ -493,6 +583,7 @@ Insert into HoaDonCT(MaHD,MaMon,SoLuong) values
 
 
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
+
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P001',16,'2022-07-13','PC09');
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
@@ -514,7 +605,7 @@ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P015',19,'2022-05-30','PC04');
 
-select * from LichChieu
+delete from ve
 --Nhập Dữ Liệu Vào Bảng Vé
 insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US001','2021-08-18','A2','PC04',1);
@@ -550,7 +641,7 @@ insert into Ve(NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US010','2021-09-15','G3&G4','PC03',9);
 
 -- Nhập Dữ Liệu Vào Bảng Lịch Chiếu
-
+delete from lichchieu
 -- Ngày 1-11-2022
 -- Phòng 1 
 insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
@@ -670,33 +761,12 @@ insert into LichChieu(MaPhim,GioChieu,NgayChieu,MaPhong)values
 ('P031',20,'2022-11-03','PC10');
 
 
-<<<<<<< Updated upstream
-create trigger tg_xoaPC on phongchieu instead of delete
-as
-begin
-	delete from ve where MaPhong in (
-		select MaPhong from deleted
-	)
-	delete from LichChieu where MaPhong in (
-		select MaPhong from deleted
-	)
-	delete from Ghe where MaPhong in (
-		select MaPhong from deleted
-	)
-	delete from PhongChieu where MaPhong in (
-		select MaPhong from deleted
-	)
-end
-
-delete from PhongChieu
-where MaPhong = 'PC11'
-=======
 select * from LichChieu
 --Nhập Dữ Liệu Vào Bảng Vé 
 insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US001','2022-10-30','A2','PC01',1);
+('US001','2022-10-30','B3','PC01',1);
 insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
-('US008','2021-08-11','A6','PC04',3);
+('US008','2022-10-30','A6','PC01',3);
 insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US010','2021-07-07','C3','PC02',5);
 insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
@@ -727,9 +797,24 @@ insert into Ve(MaUser,NgayLap,MaGhe,MaPhong,MaLichChieu)values
 ('US010','2021-09-15','G3&G4','PC03',9);
 
 
+create proc sp_dsghedadattheolichchieu @date date, @maphong nvarchar(10), @gioChieu int
+as begin
+select Ve.MaGhe
+from LichChieu join ve on LichChieu.MaLichChieu = ve.MaLichChieu
+where LichChieu.NgayChieu = @date
+	and LichChieu.MaPhong = @maphong
+	and LichChieu.GioChieu = @gioChieu
+end
+go
+
+create proc sp_dsphimtheongay @date date
+as begin
+	select MaLichChieu, Hinh, TenPhim, GioChieu, MaPhong
+	from LichChieu join phim on LichChieu.MaPhim = Phim.MaPhim
+	where LichChieu.NgayChieu = @date
+	group by Hinh, TenPhim, GioChieu, MaPhong, MaLichChieu
+end
 
 
-
->>>>>>> Stashed changes
 
 

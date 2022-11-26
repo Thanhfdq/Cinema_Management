@@ -35,7 +35,7 @@ public class BanHang extends javax.swing.JFrame {
     }
 
     void mKDatabase() {
-//        XJdbc.password = MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!");
+        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!")) ;
         doDanhSachSanPham();
         taoHoaDon();
     }

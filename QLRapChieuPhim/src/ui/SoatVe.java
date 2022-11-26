@@ -5,6 +5,12 @@
  */
 package ui;
 
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import until.MsgBox;
+
 /**
  *
  * @author quoct
@@ -27,21 +33,328 @@ public class SoatVe extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlMoving = new ui.PanelRound();
+        lblNgay = new ui.LabelRound();
+        lblDongHo = new ui.LabelRound();
+        labelRound4 = new ui.LabelRound();
+        lblDangXuat = new ui.LabelRound();
+        btnMinimize = new ui.LabelRound();
+        btnResize = new ui.LabelRound();
+        btnExit = new ui.LabelRound();
+        labelRound13 = new ui.LabelRound();
+        txtCodeScan = new javax.swing.JTextField();
+        labelRound1 = new ui.LabelRound();
+        labelRound2 = new ui.LabelRound();
+        labelRound3 = new ui.LabelRound();
+        labelRound5 = new ui.LabelRound();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+
+        pnlMoving.setBackground(new java.awt.Color(51, 51, 51));
+        pnlMoving.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                pnlMovingMouseDragged(evt);
+            }
+        });
+        pnlMoving.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlMovingMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnlMovingMousePressed(evt);
+            }
+        });
+
+        lblNgay.setBackground(new java.awt.Color(139, 0, 0));
+        lblNgay.setForeground(new java.awt.Color(255, 255, 255));
+        lblNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNgay.setText("01/01/2022");
+        lblNgay.setFont(new java.awt.Font("Calibri", 3, 18)); // NOI18N
+        lblNgay.setRoundBottomLeft(30);
+        lblNgay.setRoundBottomRight(30);
+        lblNgay.setRoundTopLeft(30);
+        lblNgay.setRoundTopRight(30);
+
+        lblDongHo.setBackground(new java.awt.Color(139, 0, 0));
+        lblDongHo.setForeground(new java.awt.Color(255, 255, 255));
+        lblDongHo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDongHo.setText("24:24");
+        lblDongHo.setFont(new java.awt.Font("Calibri", 3, 18)); // NOI18N
+        lblDongHo.setRoundBottomLeft(30);
+        lblDongHo.setRoundBottomRight(30);
+        lblDongHo.setRoundTopLeft(30);
+        lblDongHo.setRoundTopRight(30);
+
+        labelRound4.setBackground(new java.awt.Color(139, 0, 0));
+        labelRound4.setForeground(new java.awt.Color(255, 255, 255));
+        labelRound4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelRound4.setText("Xin chào nhân viên soát vé");
+        labelRound4.setFont(new java.awt.Font("Calibri", 2, 18)); // NOI18N
+        labelRound4.setRoundBottomLeft(30);
+        labelRound4.setRoundBottomRight(30);
+        labelRound4.setRoundTopLeft(30);
+        labelRound4.setRoundTopRight(30);
+
+        lblDangXuat.setBackground(new java.awt.Color(51, 51, 51));
+        lblDangXuat.setForeground(new java.awt.Color(255, 255, 255));
+        lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_logout_24px.png"))); // NOI18N
+        lblDangXuat.setToolTipText("Đăng xuất");
+        lblDangXuat.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lblDangXuat.setRoundBottomLeft(50);
+        lblDangXuat.setRoundBottomRight(50);
+        lblDangXuat.setRoundTopLeft(50);
+        lblDangXuat.setRoundTopRight(50);
+        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseExited(evt);
+            }
+        });
+
+        btnMinimize.setBackground(new java.awt.Color(204, 204, 204));
+        btnMinimize.setForeground(new java.awt.Color(51, 51, 51));
+        btnMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnMinimize.setToolTipText("MInimize");
+        btnMinimize.setRoundBottomLeft(50);
+        btnMinimize.setRoundBottomRight(50);
+        btnMinimize.setRoundTopLeft(50);
+        btnMinimize.setRoundTopRight(50);
+        btnMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnMinimizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnMinimizeMouseExited(evt);
+            }
+        });
+
+        btnResize.setBackground(new java.awt.Color(255, 255, 0));
+        btnResize.setForeground(new java.awt.Color(51, 51, 51));
+        btnResize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnResize.setToolTipText("Restore");
+        btnResize.setRoundBottomLeft(50);
+        btnResize.setRoundBottomRight(50);
+        btnResize.setRoundTopLeft(50);
+        btnResize.setRoundTopRight(50);
+        btnResize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResizeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnResizeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnResizeMouseExited(evt);
+            }
+        });
+
+        btnExit.setBackground(new java.awt.Color(139, 0, 0));
+        btnExit.setForeground(new java.awt.Color(51, 51, 51));
+        btnExit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnExit.setToolTipText("Exit");
+        btnExit.setRoundBottomLeft(50);
+        btnExit.setRoundBottomRight(50);
+        btnExit.setRoundTopLeft(50);
+        btnExit.setRoundTopRight(50);
+        btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExitMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExitMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnExitMouseExited(evt);
+            }
+        });
+
+        labelRound13.setBackground(new java.awt.Color(102, 102, 102));
+        labelRound13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelRound13.setText("logo");
+        labelRound13.setRoundBottomLeft(50);
+        labelRound13.setRoundBottomRight(50);
+        labelRound13.setRoundTopLeft(50);
+        labelRound13.setRoundTopRight(50);
+
+        javax.swing.GroupLayout pnlMovingLayout = new javax.swing.GroupLayout(pnlMoving);
+        pnlMoving.setLayout(pnlMovingLayout);
+        pnlMovingLayout.setHorizontalGroup(
+            pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMovingLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+        );
+        pnlMovingLayout.setVerticalGroup(
+            pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMovingLayout.createSequentialGroup()
+                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMovingLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12))
+        );
+
+        txtCodeScan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        labelRound1.setText("Vé đã bán");
+        labelRound1.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+
+        labelRound2.setText("Vé đã soát");
+        labelRound2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+
+        labelRound3.setText("300");
+        labelRound3.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+
+        labelRound5.setText("300");
+        labelRound5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(pnlMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtCodeScan, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70)
+                .addComponent(labelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(txtCodeScan, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 518, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lblDangXuatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseEntered
+        lblDangXuat.setBackground(new Color(70, 70, 70));
+    }//GEN-LAST:event_lblDangXuatMouseEntered
+
+    private void lblDangXuatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseExited
+        lblDangXuat.setBackground(new Color(51, 51, 51));
+    }//GEN-LAST:event_lblDangXuatMouseExited
+
+    private void btnMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseClicked
+        this.setState(JFrame.ICONIFIED);
+    }//GEN-LAST:event_btnMinimizeMouseClicked
+
+    private void btnMinimizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseEntered
+        btnMinimize.setIcon(new ImageIcon(getClass().getResource("/icons/" + "icons8_horizontal_line_24px_1.png")));
+    }//GEN-LAST:event_btnMinimizeMouseEntered
+
+    private void btnMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseExited
+        btnMinimize.setIcon(null);
+    }//GEN-LAST:event_btnMinimizeMouseExited
+
+    private void btnResizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResizeMouseClicked
+        if (this.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+            this.setExtendedState(JFrame.NORMAL);
+        } else {
+            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        }
+    }//GEN-LAST:event_btnResizeMouseClicked
+
+    private void btnResizeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResizeMouseEntered
+        if (this.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+            btnResize.setIcon(new ImageIcon(getClass().getResource("/icons/" + "icons8_copy_24px_1.png")));
+        } else {
+            btnResize.setIcon(new ImageIcon(getClass().getResource("/icons/" + "icons8_rounded_square_24px_1.png")));
+        }
+    }//GEN-LAST:event_btnResizeMouseEntered
+
+    private void btnResizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResizeMouseExited
+        btnResize.setIcon(null);
+    }//GEN-LAST:event_btnResizeMouseExited
+
+    private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        if (MsgBox.confirm(this, "Bạn có chắc muốn thoát?")) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_btnExitMouseClicked
+
+    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
+        btnExit.setIcon(new ImageIcon(getClass().getResource("/icons/" + "icons8_close_24px.png")));
+    }//GEN-LAST:event_btnExitMouseEntered
+
+    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
+        btnExit.setIcon(null);
+    }//GEN-LAST:event_btnExitMouseExited
+
+    private void pnlMovingMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMovingMouseDragged
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            if (this.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                this.setExtendedState(JFrame.NORMAL);
+            }
+            this.setLocation(evt.getXOnScreen() - xMouse, evt.getYOnScreen() - yMouse);
+        }
+    }//GEN-LAST:event_pnlMovingMouseDragged
+
+    private void pnlMovingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMovingMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt) && evt.getClickCount() == 2) {
+            if (this.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                this.setExtendedState(JFrame.NORMAL);
+            } else {
+                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            }
+        }
+    }//GEN-LAST:event_pnlMovingMouseClicked
+    int xMouse, yMouse;
+    private void pnlMovingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMovingMousePressed
+        if (this.getExtendedState() != JFrame.MAXIMIZED_BOTH && SwingUtilities.isLeftMouseButton(evt)) {
+            xMouse = evt.getX() + 3;
+            yMouse = evt.getY() + 3;
+        }
+    }//GEN-LAST:event_pnlMovingMousePressed
 
     /**
      * @param args the command line arguments
@@ -79,5 +392,19 @@ public class SoatVe extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private ui.LabelRound btnExit;
+    private ui.LabelRound btnMinimize;
+    private ui.LabelRound btnResize;
+    private ui.LabelRound labelRound1;
+    private ui.LabelRound labelRound13;
+    private ui.LabelRound labelRound2;
+    private ui.LabelRound labelRound3;
+    private ui.LabelRound labelRound4;
+    private ui.LabelRound labelRound5;
+    private ui.LabelRound lblDangXuat;
+    private ui.LabelRound lblDongHo;
+    private ui.LabelRound lblNgay;
+    private ui.PanelRound pnlMoving;
+    private javax.swing.JTextField txtCodeScan;
     // End of variables declaration//GEN-END:variables
 }
