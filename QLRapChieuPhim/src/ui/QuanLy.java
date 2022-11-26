@@ -1567,6 +1567,11 @@ public class QuanLy extends javax.swing.JFrame {
 
         cboLocTinhTrang.setBackground(new java.awt.Color(255, 0, 0));
         cboLocTinhTrang.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        cboLocTinhTrang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cboLocTinhTrangMouseClicked(evt);
+            }
+        });
 
         cboLocDienTich.setBackground(new java.awt.Color(255, 0, 0));
         cboLocDienTich.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
@@ -2342,6 +2347,12 @@ public class QuanLy extends javax.swing.JFrame {
         lblDangXuat.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lblDangXuat.setText("Đăng xuất");
 
+        btnHanhDong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHanhDongActionPerformed(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Acount");
@@ -2493,7 +2504,14 @@ public class QuanLy extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThongKeMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        // TODO add your handling code here:
+        Auth.themSua = false;
+        try {
+            new UpdatePC(this, true).setVisible(true);
+            this.fillTablePC();
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi dữ liệu!!");
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnQLNhanVienMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLNhanVienMouseEntered
@@ -2648,7 +2666,7 @@ public class QuanLy extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoaPCActionPerformed
 
     private void btnSuaPhongChieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaPhongChieuMouseClicked
-        new UpdatePC(this, true).setVisible(rootPaneCheckingEnabled);
+
     }//GEN-LAST:event_btnSuaPhongChieuMouseClicked
 
     private void txtTimKiemPCCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemPCCaretUpdate
@@ -2661,8 +2679,24 @@ public class QuanLy extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoaTimKiemPCActionPerformed
 
     private void btnSuaPhongChieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaPhongChieuActionPerformed
-        
+        Auth.themSua = true;
+            String mapc = lblMaPhong.getText();
+            try {
+                Auth.pc = daoPC.selectById(mapc);
+                new UpdatePC(this, true).setVisible(true);
+                this.fillTablePC();
+            } catch (Exception e) {
+                MsgBox.alert(this, "Mã phòng chiếu này không tồn tại!!");
+            }
     }//GEN-LAST:event_btnSuaPhongChieuActionPerformed
+
+    private void btnHanhDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHanhDongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnHanhDongActionPerformed
+
+    private void cboLocTinhTrangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboLocTinhTrangMouseClicked
+        
+    }//GEN-LAST:event_cboLocTinhTrangMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2898,6 +2932,7 @@ public class QuanLy extends javax.swing.JFrame {
 //        getContentPane().setBackground(new Color(157, 51, 51));
         fillTablePC();
         fillTableNV();
+        
         NV.getViewport().setBackground(Color.white);
         TD.getViewport().setBackground(Color.white);
         PC.getViewport().setBackground(Color.white);
@@ -3065,6 +3100,7 @@ public class QuanLy extends javax.swing.JFrame {
 
 //Phong chieu ---------------------------------------------------------------
     PhongChieuDao daoPC = new PhongChieuDao();
+    
     int rowPC = -1;
 
     void fillTablePC() {
@@ -3098,6 +3134,8 @@ public class QuanLy extends javax.swing.JFrame {
         lblAmThanh.setText(pc.getAmThanh());
         lblTinhtrang.setText(pc.getTinhTrang());
     }
+    
+
 
     void editPC() {
         String mapc = (String) tblDanhSachPC.getValueAt(this.rowPC, 0);
@@ -3167,21 +3205,12 @@ public class QuanLy extends javax.swing.JFrame {
                 this.fillTablePC();
             }
         }
-
-    }
-
-    void timKiemPc() {
-        this.fillTablePC();
-            this.clearFormPC();
-        if (tblDanhSachPC.getRowCount() == 0) {
-            MsgBox.alert(this, "Mã phòng không tồn tại");
-        }
     }
     
-    void suaPC(){
-        
+    void timKiemPc() {
+        this.fillTablePC();
+        this.clearFormPC();
     }
-
 //Thuc don ---------------------------------------------------------------
 //phim ---------------------------------------------------------------
 //Thong ke ---------------------------------------------------------------

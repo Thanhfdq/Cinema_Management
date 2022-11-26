@@ -13,15 +13,14 @@ import until.XJdbc;
 
 public class PhongChieuDao {
     public void insert(PhongChieu model){
-        String sql="INSERT INTO PhongChieu (MaPhong, SoLuongGhe, DienTich, MayChieu, AmThanh, TinhTrang, GhiChu VALUES (?, ?, ?)";
+        String sql="INSERT INTO PhongChieu (MaPhong, TinhTrang, MayChieu, AmThanh, DienTich, SoLuongGhe) VALUES (?, ?, ?, ?, ?, ?)";
             XJdbc.update(sql, 
                 model.getMaPhong(),
-                model.getSoLuongGhe(),
-                model.getDienTich(),
+                model.getTinhTrang(),
                 model.getMayChieu(),
                 model.getAmThanh(),
-                model.getTinhTrang(),
-                model.getGhiChu());
+                model.getDienTich(),
+                model.getSoLuongGhe());
     }
     
     public void update(PhongChieu model){

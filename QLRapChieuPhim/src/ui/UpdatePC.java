@@ -5,27 +5,28 @@
  */
 package ui;
 
+import dao.PhongChieuDao;
+import entity.PhongChieu;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import until.Auth;
+import until.MsgBox;
+
+
 /**
  *
  * @author quoct
  */
 public class UpdatePC extends javax.swing.JDialog {
     
-    public boolean themSua;
-
-    public boolean isThemSua() {
-        return themSua;
-    }
-
-    public void setThemSua(boolean themSua) {
-        this.themSua = themSua;
-    }
     
     
     
     public UpdatePC(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        init();
     }
 
     /**
@@ -46,17 +47,22 @@ public class UpdatePC extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtSoGhe = new javax.swing.JPasswordField();
         txtMaPhongChieu = new javax.swing.JTextField();
         lblHinh = new ui.LabelRound();
         btnThem = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cboAmThanh = new javax.swing.JComboBox<>();
+        txtSoGhe = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnHuy.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnHuy.setText("Hủy");
+        btnHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyActionPerformed(evt);
+            }
+        });
 
         txtTInhTrang.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
@@ -80,8 +86,6 @@ public class UpdatePC extends javax.swing.JDialog {
         jLabel8.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel8.setText("Diện tích");
 
-        txtSoGhe.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-
         txtMaPhongChieu.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
         lblHinh.setBackground(new java.awt.Color(255, 255, 255));
@@ -91,13 +95,20 @@ public class UpdatePC extends javax.swing.JDialog {
         lblHinh.setRoundTopRight(30);
 
         btnThem.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        btnThem.setText("Thêm");
+        btnThem.setText("Cập nhật");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel1.setText("Mã phòng chiếu");
 
         cboAmThanh.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         cboAmThanh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        txtSoGhe.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,11 +117,13 @@ public class UpdatePC extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtSoGhe)
+                        .addGap(68, 68, 68)
                         .addComponent(btnThem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHuy))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,7 +136,6 @@ public class UpdatePC extends javax.swing.JDialog {
                                     .addComponent(cboMayChieu, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(txtMaPhongChieu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                                     .addComponent(txtDienTich, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtSoGhe, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtTInhTrang, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -166,20 +178,28 @@ public class UpdatePC extends javax.swing.JDialog {
                         .addComponent(txtDienTich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSoGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 29, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem)
-                            .addComponent(btnHuy))))
+                            .addComponent(btnHuy)
+                            .addComponent(txtSoGhe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        System.exit(0);
+        this.dispose();
+    }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        themSua();
+    }//GEN-LAST:event_btnThemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,7 +257,121 @@ public class UpdatePC extends javax.swing.JDialog {
     private ui.LabelRound lblHinh;
     private javax.swing.JTextField txtDienTich;
     private javax.swing.JTextField txtMaPhongChieu;
-    private javax.swing.JPasswordField txtSoGhe;
+    private javax.swing.JTextField txtSoGhe;
     private javax.swing.JTextField txtTInhTrang;
     // End of variables declaration//GEN-END:variables
+    
+    PhongChieuDao daopc = new PhongChieuDao();
+    
+    void init() {
+        if (Auth.themSua) {
+            this.setForm(Auth.pc);
+        } else {
+            MsgBox.alert(this, "Thêm phòng chiếu");
+            this.fillCboMayChieu();
+            this.fillCboAmThanh();
+        }
+
+    }
+    
+    void setForm(PhongChieu pc){
+        txtMaPhongChieu.setText(pc.getMaPhong());
+        txtTInhTrang.setText(pc.getTinhTrang());
+        this.fillCboMayChieu();
+        this.fillCboAmThanh();
+        txtDienTich.setText(pc.getDienTich());
+        txtSoGhe.setText(String.valueOf(pc.getSoLuongGhe()));
+        
+    }
+    
+        PhongChieu getForm(){
+        PhongChieu pc = new PhongChieu();
+        pc.setMaPhong(txtMaPhongChieu.getText());
+        pc.setTinhTrang(txtTInhTrang.getText());
+        pc.setMayChieu(String.valueOf(cboMayChieu.getSelectedItem()));
+        pc.setAmThanh(String.valueOf(cboAmThanh.getSelectedItem()));
+        pc.setDienTich(txtDienTich.getText());
+        pc.setSoLuongGhe(Integer.valueOf(txtSoGhe.getText()));
+        return pc;
+    }
+    
+    void fillCboMayChieu(){
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboMayChieu.getModel();
+        model.removeAllElements();
+        List<PhongChieu> list = daopc.selectAll();
+        List<String> loaiMayChieu = new ArrayList<>();
+        boolean khongTrungMc = true;
+        for (PhongChieu mc : list) {
+            khongTrungMc = true;
+            for (String mc1 : loaiMayChieu) {
+                if(mc1.equals(mc.getMayChieu())){
+                    khongTrungMc = false;
+                    break;
+                }
+            }if (khongTrungMc) {
+                loaiMayChieu.add(mc.getMayChieu());
+            }
+        }
+        for(String  st1 : loaiMayChieu){
+             model.addElement(st1);
+        }
+    }
+
+    void fillCboAmThanh(){
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cboAmThanh.getModel();
+        model.removeAllElements();
+        List<PhongChieu> list = daopc.selectAll();
+        List<String> loaiAmThanh = new ArrayList<>();
+        boolean khongTrung = true;
+        for (PhongChieu at : list) {
+            khongTrung = true;
+            for (String mc1 : loaiAmThanh) {
+                if(mc1.equals(at.getMayChieu())){
+                    khongTrung = false;
+                    break;
+                }
+            }if (khongTrung) {
+                loaiAmThanh.add(at.getMayChieu());
+            }
+        }
+        for(String at : loaiAmThanh){
+             model.addElement(at);
+        }
+    }
+    
+    public void clearFormPC() {
+//        this.setForm(new PhongChieu());
+    }
+    
+    void themSua() {
+        if (Auth.themSua) {
+            
+            PhongChieu pc = getForm();
+            try {
+                daopc.update(pc);
+                this.clearFormPC();
+                MsgBox.alert(this, "Cập nhật thành công!");
+                this.dispose();
+            } catch (Exception e) {
+                MsgBox.alert(this, "Cập nhật thất bại!");
+                e.printStackTrace();
+            }
+        } else {
+            if (daopc.selectById(txtMaPhongChieu.getText()) != null) {
+                MsgBox.alert(this, "Mã phòng chiếu đã tồn tại!");
+                txtMaPhongChieu.requestFocus();
+                return;
+            }
+            PhongChieu pc1 = getForm();
+            try {
+                daopc.insert(pc1);
+//                this.clearFormPC();
+                this.dispose();
+                MsgBox.alert(this, "Thêm thành công!");
+            } catch (Exception e) {
+                MsgBox.alert(this, "Thêm thất bại!");
+                e.printStackTrace();
+            }
+        }
+    }
 }

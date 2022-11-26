@@ -2614,6 +2614,9 @@
                                   <StringArray count="0"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cboLocTinhTrangMouseClicked"/>
+                              </Events>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                               </AuxValues>
@@ -3701,6 +3704,9 @@
     <Component class="javax.swing.JButton" name="btnTaiKhoan">
     </Component>
     <Component class="javax.swing.JButton" name="btnHanhDong">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHanhDongActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnGioiThieu">
     </Component>

@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Phim;
+import entity.PhongChieu;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -79,5 +80,10 @@ public class PhimDao {
             throw new RuntimeException(ex);
         }
         return list;
-    }     
+    } 
+
+    public List<Phim> selectByKeyword(String keyword){
+        String sql="SELECT * FROM PhongChieu WHERE MaPhong LIKE ?";
+        return this.selectBySql(sql, "%"+keyword.toUpperCase()+"%");
+    }    
 }
