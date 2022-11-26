@@ -7,13 +7,10 @@ package until;
 
 import dao.NhanVienDAO;
 import entity.HoaDon;
-
 import entity.NhanVien;
+import entity.PhongChieu;
 
-/**
- *
- * @author quoct
- */
+
 public class Auth {
     /**
      * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
@@ -26,4 +23,9 @@ public class Auth {
         Auth.user = null;
     }
      public static HoaDon HoaDonGiaoDich = null;
+
+    public static boolean themSua;
+    
+    public static PhongChieu pc = null;
+    
 }
