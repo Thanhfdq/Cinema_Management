@@ -5,39 +5,62 @@
  */
 package ui;
 
+import dao.HoaDonCTDao;
+import dao.HoaDonDao;
 import dao.ThucDonDao;
 import entity.HoaDon;
+import entity.HoaDonCT;
 
 import entity.ThucDon;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
-
 import until.Auth;
-
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import until.MsgBox;
+import until.XDate;
 import until.XJdbc;
 
 public class BanHang extends javax.swing.JFrame {
 
     ThucDon Thucd = new ThucDon();
     ThucDonDao dao = new ThucDonDao();
+    HoaDonCTDao HDCTdao = new HoaDonCTDao();
+    HoaDonDao HDdao = new HoaDonDao();
+
     DecimalFormat dcf = new DecimalFormat("###,###,###.###");
 
     public BanHang() {
         initComponents();
-
+        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
         this.setLocationRelativeTo(null);
+
         mKDatabase();
 
     }
 
     void mKDatabase() {
         XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!")) ;
+
         doDanhSachSanPham();
         taoHoaDon();
+
     }
 
     void doDanhSachSanPham() {
@@ -64,7 +87,6 @@ public class BanHang extends javax.swing.JFrame {
             STT++;
 
             Object[] row = {
-                
                 sp.getMaMon(),
                 sp.getTenMon(),
                 dcf.format(sp.getDonGia()),
@@ -117,6 +139,11 @@ public class BanHang extends javax.swing.JFrame {
         jLabel1.setText("Hóa đơn");
 
         btnThanhToan.setText("Thanh Toán");
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanActionPerformed(evt);
+            }
+        });
 
         btnxoatrang.setText("Xóa");
         btnxoatrang.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +250,7 @@ public class BanHang extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, true, false, true, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -323,7 +350,7 @@ public class BanHang extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongTienActionPerformed
-        
+
     }//GEN-LAST:event_txtTongTienActionPerformed
 
     private void tblThucDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblThucDonMouseClicked
@@ -336,7 +363,7 @@ public class BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnxoatrangActionPerformed
 
     private void tblThucDonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tblThucDonPropertyChange
-            demsoluong();
+        demsoluong();
     }//GEN-LAST:event_tblThucDonPropertyChange
 
     private void tbldanhsachsanphamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbldanhsachsanphamMouseClicked
@@ -346,7 +373,7 @@ public class BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_tbldanhsachsanphamMouseClicked
 
     private void txtTienThuaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienThuaKeyPressed
-        
+
     }//GEN-LAST:event_txtTienThuaKeyPressed
 
     private void txtKhachTraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKhachTraKeyPressed
@@ -354,6 +381,10 @@ public class BanHang extends javax.swing.JFrame {
             tinhTienThua();
         }
     }//GEN-LAST:event_txtKhachTraKeyPressed
+
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
+        xuatHoaDon();
+    }//GEN-LAST:event_btnThanhToanActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -419,27 +450,34 @@ public class BanHang extends javax.swing.JFrame {
         demsoluong();
         tab.setSelectedIndex(0);
     }
-    
+
     void nhapSanPhamVaoDon(ThucDon TD) {
         Auth.HoaDonGiaoDich.themSP(TD, 1);
         duyetDanhSach(TD);
 
     }
+    static float tongCong;
+    
     void tinhTienThua() {
+      
         float TienHoaDon = Float.parseFloat(txtTongTien.getText());
+        
         float TienKhachTra = Float.parseFloat(txtKhachTra.getText());
         float TienThua = TienKhachTra - TienHoaDon;
+        
         if (TienThua < 0) {
             MsgBox.alert(this, "Kiểm tra lại tiền khách trả.");
             txtKhachTra.requestFocus();
         } else {
             txtTienThua.setText(dcf.format(TienThua) + "");
-         
+
         }
-        if(txtTongTien.getText().isEmpty()){
-           MsgBox.alert(this, "Không có giá trị");
+        if (txtTongTien.getText().isEmpty()) {
+            MsgBox.alert(this, "Không có giá trị");
         }
+        tongCong = TienHoaDon   ;
     }
+    
     void demsoluong() {
         int demSoLuong = 0;
         float tongThanhTien = 0;
@@ -452,7 +490,7 @@ public class BanHang extends javax.swing.JFrame {
         txtsoluong.setText(demSoLuong + "");
         txtTongTien.setText(tongThanhTien + "");
     }
-    
+
     void taoHoaDon() {
         if (Auth.HoaDonGiaoDich == null) {
             Auth.HoaDonGiaoDich = new HoaDon();
@@ -462,7 +500,7 @@ public class BanHang extends javax.swing.JFrame {
 
         }
     }
-    
+
     void xoaSanPhamDonHang() {
         DefaultTableModel dtm = (DefaultTableModel) tblThucDon.getModel();
         dtm.setRowCount(0);
@@ -470,6 +508,7 @@ public class BanHang extends javax.swing.JFrame {
         txtKhachTra.setText("");
         txtTienThua.setText("");
     }
+
     void capnhatDonHang() {
         if (!Auth.HoaDonGiaoDich.getDSSP().isEmpty()) {
             // duyệt các dòng trong table để put lại số lượng của SP trong TreeMap
@@ -494,8 +533,6 @@ public class BanHang extends javax.swing.JFrame {
                     key.getMaMon(),
                     key.getTenMon(),
                     Auth.HoaDonGiaoDich.getDSSP().get(key),
-                     
-                    
                     dcf.format(key.getDonGia()),
                     Auth.HoaDonGiaoDich.getDSSP().get(key) * key.getDonGia()
 
@@ -535,9 +572,94 @@ public class BanHang extends javax.swing.JFrame {
                 Auth.HoaDonGiaoDich.getDSSP().get(TD),
                 dcf.format(TD.getDonGia()),
                 ThanhTien
-                    
+
             };
             dtm.addRow(addrow);
+        }
+    }
+
+    boolean xetDieuKien() {
+        boolean ketqua = true;
+        // kiem tra trong list hoa don tam co san pham hay khong
+        if (Auth.HoaDonGiaoDich.getDSSP().isEmpty()) {
+            ketqua = false;
+        }
+        // kiem tra tien khach tra
+        float TienKhachTra = Float.parseFloat(txtKhachTra.getText());
+        float TongCong = Float.parseFloat(txtTongTien.getText());
+        if (TienKhachTra < TongCong) {
+            ketqua = false;
+        }
+        return ketqua;
+    }
+    /*
+     * Hàm đưa hoá đơn chi tiết lên database
+     */
+    
+    static int MaHoaDon;
+    static int Soluong;
+    void themHDCT() throws SQLException {
+        // get mã hoá đơn vừa đưa lên database (tức mã mới nhất)
+        int dem = HDdao.demHoaDon();
+        
+        MaHoaDon = dem;
+        for (ThucDon SP : Auth.HoaDonGiaoDich.getDSSP().keySet()) {
+            HoaDonCT HDCT = new HoaDonCT();
+            HDCT.setMaHD(dem);
+            HDCT.setMaMon(SP.getMaMon());
+            HDCT.setSoLuong(Auth.HoaDonGiaoDich.getDSSP().get(SP));
+            
+            HDCTdao.themHDCT(HDCT);
+        }
+    }
+
+    void xuatHoaDon() {
+        // kiem tra cac thong tin can thiet
+        if (xetDieuKien()) {
+            // đưa thông tin hoá đơn lên database: hoá đơn -> hoá đơn chi tiết
+            Auth.HoaDonGiaoDich.setMaUser("US001");
+            Auth.HoaDonGiaoDich.setNgayLap(XDate.now());
+            try {
+
+                HDdao.themHoaDon(Auth.HoaDonGiaoDich);
+
+                themHDCT();
+                // sau khi hoàn tất thao tác với database thì reload lại các thông tin
+                MsgBox.alert(this, "Đã hoàn tất thanh toán");
+                // in hoá đơn cho khách
+                inHoaDon();
+                Auth.HoaDonGiaoDich.getDSSP().clear();
+                Auth.HoaDonGiaoDich = null;
+                //new BanHang().setVisible(true);
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        } else {
+            MsgBox.alert(this, "Kiểm tra lại các thông tin");
+        }
+    }
+
+    void inHoaDon() {
+        try {
+            
+            HashMap HoaDon = new HashMap();
+            String path = getClass().getResource("/Report/HoaDon.jrxml").toString().replace("file:/", "");
+            JasperReport rpt = JasperCompileManager.compileReport(path);
+            HoaDon.put("MaHD", MaHoaDon);
+            HoaDon.put("TongCong", tongCong);
+            Connection conn = DriverManager.getConnection(XJdbc.getDburl(), XJdbc.getUsername(), XJdbc.getPassword());
+            JasperPrint p = JasperFillManager.fillReport(rpt, HoaDon, conn);
+            //Xem truoc khi in
+            System.out.println(MaHoaDon);
+            System.out.println(tongCong);
+          
+            JasperViewer.viewReport(p, false);
+            //in hoa don
+            JasperPrintManager.printReport(p, false);
+
+        } catch (Exception e) {
+            MsgBox.alert(this, "Có lỗi: " + e.toString());
+            e.printStackTrace();
         }
     }
 

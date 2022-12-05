@@ -5,42 +5,41 @@
 package entity;
 
 public class HoaDonCT {
-    private int maHD;
-    private String maMon;
-    private int soLuong;
+    private Integer maHD;
+    private Integer maMon;
+    private Integer soLuong;
 
     public HoaDonCT() {
-    }
+   
+}
 
-    public HoaDonCT(int maHD, String maMon, int soLuong) {
-        this.maHD = maHD;
-        this.maMon = maMon;
-        this.soLuong = soLuong;
-    }
-
-    public int getMaHD() {
+    public Integer getMaHD() {
         return maHD;
     }
 
-    public void setMaHD(int maHD) {
+    public void setMaHD(Integer maHD) {
         this.maHD = maHD;
     }
 
-    public String getMaMon() {
+    public Integer getMaMon() {
         return maMon;
     }
 
-    public void setMaMon(String maMon) {
+    public void setMaMon(Integer maMon) {
         this.maMon = maMon;
     }
 
-    public int getSoLuong() {
+    public Integer getSoLuong() {
         return soLuong;
     }
 
-    public void setSoLuong(int soLuong) {
+    public void setSoLuong(Integer soLuong) {
         this.soLuong = soLuong;
     }
-    
-    
+
+    public HoaDonCT(Integer maHD, Integer maMon, Integer soLuong) {
+        this.maHD = maHD;
+        this.maMon = maMon;
+        this.soLuong = soLuong;
+    }
 }

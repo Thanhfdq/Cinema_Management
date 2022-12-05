@@ -5,11 +5,20 @@
  */
 package until;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 /**
  *
@@ -20,7 +29,10 @@ public class XJdbc {
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String dburl = "jdbc:sqlserver://localhost;database=Duan1_QLRP";
     private static String username = "sa";
+
     private static String password = "123";
+
+
 
     public static String getDriver() {
         return driver;
@@ -115,4 +127,5 @@ public class XJdbc {
             throw new RuntimeException(e);
         }
     }
+    
 }

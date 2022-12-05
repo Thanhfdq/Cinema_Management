@@ -140,9 +140,7 @@ public class NhanVien {
         this.Luong = Luong;
     }
 
-    public void setVisible(boolean rootPaneCheckingEnabled) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
 
 }

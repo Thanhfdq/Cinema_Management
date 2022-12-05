@@ -4,12 +4,13 @@
  */
 package entity;
 
+
 import java.util.Date;
 import java.util.TreeMap;
 
 public class HoaDon {
     private Integer MaHD;
-    private String MaNV;
+    private String MaUser;
     private Date ngayLap;
     private TreeMap<ThucDon,Integer> DSSP;
 
@@ -17,9 +18,9 @@ public class HoaDon {
           this.DSSP = new TreeMap<>();
     }
 
-    public HoaDon(Integer MaHD, String MaNV, Date ngayLap, TreeMap<ThucDon, Integer> DSSP) {
+    public HoaDon(Integer MaHD, String MaUser, Date ngayLap, TreeMap<ThucDon, Integer> DSSP) {
         this.MaHD = MaHD;
-        this.MaNV = MaNV;
+        this.MaUser = MaUser;
         this.ngayLap = ngayLap;
         this.DSSP = DSSP;
     }
@@ -32,12 +33,12 @@ public class HoaDon {
         this.MaHD = MaHD;
     }
 
-    public String getMaNV() {
-        return MaNV;
+    public String getMaUser() {
+        return MaUser;
     }
 
-    public void setMaNV(String MaNV) {
-        this.MaNV = MaNV;
+    public void setMaUser(String MaUser) {
+        this.MaUser = MaUser;
     }
 
     public Date getNgayLap() {
@@ -55,6 +56,8 @@ public class HoaDon {
     public void setDSSP(TreeMap<ThucDon, Integer> DSSP) {
         this.DSSP = DSSP;
     }
+
+    
     
     
 
@@ -96,5 +99,7 @@ public class HoaDon {
             DSSP.remove(TD);
         }
     }
+
+
 
 }
