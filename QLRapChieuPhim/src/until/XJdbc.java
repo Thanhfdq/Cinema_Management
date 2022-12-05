@@ -29,8 +29,12 @@ public class XJdbc {
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String dburl = "jdbc:sqlserver://localhost;database=Duan1_QLRP";
     private static String username = "sa";
+//<<<<<<< Updated upstream
 
     private static String password = "123";
+//=======
+//    private static String password = "0000";
+//>>>>>>> Stashed changes
 
 
 

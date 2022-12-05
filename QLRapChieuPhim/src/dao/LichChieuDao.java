@@ -5,6 +5,7 @@
 package dao;
 
 import entity.LichChieu;
+import entity.Phim;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import until.XJdbc;
 
 public class LichChieuDao {
         public void insert(LichChieu model){
-        String sql="INSERT INTO LichChieu (MaLichChieu, MaPhim, GioChieu, NgayChieu, MaPhong VALUES (?, ?, ?, ?, ?)";
+        String sql="INSERT INTO LichChieu (MaLichChieu, MaPhim, GioChieu, NgayChieu, MaPhong) VALUES (?, ?, ?, ?, ?)";
             XJdbc.update(sql, 
                 model.getMaLichChieu(),
                 model.getMaPhim(),
@@ -41,6 +42,12 @@ public class LichChieuDao {
         String sql="SELECT * FROM LichChieu";
         return this.selectBySql(sql);
     }
+    
+    public LichChieu selectMaPhim(String maphim) {
+        String sql = "SELECT MaLichChieu, GioChieu, NgayChieu, MaPhong FROM LichChieu WHERE MaPhim='?'";
+        List<LichChieu> list = this.selectBySql(sql, maphim);
+        return list.size() > 0 ? list.get(0) : null;
+    }    
     
     public LichChieu selectById(String malichchieu){
         String sql="SELECT * FROM LichChieu WHERE MaLichChieu=?";

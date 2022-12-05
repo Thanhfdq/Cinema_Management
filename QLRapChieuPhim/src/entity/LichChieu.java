@@ -64,6 +64,12 @@ public class LichChieu {
         this.maPhong = maPhong;
     }
 
+//    public LichChieu(int maLichChieu, int gioChieu, Date ngayChieu, String maPhong) {
+//        this.maLichChieu = maLichChieu;
+//        this.gioChieu = gioChieu;
+//        this.ngayChieu = ngayChieu;
+//        this.maPhong = maPhong;
+//    }
 
     
 }

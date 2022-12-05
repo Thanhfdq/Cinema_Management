@@ -3183,7 +3183,6 @@ public class QuanLy extends javax.swing.JFrame {
     void deleteCtPC() {
         if (MsgBox.confirm(this, "Bạn có muốn xóa hay không?")) {
             String mapc = lblMaPhong.getText();
-            System.out.println(mapc);
             try {
                 daoPC.delete(mapc);
                 this.fillTablePC();

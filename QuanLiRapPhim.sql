@@ -814,7 +814,32 @@ as begin
 	where LichChieu.NgayChieu = @date
 	group by Hinh, TenPhim, GioChieu, MaPhong, MaLichChieu
 end
+go
 
+create trigger tg_xoaphim on Phim instead of delete
+as
+begin
+	delete from LichChieu where MaPhim in (
+		select MaPhim from deleted
+	)
+	delete from Phim where MaPhim in (
+		select MaPhim from deleted
+	)
+
+end
+go
+
+create trigger tg_xoalichchieu on LichChieu instead of delete
+as
+begin
+	delete from Ve where MaLichChieu in (
+		select MaLichChieu from deleted
+	)
+	delete from LichChieu where MaLichChieu in (
+		select MaLichChieu from deleted
+	)
+
+end
 
 
 
