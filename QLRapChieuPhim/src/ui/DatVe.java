@@ -16,12 +16,24 @@ import entity.Ve;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +42,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 import until.Auth;
 import until.ComponentResizer;
 import until.MsgBox;
@@ -42,7 +61,7 @@ import until.XJdbc;
  * @author quoct
  */
 public class DatVe extends javax.swing.JFrame {
-
+    
     boolean batdau = true;
     //lay thong tin
     String phimCur, ngayChieuCur, gioChieuCur, soGheCur, soPhongCur, maLichChieuCur, anhCur;
@@ -51,12 +70,14 @@ public class DatVe extends javax.swing.JFrame {
     Color chon = Color.GREEN;
     Color trong = new Color(51, 51, 51);
     Color sai = new Color(139, 0, 0);
-
+    
     List<String[]> dsMaLichChieu = new ArrayList();
 
     //don dat ve
     List<Object[]> dsDatVe = new ArrayList(); //dsDatVe tam bao gom : NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu, gia ve
     int tongTien = 0;
+    
+    Socket clientSocket;
 
     /**
      * Creates new form DatVe
@@ -65,11 +86,11 @@ public class DatVe extends javax.swing.JFrame {
         initComponents();
         initResize();
         mKDatabase();
-        getContentPane().setBackground(trong);
+        setBackground(new Color(0, 0, 0, 0));
         lblThemVe.setBackground(sai);
         lblThanhToan.setCursor(new Cursor(Cursor.HAND_CURSOR));
         lblThemVe.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        System.out.println(getClass().getResource("/ui/report/VeXemPhim.jrxml").toString().replace("file:/", ""));
         //chinh do rong cot bang ve
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(JLabel.CENTER);
@@ -80,20 +101,42 @@ public class DatVe extends javax.swing.JFrame {
         model.getColumn(2).setMinWidth(100);
         model.getColumn(3).setMaxWidth(100);
         model.getColumn(3).setMinWidth(100);
-
+        
         model.getColumn(1).setCellRenderer(render);
         model.getColumn(2).setCellRenderer(render);
         model.getColumn(3).setCellRenderer(render);
-
+        
         dtcChonNgay.setDate(new Date());
         lblNgayLap.setText(XDate.toString(new Date(), "dd-MM-YYYY"));
         lblSoLuong.setText("0");
         lblTongTien.setText(tongTien + "");
         //Khong cho sua bang danh dach phim
         tblChonPhim.setDefaultEditor(Object.class, null);
-    }
+        jScrollPane1.getColumnHeader().setVisible(false);
+        jScrollPane1.getViewport().setBackground(new Color(102, 102, 102));
+        scrChonPhim.getColumnHeader().setVisible(false);
+        scrChonPhim.getViewport().setBackground(new Color(255,218,234));
 
+        //Neu co yeu cau ket noi thi mo ket noi
+        if (Auth.connectSocket) {
+            //mo socket
+            try {
+                clientSocket = new Socket(Auth.ip, Auth.port);
+                lblSocketState.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_connected_32px.png")));
+                lblSocketState.setToolTipText("Connected");
+            } catch (IOException ex) {
+                System.out.println("Loi ket noi");
+                ex.printStackTrace();
+            }
+        }
+    }
+    
     void mKDatabase() {
+        if (MsgBox.confirm(this, "Chọn dùng Localhost")) {
+            XJdbc.setHost("Localhost");
+        } else {
+            XJdbc.setHost("192.168.1.0");
+        }
         XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
     }
 
@@ -109,10 +152,10 @@ public class DatVe extends javax.swing.JFrame {
         pmnXoa = new javax.swing.JPopupMenu();
         mnXoa = new javax.swing.JMenuItem();
         mnChiTiet = new javax.swing.JMenuItem();
+        panelRound10 = new ui.PanelRound();
         pnlChinh = new ui.PanelRound();
         panelRound1 = new ui.PanelRound();
         lblThanhToan = new ui.LabelRound();
-        tblDonMuaVe = new javax.swing.JTable();
         panelRound3 = new ui.PanelRound();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -123,6 +166,8 @@ public class DatVe extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         labelRound2 = new ui.LabelRound();
         labelRound3 = new ui.LabelRound();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDonMuaVe = new javax.swing.JTable();
         pnlDanhSachVe = new javax.swing.JPanel();
         panelRound2 = new ui.PanelRound();
         pnlChonPhim = new ui.PanelRound();
@@ -133,6 +178,7 @@ public class DatVe extends javax.swing.JFrame {
         btnXoaTimKiemNV = new javax.swing.JButton();
         lblDongChon = new javax.swing.JLabel();
         dtcChonNgay = new com.toedter.calendar.JDateChooser();
+        labelRound20 = new ui.LabelRound();
         pnlChonGhe = new ui.PanelRound();
         btnQuayLaiChonPhim = new javax.swing.JButton();
         labelRound1 = new ui.LabelRound();
@@ -226,9 +272,20 @@ public class DatVe extends javax.swing.JFrame {
         btnResize = new ui.LabelRound();
         btnExit = new ui.LabelRound();
         labelRound13 = new ui.LabelRound();
+        lblSocketState = new javax.swing.JLabel();
+
+        pmnXoa.setBackground(new java.awt.Color(51, 51, 51));
+        pmnXoa.setForeground(new java.awt.Color(255, 255, 255));
+        pmnXoa.setPreferredSize(new java.awt.Dimension(237, 70));
 
         mnXoa.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        mnXoa.setText("Xóa");
+        mnXoa.setForeground(new java.awt.Color(51, 51, 51));
+        mnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_delete_row_24px.png"))); // NOI18N
+        mnXoa.setText("Xóa dòng");
+        mnXoa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        mnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        mnXoa.setIconTextGap(7);
+        mnXoa.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_two_tickets_24px.png"))); // NOI18N
         mnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mnXoaActionPerformed(evt);
@@ -236,18 +293,31 @@ public class DatVe extends javax.swing.JFrame {
         });
         pmnXoa.add(mnXoa);
 
+        mnChiTiet.setBackground(new java.awt.Color(51, 51, 51));
         mnChiTiet.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        mnChiTiet.setText("Chi Tiết");
+        mnChiTiet.setForeground(new java.awt.Color(51, 51, 51));
+        mnChiTiet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_view_details_24px.png"))); // NOI18N
+        mnChiTiet.setText("Xem chi Ttết");
+        mnChiTiet.setBorder(null);
+        mnChiTiet.setContentAreaFilled(false);
         pmnXoa.add(mnChiTiet);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Đặt vé");
         setUndecorated(true);
 
-        pnlChinh.setBackground(new java.awt.Color(70, 70, 70));
+        panelRound10.setBackground(new java.awt.Color(51, 51, 51));
+        panelRound10.setRoundBottomLeft(20);
+        panelRound10.setRoundBottomRight(20);
+        panelRound10.setRoundTopLeft(20);
+        panelRound10.setRoundTopRight(20);
+
+        pnlChinh.setBackground(new java.awt.Color(153, 153, 153));
+        pnlChinh.setRoundBottomRight(50);
         pnlChinh.setRoundTopLeft(50);
 
         panelRound1.setBackground(new java.awt.Color(102, 102, 102));
+        panelRound1.setRoundBottomRight(20);
 
         lblThanhToan.setBackground(new java.awt.Color(0, 204, 0));
         lblThanhToan.setForeground(new java.awt.Color(255, 255, 255));
@@ -267,34 +337,6 @@ public class DatVe extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 lblThanhToanMouseExited(evt);
-            }
-        });
-
-        tblDonMuaVe.setBackground(new java.awt.Color(51, 51, 51));
-        tblDonMuaVe.setFont(new java.awt.Font("Calibri", 2, 18)); // NOI18N
-        tblDonMuaVe.setForeground(new java.awt.Color(255, 255, 255));
-        tblDonMuaVe.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "", "", "", ""
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblDonMuaVe.setFocusable(false);
-        tblDonMuaVe.setGridColor(new java.awt.Color(204, 204, 204));
-        tblDonMuaVe.setRowHeight(60);
-        tblDonMuaVe.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tblDonMuaVeMouseReleased(evt);
             }
         });
 
@@ -375,7 +417,7 @@ public class DatVe extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRound3Layout.createSequentialGroup()
-                        .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                        .addComponent(lblTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25))
@@ -394,7 +436,7 @@ public class DatVe extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(lblSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
@@ -402,29 +444,69 @@ public class DatVe extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
+        jScrollPane1.setBackground(new java.awt.Color(51, 51, 51));
+        jScrollPane1.setBorder(null);
+
+        tblDonMuaVe.setBackground(new java.awt.Color(51, 51, 51));
+        tblDonMuaVe.setFont(new java.awt.Font("Calibri", 2, 18)); // NOI18N
+        tblDonMuaVe.setForeground(new java.awt.Color(255, 255, 255));
+        tblDonMuaVe.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "", "", "", "", ""
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblDonMuaVe.setFocusable(false);
+        tblDonMuaVe.setGridColor(new java.awt.Color(204, 204, 204));
+        tblDonMuaVe.setRowHeight(60);
+        tblDonMuaVe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblDonMuaVeMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDonMuaVe);
+
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(12, 12, 12)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(tblDonMuaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelRound3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addComponent(tblDonMuaVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addGap(18, 18, 18)
                 .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addGap(12, 12, 12))
         );
 
-        pnlDanhSachVe.setBackground(new java.awt.Color(70, 70, 70));
+        pnlDanhSachVe.setBackground(new java.awt.Color(153, 153, 153));
 
         panelRound2.setPreferredSize(new java.awt.Dimension(780, 519));
         panelRound2.setRoundBottomLeft(30);
@@ -446,18 +528,25 @@ public class DatVe extends javax.swing.JFrame {
         tblChonPhim.setForeground(new java.awt.Color(51, 51, 51));
         tblChonPhim.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "", " ", "", "", ""
+                "", " ", "", "", "", ""
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -475,6 +564,7 @@ public class DatVe extends javax.swing.JFrame {
         scrChonPhim.setViewportView(tblChonPhim);
 
         panelRound18.setBackground(new java.awt.Color(255, 218, 234));
+        panelRound18.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         panelRound18.setRoundTopLeft(30);
         panelRound18.setRoundTopRight(30);
 
@@ -527,35 +617,44 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
 
+        labelRound20.setBackground(new java.awt.Color(255, 218, 234));
+        labelRound20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelRound20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_view_all_32px.png"))); // NOI18N
+        labelRound20.setToolTipText("Xem tất cả lịch chiếu");
+        labelRound20.setRoundTopLeft(50);
+
         javax.swing.GroupLayout panelRound18Layout = new javax.swing.GroupLayout(panelRound18);
         panelRound18.setLayout(panelRound18Layout);
         panelRound18Layout.setHorizontalGroup(
             panelRound18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound18Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(dtcChonNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDongChon, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelRound20, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(dtcChonNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTimPhim, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+                .addComponent(lblDongChon, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTimPhim)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXoaTimKiemNV, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panelRound18Layout.setVerticalGroup(
             panelRound18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnXoaTimKiemNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelRound18Layout.createSequentialGroup()
-                .addComponent(lblDongChon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(dtcChonNgay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(txtTimPhim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound18Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(panelRound18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTimPhim, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDongChon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(labelRound20, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlChonPhimLayout = new javax.swing.GroupLayout(pnlChonPhim);
         pnlChonPhim.setLayout(pnlChonPhimLayout);
         pnlChonPhimLayout.setHorizontalGroup(
             pnlChonPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrChonPhim, javax.swing.GroupLayout.DEFAULT_SIZE, 979, Short.MAX_VALUE)
+            .addComponent(scrChonPhim, javax.swing.GroupLayout.DEFAULT_SIZE, 997, Short.MAX_VALUE)
             .addComponent(panelRound18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlChonPhimLayout.setVerticalGroup(
@@ -563,7 +662,7 @@ public class DatVe extends javax.swing.JFrame {
             .addGroup(pnlChonPhimLayout.createSequentialGroup()
                 .addComponent(panelRound18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(scrChonPhim, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                .addComponent(scrChonPhim, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
         );
 
@@ -1452,7 +1551,7 @@ public class DatVe extends javax.swing.JFrame {
                     .addComponent(HorizoneIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelRound9Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(pnlGhe, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)))
+                        .addComponent(pnlGhe, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(verticalIndex, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1463,7 +1562,7 @@ public class DatVe extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(panelRound9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(verticalIndex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlGhe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlGhe, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(HorizoneIndex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1510,11 +1609,12 @@ public class DatVe extends javax.swing.JFrame {
                 .addGroup(pnlChonGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                     .addComponent(btnQuayLaiChonPhim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(3, 3, 3)
                 .addGroup(pnlChonGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelRound9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlChonGheLayout.createSequentialGroup()
-                        .addGap(0, 367, Short.MAX_VALUE)
+                        .addGap(3, 3, 3)
+                        .addComponent(panelRound9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlChonGheLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlChonGheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1538,7 +1638,6 @@ public class DatVe extends javax.swing.JFrame {
         panelRound8.setBackground(new java.awt.Color(139, 0, 0));
         panelRound8.setRoundBottomLeft(30);
         panelRound8.setRoundTopLeft(30);
-        panelRound8.setRoundTopRight(400);
 
         lblNgayChieuCur.setBackground(new java.awt.Color(139, 0, 0));
         lblNgayChieuCur.setForeground(new java.awt.Color(204, 204, 204));
@@ -1592,13 +1691,13 @@ public class DatVe extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(panelRound8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRound8Layout.createSequentialGroup()
-                        .addComponent(lblNgayChieuCur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNgayChieuCur, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblGioChieuCur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblGioChieuCur, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblSoPhongCur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblSoPhongCur, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblSoGheCur, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                        .addComponent(lblSoGheCur, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
                     .addGroup(panelRound8Layout.createSequentialGroup()
                         .addComponent(txtTenPhimCur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(194, 194, 194)))
@@ -1646,11 +1745,11 @@ public class DatVe extends javax.swing.JFrame {
         pnlDanhSachVeLayout.setVerticalGroup(
             pnlDanhSachVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDanhSachVeLayout.createSequentialGroup()
-                .addGroup(pnlDanhSachVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panelRound8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblThemVe, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlDanhSachVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelRound8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblThemVe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(23, 23, 23)
-                .addComponent(panelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
+                .addComponent(panelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE))
         );
 
         labelRound12.setBackground(new java.awt.Color(51, 51, 51));
@@ -1788,6 +1887,8 @@ public class DatVe extends javax.swing.JFrame {
         });
 
         pnlMoving.setBackground(new java.awt.Color(51, 51, 51));
+        pnlMoving.setRoundTopLeft(20);
+        pnlMoving.setRoundTopRight(20);
         pnlMoving.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 pnlMovingMouseDragged(evt);
@@ -1843,6 +1944,9 @@ public class DatVe extends javax.swing.JFrame {
         lblDangXuat.setRoundTopLeft(50);
         lblDangXuat.setRoundTopRight(50);
         lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblDangXuatMouseEntered(evt);
             }
@@ -1871,7 +1975,7 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
 
-        btnResize.setBackground(new java.awt.Color(255, 255, 0));
+        btnResize.setBackground(new java.awt.Color(255, 255, 204));
         btnResize.setForeground(new java.awt.Color(51, 51, 51));
         btnResize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnResize.setToolTipText("Restore");
@@ -1911,13 +2015,17 @@ public class DatVe extends javax.swing.JFrame {
             }
         });
 
-        labelRound13.setBackground(new java.awt.Color(102, 102, 102));
+        labelRound13.setBackground(new java.awt.Color(51, 51, 51));
         labelRound13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRound13.setText("logo");
+        labelRound13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cinesys_round_logo_24px.png"))); // NOI18N
         labelRound13.setRoundBottomLeft(50);
         labelRound13.setRoundBottomRight(50);
         labelRound13.setRoundTopLeft(50);
         labelRound13.setRoundTopRight(50);
+
+        lblSocketState.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSocketState.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_disconnected_32px.png"))); // NOI18N
+        lblSocketState.setToolTipText("Disconnected");
 
         javax.swing.GroupLayout pnlMovingLayout = new javax.swing.GroupLayout(pnlMoving);
         pnlMoving.setLayout(pnlMovingLayout);
@@ -1936,8 +2044,10 @@ public class DatVe extends javax.swing.JFrame {
                 .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 947, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblSocketState, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -1945,66 +2055,84 @@ public class DatVe extends javax.swing.JFrame {
         pnlMovingLayout.setVerticalGroup(
             pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMovingLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlMovingLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMovingLayout.createSequentialGroup()
+                    .addComponent(lblSocketState, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlMovingLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout panelRound10Layout = new javax.swing.GroupLayout(panelRound10);
+        panelRound10.setLayout(panelRound10Layout);
+        panelRound10Layout.setHorizontalGroup(
+            panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound10Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRound10Layout.createSequentialGroup()
+                        .addGroup(panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAbout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAction, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                            .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
-                        .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12))
+                        .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        panelRound10Layout.setVerticalGroup(
+            panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound10Layout.createSequentialGroup()
+                .addComponent(pnlMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelRound10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelRound10Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addComponent(btnAction, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addGap(43, 43, 43))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                    .addComponent(btnAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAbout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                    .addComponent(btnAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(pnlMoving, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelRound10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(btnAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(41, 41, 41)
-                .addComponent(btnAction, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(40, 40, 40)
-                .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addGap(30, 30, 30))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlMoving, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(panelRound10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -2013,7 +2141,6 @@ public class DatVe extends javax.swing.JFrame {
 
     private void tblChonPhimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChonPhimMouseClicked
         int phim = tblChonPhim.getSelectedRow();
-        lblDongChon.setText("Dòng " + (phim + 1));
         if (evt.getClickCount() == 2) {
             //luu cac gia tri
             maLichChieuCur = dsMaLichChieu.get(phim)[0];
@@ -2023,7 +2150,7 @@ public class DatVe extends javax.swing.JFrame {
             lblGioChieuCur.setText((gioChieuCur = tblChonPhim.getValueAt(phim, 3).toString().replace(":00", "")) + ":00");
             lblSoPhongCur.setText(soPhongCur = tblChonPhim.getValueAt(phim, 4).toString().replace("Phòng ", ""));
             lblAnhPhimCur.setIcon(XImage.resizeImg(new ImageIcon(getClass().getResource("/images/" + anhCur)), lblAnhPhimCur.getWidth(), lblAnhPhimCur.getHeight()));
-
+            
             pnlChonPhim.setVisible(false);
             pnlChonGhe.setVisible(true);
             //set trang thai cac ghe
@@ -2032,10 +2159,10 @@ public class DatVe extends javax.swing.JFrame {
     }//GEN-LAST:event_tblChonPhimMouseClicked
 
     private void dtcChonNgayPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dtcChonNgayPropertyChange
-        if (!batdau) {
-            doDuLieuPhim();
-        } else {
+        if (batdau) {
             batdau = false;
+        } else {
+            doDuLieuPhim();
         }
     }//GEN-LAST:event_dtcChonNgayPropertyChange
 
@@ -2511,9 +2638,9 @@ public class DatVe extends javax.swing.JFrame {
     private void btnMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseExited
         btnMinimize.setIcon(null);
     }//GEN-LAST:event_btnMinimizeMouseExited
-
+    
     int chucnang = 2;
-
+    
     void stateFunction() {
         if (chucnang == 1) {
             btnAccount.setIcon(new ImageIcon(getClass().getResource("/icons/" + "icons8_account_32px_1.png")));
@@ -2560,7 +2687,14 @@ public class DatVe extends javax.swing.JFrame {
     private void btnAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAboutMouseClicked
         chucnang = 3;
         stateFunction();
+
     }//GEN-LAST:event_btnAboutMouseClicked
+
+    private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
+        this.dispose();
+        Auth.clear();
+        new DangNhap().setVisible(true);
+    }//GEN-LAST:event_lblDangXuatMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2660,6 +2794,7 @@ public class DatVe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private ui.LabelRound labelRound1;
     private ui.LabelRound labelRound10;
     private ui.LabelRound labelRound11;
@@ -2672,6 +2807,7 @@ public class DatVe extends javax.swing.JFrame {
     private ui.LabelRound labelRound18;
     private ui.LabelRound labelRound19;
     private ui.LabelRound labelRound2;
+    private ui.LabelRound labelRound20;
     private ui.LabelRound labelRound3;
     private ui.LabelRound labelRound4;
     private ui.LabelRound labelRound5;
@@ -2690,12 +2826,14 @@ public class DatVe extends javax.swing.JFrame {
     private ui.LabelRound lblSoGheCur;
     private ui.LabelRound lblSoLuong;
     private ui.LabelRound lblSoPhongCur;
+    private javax.swing.JLabel lblSocketState;
     private ui.LabelRound lblThanhToan;
     private ui.LabelRound lblThemVe;
     private ui.LabelRound lblTongTien;
     private javax.swing.JMenuItem mnChiTiet;
     private javax.swing.JMenuItem mnXoa;
     private ui.PanelRound panelRound1;
+    private ui.PanelRound panelRound10;
     private ui.PanelRound panelRound18;
     private ui.PanelRound panelRound2;
     private ui.PanelRound panelRound3;
@@ -2721,7 +2859,7 @@ public class DatVe extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private ComponentResizer resize;
-
+    
     public void initResize() {
         resize = new ComponentResizer();
         resize.setSnapSize(new Dimension(10, 10));
@@ -2732,7 +2870,7 @@ public class DatVe extends javax.swing.JFrame {
     VeDao daov = new VeDao();
     List<Object[]> listVeDaDatTrongNgay;
     List<Object[]> listDsPhimChieuTrongNgay;
-
+    
     void doDuLieuPhim() {
         anhCur = null;
         lblAnhPhimCur.setIcon(null);
@@ -2757,15 +2895,18 @@ public class DatVe extends javax.swing.JFrame {
             }
         };
         dtm.setRowCount(0);
-
+        
         int STT = 0;
+        dsMaLichChieu = new ArrayList();
         for (Object[] ph : listDsPhimChieuTrongNgay) {
             dsMaLichChieu.add(new String[]{ph[4] + "", ph[0].toString()});
 //            System.out.println(Arrays.toString(ph));
             STT++;
             ImageIcon Hinh = null;
             if (ph[0] != null) {
-                Hinh = XImage.resizeImg(new ImageIcon(getClass().getResource("/images/" + ph[0])), 100, tblChonPhim.getRowHeight());
+                System.out.println(ph[0]);
+                ImageIcon im = new ImageIcon(getClass().getResource("/images/" + ph[0]));
+                Hinh = XImage.resizeImg(im, 200, tblChonPhim.getRowHeight());
             }
             Object[] row = {
                 STT,
@@ -2777,11 +2918,13 @@ public class DatVe extends javax.swing.JFrame {
             dtm.addRow(row);
         }
         tblChonPhim.setModel(dtm);
+        lblDongChon.setText(tblChonPhim.getRowCount() + " dòng");
         //chinh do rong cot bang phim
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(JLabel.CENTER);
         render.setBackground(new Color(255, 218, 234));
-
+        render.setFont(new Font("Arial", Font.ITALIC, 25));
+        
         TableColumnModel model = tblChonPhim.getColumnModel();
         model.getColumn(0).setMaxWidth(40);
         model.getColumn(1).setMaxWidth(200);
@@ -2789,17 +2932,17 @@ public class DatVe extends javax.swing.JFrame {
         model.getColumn(3).setMaxWidth(100);
         model.getColumn(4).setMaxWidth(200);
         model.getColumn(4).setMinWidth(200);
-
+        
         model.getColumn(0).setCellRenderer(render);
         model.getColumn(3).setCellRenderer(render);
         model.getColumn(4).setCellRenderer(render);
     }
-
+    
     void timPhimTrongNgay() {
         DefaultTableModel model = (DefaultTableModel) tblChonPhim.getModel();
         model.setRowCount(0);
         dsMaLichChieu = new ArrayList();
-
+        
         String keyWord = txtTimPhim.getText();
         int STT = 0;
         for (Object[] ob : listDsPhimChieuTrongNgay) {
@@ -2809,7 +2952,7 @@ public class DatVe extends javax.swing.JFrame {
                 STT++;
                 ImageIcon Hinh = null;
                 if (ob[0] != null) {
-                    Hinh = XImage.resizeImg(new ImageIcon(getClass().getResource("/images/" + ob[0])), 100, tblChonPhim.getRowHeight());
+                    Hinh = XImage.resizeImg(new ImageIcon(getClass().getResource("/images/" + ob[0])), 200, tblChonPhim.getRowHeight());
                 }
                 model.addRow(new Object[]{
                     STT,
@@ -2820,8 +2963,9 @@ public class DatVe extends javax.swing.JFrame {
                 });
             }
         }
+        lblDongChon.setText(tblChonPhim.getRowCount() + " dòng");
     }
-
+    
     Color danhDauGhe(String ghe) {
         Color color = trong;
 
@@ -2829,7 +2973,7 @@ public class DatVe extends javax.swing.JFrame {
         listVeDaDatTrongNgay = daov.getDsGheDaDatTrongNgay(XDate.toString(dtcChonNgay.getDate(), "yyyy-MM-dd"), soPhongCur, Integer.parseInt(gioChieuCur));
 //        System.out.println(ngayChieuCur + " " + soPhongCur + " " + gioChieuCur);
         for (Object[] ob : listVeDaDatTrongNgay) {
-            System.out.println(ob[0]);
+//            System.out.println(ob[0]);
             if (ob[0].equals(ghe)) {
                 color = this.daDat;
                 return color;
@@ -2845,12 +2989,12 @@ public class DatVe extends javax.swing.JFrame {
         }
         return color;
     }
-
+    
     boolean coGhe(JButton button) {
         GheDao daogh = new GheDao();
         return daogh.selectById(button.getText(), soPhongCur) != null;
     }
-
+    
     void setTrangThaiGhe() {
         jButton1.setBackground(danhDauGhe("A1"));
         jButton2.setBackground(danhDauGhe("A2"));
@@ -2858,94 +3002,94 @@ public class DatVe extends javax.swing.JFrame {
         jButton4.setBackground(danhDauGhe("A4"));
         jButton5.setBackground(danhDauGhe("A5"));
         jButton6.setBackground(danhDauGhe("A6"));
-
+        
         jButton7.setBackground(danhDauGhe("B1"));
         jButton8.setBackground(danhDauGhe("B2"));
         jButton9.setBackground(danhDauGhe("B3"));
         jButton10.setBackground(danhDauGhe("B4"));
         jButton11.setBackground(danhDauGhe("B5"));
         jButton12.setBackground(danhDauGhe("B6"));
-
+        
         jButton13.setBackground(danhDauGhe("C1"));
         jButton14.setBackground(danhDauGhe("C2"));
         jButton15.setBackground(danhDauGhe("C3"));
         jButton16.setBackground(danhDauGhe("C4"));
         jButton17.setBackground(danhDauGhe("C5"));
         jButton18.setBackground(danhDauGhe("C6"));
-
+        
         jButton19.setBackground(danhDauGhe("D1"));
         jButton20.setBackground(danhDauGhe("D2"));
         jButton21.setBackground(danhDauGhe("D3"));
         jButton22.setBackground(danhDauGhe("D4"));
         jButton23.setBackground(danhDauGhe("D5"));
         jButton24.setBackground(danhDauGhe("D6"));
-
+        
         jButton25.setBackground(danhDauGhe("E1"));
         jButton26.setBackground(danhDauGhe("E2"));
         jButton27.setBackground(danhDauGhe("E3"));
         jButton28.setBackground(danhDauGhe("E4"));
         jButton29.setBackground(danhDauGhe("E5"));
         jButton30.setBackground(danhDauGhe("E6"));
-
+        
         jButton31.setBackground(danhDauGhe("F1"));
         jButton32.setBackground(danhDauGhe("F2"));
         jButton33.setBackground(danhDauGhe("F3"));
         jButton34.setBackground(danhDauGhe("F4"));
         jButton35.setBackground(danhDauGhe("F5"));
         jButton36.setBackground(danhDauGhe("F6"));
-
+        
         jButton37.setBackground(danhDauGhe("G1&G2"));
         jButton38.setBackground(danhDauGhe("G3&G4"));
         jButton39.setBackground(danhDauGhe("G5&G6"));
-
+        
         jButton1.setVisible(coGhe(jButton1));
         jButton2.setVisible(coGhe(jButton2));
         jButton3.setVisible(coGhe(jButton3));
         jButton4.setVisible(coGhe(jButton4));
         jButton5.setVisible(coGhe(jButton5));
         jButton6.setVisible(coGhe(jButton6));
-
+        
         jButton7.setVisible(coGhe(jButton7));
         jButton8.setVisible(coGhe(jButton8));
         jButton9.setVisible(coGhe(jButton9));
         jButton10.setVisible(coGhe(jButton10));
         jButton11.setVisible(coGhe(jButton11));
         jButton12.setVisible(coGhe(jButton12));
-
+        
         jButton13.setVisible(coGhe(jButton13));
         jButton14.setVisible(coGhe(jButton14));
         jButton15.setVisible(coGhe(jButton15));
         jButton16.setVisible(coGhe(jButton16));
         jButton17.setVisible(coGhe(jButton17));
         jButton18.setVisible(coGhe(jButton18));
-
+        
         jButton19.setVisible(coGhe(jButton19));
         jButton20.setVisible(coGhe(jButton20));
         jButton21.setVisible(coGhe(jButton21));
         jButton22.setVisible(coGhe(jButton22));
         jButton23.setVisible(coGhe(jButton23));
         jButton24.setVisible(coGhe(jButton24));
-
+        
         jButton25.setVisible(coGhe(jButton25));
         jButton26.setVisible(coGhe(jButton26));
         jButton27.setVisible(coGhe(jButton27));
         jButton28.setVisible(coGhe(jButton28));
         jButton29.setVisible(coGhe(jButton29));
         jButton30.setVisible(coGhe(jButton30));
-
+        
         jButton31.setVisible(coGhe(jButton31));
         jButton32.setVisible(coGhe(jButton32));
         jButton33.setVisible(coGhe(jButton33));
         jButton34.setVisible(coGhe(jButton34));
         jButton35.setVisible(coGhe(jButton35));
         jButton36.setVisible(coGhe(jButton36));
-
+        
         jButton37.setVisible(coGhe(jButton37));
         jButton38.setVisible(coGhe(jButton38));
         jButton39.setVisible(coGhe(jButton39));
 //        System.out.println("da chay hamf set");
     }
-
+    
     void chonGhe(int c, JButton button) {
         //nut mat focus
         if (c == 1 && button.getBackground() != daDat && button.getBackground() != coTrongDon) {
@@ -2966,7 +3110,7 @@ public class DatVe extends javax.swing.JFrame {
             lblSoGheCur.setText("<Trống>");
         }
     }
-
+    
     void refreshDonMuaVe() {
         //hien thi len bang don mua ve
         fillTableDonMuaVe();
@@ -2977,11 +3121,11 @@ public class DatVe extends javax.swing.JFrame {
         //set trang thai ghe
         setTrangThaiGhe();
     }
-
+    
     void resetDonMuaVe() {
-
+        
     }
-
+    
     void xoaVe() {
         int[] ve = tblDonMuaVe.getSelectedRows();
         for (int i = ve.length - 1; i > -1; i--) {
@@ -2994,7 +3138,7 @@ public class DatVe extends javax.swing.JFrame {
         }
         refreshDonMuaVe();
     }
-
+    
     void themVe() {
         //luu vao danh sach tam
         dsDatVe.add(new Object[]{
@@ -3011,24 +3155,24 @@ public class DatVe extends javax.swing.JFrame {
         );
         refreshDonMuaVe();
     }
-
+    
     void fillTableDonMuaVe() {
         DefaultTableModel model = (DefaultTableModel) tblDonMuaVe.getModel();
         model.setRowCount(0);
         for (Object[] objects : dsDatVe) {
             model.addRow(
-                    new Object[]{objects[6], objects[2], objects[3], objects[1]}
+                    new Object[]{objects[6], objects[2], objects[3], objects[7]}
             );
         }
     }
-
+    
     void tinhTongTien() {
         tongTien = 0;
         for (Object[] objects : dsDatVe) {
             tongTien += Integer.parseInt(objects[5].toString().substring(0, objects[5].toString().length() - 2));
         }
     }
-
+    
     void luuVe() {
         int soVe = 0;
         for (Object[] objects : dsDatVe) {
@@ -3040,15 +3184,45 @@ public class DatVe extends javax.swing.JFrame {
             daov.insert(ve);
             //tao ma vach
             String maVach = daov.getMaVe(objects[2], objects[3], objects[4]);
-            taoMaVach(maVach, maVach);
+            String pathMaVach = (getClass().getResource("/BarcodeImg/") + maVach + ".png").substring(6);
+            System.out.println(pathMaVach);
+            taoMaVach(pathMaVach, maVach);
             ++soVe;
+            
+            try {
+                Hashtable map = new Hashtable();
+                String path = getClass().getResource("/ui/report/VeXemPhim.jrxml").toString().replace("file:/", "");
+                JasperReport rpt = JasperCompileManager.compileReport(path);
+                map.put("mave", maVach);
+                map.put("pathBarCode", pathMaVach);
+                map.put("pathImg", getClass().getResource("/icons/cinesys_round_logo.png").toString());
+                Connection conn = DriverManager.getConnection(XJdbc.getDburl(), XJdbc.getUsername(), XJdbc.getPassword());
+                JasperPrint p = JasperFillManager.fillReport(rpt, map, conn);
+                //Xem truoc khi in
+//                JasperViewer.viewReport(p, false);
+                //in hoa don
+                JasperPrintManager.printReport(p, false);
+            } catch (JRException | SQLException ex) {
+                ex.printStackTrace();
+            }
         }
-        MsgBox.alert(this, "Thêm " + soVe + " vé mới thành công!");
+        MsgBox.alert(this, "Thanh toán " + soVe + " vé mới thành công!");
+        
+        if (Auth.connectSocket) {
+            try {
+                PrintStream ps = new PrintStream(clientSocket.getOutputStream());
+                new DataOutputStream(clientSocket.getOutputStream()).writeUTF(Auth.user.getHoTen() + " vửa bán " + soVe + " vé mới thành công!");
+//                ps.println(Auth.user.getHoTen() + " vửa bán " + soVe + " vé mới thành công!");
+                System.out.println("da gui tin hieu");
+            } catch (IOException ex) {
+                System.out.println("loi duong truyen");
+                ex.printStackTrace();
+            }
+        }
     }
-
-    void taoMaVach(String imgName, String codeString) {
+    
+    void taoMaVach(String path, String codeString) {
         try {
-            String path = (getClass().getResource("/BarcodeImg/") + imgName + ".png").substring(6);
             Code128Writer writer = new Code128Writer();
             BitMatrix matrix = writer.encode(codeString, BarcodeFormat.CODE_128, 1000, 300);
             MatrixToImageWriter.writeToPath(matrix, "png", Paths.get(path));
@@ -3058,4 +3232,5 @@ public class DatVe extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
+    
 }

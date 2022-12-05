@@ -48,16 +48,12 @@ public class BanHang extends javax.swing.JFrame {
 
     public BanHang() {
         initComponents();
-        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
         this.setLocationRelativeTo(null);
-
         mKDatabase();
-
     }
 
     void mKDatabase() {
-        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!")) ;
-
+        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!"));
         doDanhSachSanPham();
         taoHoaDon();
 
@@ -457,14 +453,14 @@ public class BanHang extends javax.swing.JFrame {
 
     }
     static float tongCong;
-    
+
     void tinhTienThua() {
-      
+
         float TienHoaDon = Float.parseFloat(txtTongTien.getText());
-        
+
         float TienKhachTra = Float.parseFloat(txtKhachTra.getText());
         float TienThua = TienKhachTra - TienHoaDon;
-        
+
         if (TienThua < 0) {
             MsgBox.alert(this, "Kiểm tra lại tiền khách trả.");
             txtKhachTra.requestFocus();
@@ -475,9 +471,9 @@ public class BanHang extends javax.swing.JFrame {
         if (txtTongTien.getText().isEmpty()) {
             MsgBox.alert(this, "Không có giá trị");
         }
-        tongCong = TienHoaDon   ;
+        tongCong = TienHoaDon;
     }
-    
+
     void demsoluong() {
         int demSoLuong = 0;
         float tongThanhTien = 0;
@@ -595,20 +591,21 @@ public class BanHang extends javax.swing.JFrame {
     /*
      * Hàm đưa hoá đơn chi tiết lên database
      */
-    
+
     static int MaHoaDon;
     static int Soluong;
+
     void themHDCT() throws SQLException {
         // get mã hoá đơn vừa đưa lên database (tức mã mới nhất)
-        int dem = HDdao.demHoaDon();
-        
-        MaHoaDon = dem;
+        int mahdMoi = HDdao.maHoaDon();
+
+        MaHoaDon = mahdMoi;
         for (ThucDon SP : Auth.HoaDonGiaoDich.getDSSP().keySet()) {
             HoaDonCT HDCT = new HoaDonCT();
-            HDCT.setMaHD(dem);
+            HDCT.setMaHD(mahdMoi);
             HDCT.setMaMon(SP.getMaMon());
             HDCT.setSoLuong(Auth.HoaDonGiaoDich.getDSSP().get(SP));
-            
+
             HDCTdao.themHDCT(HDCT);
         }
     }
@@ -632,7 +629,7 @@ public class BanHang extends javax.swing.JFrame {
                 Auth.HoaDonGiaoDich = null;
                 //new BanHang().setVisible(true);
             } catch (Exception e) {
-                System.out.println(e.toString());
+                e.printStackTrace();
             }
         } else {
             MsgBox.alert(this, "Kiểm tra lại các thông tin");
@@ -641,9 +638,9 @@ public class BanHang extends javax.swing.JFrame {
 
     void inHoaDon() {
         try {
-            
+
             HashMap HoaDon = new HashMap();
-            String path = getClass().getResource("/Report/HoaDon.jrxml").toString().replace("file:/", "");
+            String path = getClass().getResource("/ui/report/HoaDon.jrxml").toString().replace("file:/", "");
             JasperReport rpt = JasperCompileManager.compileReport(path);
             HoaDon.put("MaHD", MaHoaDon);
             HoaDon.put("TongCong", tongCong);
@@ -652,7 +649,7 @@ public class BanHang extends javax.swing.JFrame {
             //Xem truoc khi in
             System.out.println(MaHoaDon);
             System.out.println(tongCong);
-          
+
             JasperViewer.viewReport(p, false);
             //in hoa don
             JasperPrintManager.printReport(p, false);

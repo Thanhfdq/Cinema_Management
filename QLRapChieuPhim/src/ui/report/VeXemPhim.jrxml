@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="706" pageHeight="290" orientation="Landscape" columnWidth="692" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="6eb6971c-9a51-403f-a158-c822742682e0">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="mave" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pathBarCode" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pathImg" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT      dbo.Ve.MaGhe, dbo.LichChieu.MaPhong, dbo.LichChieu.NgayChieu, dbo.LichChieu.GioChieu, dbo.Ghe.Gia, dbo.Phim.TenPhim
+FROM         dbo.Ghe INNER JOIN
+                   dbo.LichChieu ON dbo.Ghe.MaPhong = dbo.LichChieu.MaPhong INNER JOIN
+                   dbo.Phim ON dbo.LichChieu.MaPhim = dbo.Phim.MaPhim INNER JOIN
+                   dbo.PhongChieu ON dbo.Ghe.MaPhong = dbo.PhongChieu.MaPhong AND dbo.LichChieu.MaPhong = dbo.PhongChieu.MaPhong INNER JOIN
+                   dbo.Ve ON dbo.Ghe.MaGhe = dbo.Ve.MaGhe AND dbo.Ghe.MaPhong = dbo.Ve.MaPhong AND dbo.LichChieu.MaLichChieu = dbo.Ve.MaLichChieu
+where mave = $P{mave}]]>
+	</queryString>
+	<field name="MaGhe" class="java.lang.String"/>
+	<field name="MaPhong" class="java.lang.String"/>
+	<field name="NgayChieu" class="java.lang.String"/>
+	<field name="GioChieu" class="java.lang.Integer"/>
+	<field name="Gia" class="java.lang.Double"/>
+	<field name="TenPhim" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="90" y="0" width="329" height="67" forecolor="#FF0000" uuid="27e699f1-6829-4264-9c38-23d9a9ce0eb6"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="48" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Cinesys 3D]]></text>
+			</staticText>
+			<line>
+				<reportElement x="419" y="0" width="1" height="67" uuid="c0d2efe3-61fb-4885-abc2-3358436071dc"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="420" y="0" width="272" height="38" uuid="e8a4c5ff-3291-4b54-b7b1-538c1b96e430"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[CINESYS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="438" y="38" width="254" height="29" uuid="0f8ed6c0-77e0-470f-babc-929298cc9122"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Công viên phần mềm, Toà nhà Innovation lô 24, Quang Trung, Quận 12, Thành phố Hồ Chí Minh]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="692" height="1" uuid="95602429-3102-4fde-8742-d25cd793b8eb"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="18" y="3" width="72" height="64" uuid="5e6adde9-4a69-4ec5-9b97-4238d0234f22"/>
+				<imageExpression><![CDATA[$P{pathImg}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="127">
+			<staticText>
+				<reportElement x="102" y="84" width="98" height="42" uuid="59213bac-79ea-4da2-99df-82ae10d90c56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[THEATER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="84" width="56" height="42" uuid="8d7f09af-6023-442f-94df-d65ed5496f24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[SEAT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="84" width="62" height="42" uuid="605e2ed3-e008-45b9-ad9a-57791c113d21"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MaPhong}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="84" width="101" height="42" uuid="a41ace4a-6f5d-4b39-973e-dfea83c7eb5c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MaGhe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="318" y="0" width="39" height="42" uuid="18be77f1-c954-4b1c-9abf-7438b21dd154"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GioChieu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="84" width="116" height="42" uuid="d57c8619-0afe-4dc0-b5c0-3b1026989a3b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Gia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="42" width="254" height="53" uuid="4dd09f2c-03b9-4745-a349-ef8d918b8997"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TenPhim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="9" y="42" width="410" height="42" uuid="31831553-b8b8-4eb9-8830-1a69ce69b934"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TenPhim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="568" y="0" width="49" height="42" uuid="9cbaed02-cbfc-406e-8a0a-0753b844d32a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{GioChieu}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="419" y="0" width="1" height="126" uuid="b5670147-bb07-4b1a-875e-fff279dc9ec2"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="66" y="0" width="177" height="42" uuid="fe3090b4-50f0-4ee4-9a72-5fad775b1902"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NgayChieu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="0" width="130" height="42" uuid="9e7fa0ca-81b2-4ca0-8e93-d205fcf5aae1"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NgayChieu}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="243" y="0" width="75" height="42" uuid="21ec286e-8665-4e91-85dd-0b3aa09c0c92"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[TIME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="357" y="0" width="62" height="42" uuid="95e0d15c-bbbb-4071-810e-012328b59497"/>
+				<textElement verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="65" height="42" uuid="3798f849-c71e-4ea2-ad0a-3c087c53ad30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[DATE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="617" y="0" width="39" height="42" uuid="fb2360ac-3c0b-4066-b052-26ec96dbcee6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:00]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="95" width="130" height="32" uuid="0d28cfc0-3ec2-44d4-9ed1-21c91b2ec7ae"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Gia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="568" y="95" width="124" height="32" uuid="8acc43bc-a475-41ba-9e0c-04c95bb3134c"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MaPhong}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="75">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="262" y="24" width="157" height="50" uuid="85f53344-994e-4cfe-8515-2a49afe10ed9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="419" y="0" width="1" height="75" uuid="20381b70-b3ba-4bf0-a44b-fbfa013b23c4"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="9" y="0" width="252" height="50" uuid="7a5eb47a-96f5-49cf-ae85-9d8154c5320f"/>
+				<imageExpression><![CDATA[$P{pathBarCode}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="18" y="50" width="243" height="14" uuid="0b019b42-8250-4f72-8474-24a80d17af35"/>
+				<textElement verticalAlignment="Top">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mave}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="0" width="130" height="32" uuid="749aecce-a8bc-44b7-9aca-c00b6fe8e3f7"/>
+				<textElement verticalAlignment="Top">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mave}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="438" y="32" width="254" height="43" uuid="ffe9ec30-8a54-47b8-8788-e8e6c5314a9d"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="74" width="692" height="1" uuid="f872ae05-aabe-4c22-bc3f-8971a34a07ee"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="568" y="0" width="124" height="33" uuid="9a356dcc-b166-41ec-ad39-0ccf66aac2f6"/>
+				<textElement>
+					<font size="26" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MaGhe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -5,20 +5,11 @@
  */
 package until;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 /**
  *
@@ -26,8 +17,9 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
  */
 public class XJdbc {
 
+    private static String host = "localhost";
     private static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String dburl = "jdbc:sqlserver://localhost;database=Duan1_QLRP";
+    private static String dburl = "jdbc:sqlserver://" + host + ";database=Duan1_QLRP";
     private static String username = "sa";
 //<<<<<<< Updated upstream
 
@@ -38,6 +30,16 @@ public class XJdbc {
 
 
 
+    public static String getHost() {
+        return host;
+    }
+
+    public static void setHost(String host) {
+        XJdbc.host = host;
+        dburl = "jdbc:sqlserver://" + host + ";database=Duan1_QLRP";
+    }
+
+    
     public static String getDriver() {
         return driver;
     }
@@ -58,7 +60,6 @@ public class XJdbc {
         XJdbc.password = password;
     }
 
-    
     /*
      * Nạp driver
      */
@@ -84,8 +85,6 @@ public class XJdbc {
         return pstmt;
     }
 
-    
-     
     public static void update(String sql, Object... args) {
         try {
             PreparedStatement stmt = XJdbc.getStmt(sql, args);
@@ -107,7 +106,7 @@ public class XJdbc {
      * gọi thủ tục lưu
      * @param args là danh sách các giá trị được cung cấp cho các tham số trong
      * câu lệnh sql
-     * @return 
+     * @return
      */
     public static ResultSet query(String sql, Object... args) {
         try {

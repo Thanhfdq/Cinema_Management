@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import until.MsgBox;
+import until.XJdbc;
 
 /**
  *
@@ -144,7 +145,7 @@ public class QLPhim extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtQuocGia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                             .addComponent(txtThoiluong))
-                        .addContainerGap(13, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(177, 177, 177)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -861,6 +862,7 @@ public class QLPhim extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void init() {
+        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu!!"));
         fillTablePhim();
         fillTableLichChieu();
         fillCboMaPhong();

@@ -7,30 +7,34 @@ package ui;
 
 import dao.NhanVienDAO;
 import entity.NhanVien;
+import java.awt.Color;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import until.Auth;
 import until.MsgBox;
 import until.XImage;
 import until.XJdbc;
-
-
-
 
 /**
  *
  * @author quoct
  */
 public class DangNhap extends javax.swing.JFrame {
+
     NhanVien nv = null;
+
     /**
      * Creates new form DangNhap
      */
     public DangNhap() {
         initComponents();
         init();
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,40 +45,35 @@ public class DangNhap extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        lblName = new javax.swing.JLabel();
-        lblPass = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
-        btnLogin = new javax.swing.JButton();
+        socket = new javax.swing.ButtonGroup();
+        panelRound1 = new ui.PanelRound();
+        txtName = new ui.field.TextField();
         btnQuenPass = new javax.swing.JButton();
-        lblTitle = new javax.swing.JLabel();
-        btnShowPass = new javax.swing.JToggleButton();
-        txtPass = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        btnQR = new ui.LabelRound();
+        txtPass = new ui.field.PasswordField();
         jLabel1 = new javax.swing.JLabel();
+        txtIP = new javax.swing.JTextField();
+        cboPort = new javax.swing.JComboBox<>();
+        rdoServer = new javax.swing.JRadioButton();
+        rdoClient = new javax.swing.JRadioButton();
+        lblClientHint = new javax.swing.JLabel();
+        btnConnect = new javax.swing.JToggleButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        labelRound2 = new ui.LabelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign in");
+        setUndecorated(true);
 
-        lblName.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        lblName.setText("UserName:");
+        panelRound1.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound1.setRoundBottomLeft(20);
+        panelRound1.setRoundBottomRight(20);
+        panelRound1.setRoundTopLeft(20);
+        panelRound1.setRoundTopRight(20);
 
-        lblPass.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        lblPass.setText("Password:");
-
-        txtName.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
-
-        btnLogin.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
-        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Key.png"))); // NOI18N
-        btnLogin.setText("LOGIN");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
+        txtName.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtName.setLabelText("User name");
 
         btnQuenPass.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         btnQuenPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Exit.png"))); // NOI18N
@@ -85,19 +84,153 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
-        lblTitle.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("HỆ THỐNG QUẢN LÝ RẠP CHIẾU PHIM");
-
-        btnShowPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/show.png"))); // NOI18N
-        btnShowPass.setText("Show");
-        btnShowPass.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setBackground(new java.awt.Color(153, 51, 0));
+        btnLogin.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogin.setText("LOGIN");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowPassActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/DANHNHAP.png"))); // NOI18N
+        btnQR.setBackground(new java.awt.Color(102, 102, 102));
+        btnQR.setForeground(new java.awt.Color(204, 204, 204));
+        btnQR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_Qr_Code_32px.png"))); // NOI18N
+        btnQR.setText("Login by QR code");
+        btnQR.setRoundBottomLeft(20);
+        btnQR.setRoundBottomRight(20);
+        btnQR.setRoundTopLeft(20);
+        btnQR.setRoundTopRight(20);
+        btnQR.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnQRMouseClicked(evt);
+            }
+        });
+
+        txtPass.setEchoChar('\u25cf');
+        txtPass.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        txtPass.setLabelText("Password");
+        txtPass.setShowAndHide(true);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cinesys_round_logo.png"))); // NOI18N
+
+        txtIP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtIP.setEnabled(false);
+        txtIP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtIPKeyReleased(evt);
+            }
+        });
+
+        cboPort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6789", "8888" }));
+        cboPort.setEnabled(false);
+
+        socket.add(rdoServer);
+        rdoServer.setText("Server");
+        rdoServer.setEnabled(false);
+        rdoServer.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoServerItemStateChanged(evt);
+            }
+        });
+
+        socket.add(rdoClient);
+        rdoClient.setText("Client");
+        rdoClient.setEnabled(false);
+
+        lblClientHint.setForeground(new java.awt.Color(255, 0, 0));
+        lblClientHint.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblClientHint.setText("Đảm bảo server đã được mở trước khi kết nối");
+
+        btnConnect.setText("Không kết nối");
+        btnConnect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConnectActionPerformed(evt);
+            }
+        });
+
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
+        panelRound1.setLayout(panelRound1Layout);
+        panelRound1Layout.setHorizontalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelRound1Layout.createSequentialGroup()
+                                .addComponent(rdoServer, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rdoClient, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                            .addComponent(txtIP)
+                            .addComponent(cboPort, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnConnect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnQuenPass)
+                        .addGap(133, 133, 133)
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnQR, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                            .addComponent(lblClientHint, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRound1Layout.setVerticalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel1)
+                .addGap(36, 36, 36)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
+                            .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(rdoServer)
+                                .addComponent(rdoClient))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cboPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnConnect))))
+                .addGap(43, 43, 43)
+                .addComponent(btnQR, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(btnLogin)
+                .addGap(8, 8, 8)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnQuenPass)
+                    .addComponent(lblClientHint, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        labelRound2.setBackground(new java.awt.Color(153, 51, 0));
+        labelRound2.setForeground(new java.awt.Color(255, 255, 255));
+        labelRound2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelRound2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Logo.png"))); // NOI18N
+        labelRound2.setText("Cinesys Sign in");
+        labelRound2.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        labelRound2.setRoundBottomLeft(20);
+        labelRound2.setRoundBottomRight(20);
+        labelRound2.setRoundTopLeft(20);
+        labelRound2.setRoundTopRight(20);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,51 +238,19 @@ public class DangNhap extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblTitle, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblName)
-                                .addComponent(lblPass))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(btnLogin)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnQuenPass)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnShowPass)
-                                .addGap(0, 76, Short.MAX_VALUE)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(lblTitle)
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPass, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnShowPass))
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnQuenPass)
-                            .addComponent(btnLogin)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(labelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -162,22 +263,94 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void btnQuenPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuenPassActionPerformed
         // TODO add your handling code here:
-       ketThuc();
+        ketThuc();
     }//GEN-LAST:event_btnQuenPassActionPerformed
 
-    private void btnShowPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowPassActionPerformed
-        if (txtPass.getEchoChar() == (char) 0) {
-            btnShowPass.setText("Show");
-            txtPass.setEchoChar('\u25cf');
-        } else {
-            btnShowPass.setText("Hide");
-            txtPass.setEchoChar((char) 0);
+    private void btnQRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQRMouseClicked
+        if (btnQR.isEnabled()) {
+            //set up ket noi
+            if (btnConnect.isSelected()) {
+                Auth.connectSocket = true;
+                Auth.ip = txtIP.getText();
+                Auth.port = Integer.parseInt(cboPort.getSelectedItem() + "");
+            }
+            new ScanQRJDialog(this, true).setVisible(true);
+            if (Auth.user != null) {
+                if (Auth.user.getChucVu() == 1) {
+                    this.dispose();
+                    new QuanLy().setVisible(rootPaneCheckingEnabled);
+                }
+                if (Auth.user.getChucVu() == 2) {
+                    this.dispose();
+                    new BanHang().setVisible(rootPaneCheckingEnabled);
+                }
+                if (Auth.user.getChucVu() == 3) {
+                    this.dispose();
+                    new DatVe().setVisible(rootPaneCheckingEnabled);
+                }
+                if (Auth.user.getChucVu() == 4) {
+                    this.dispose();
+                    new QLPhim().setVisible(rootPaneCheckingEnabled);
+                }
+                if (Auth.user.getChucVu() == 5) {
+                    this.dispose();
+                    new SoatVe().setVisible(rootPaneCheckingEnabled);
+                }
+            }
         }
-    }//GEN-LAST:event_btnShowPassActionPerformed
+    }//GEN-LAST:event_btnQRMouseClicked
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    private void rdoServerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoServerItemStateChanged
+        if (rdoServer.isSelected()) {
+            try {
+                InetAddress myHost = InetAddress.getLocalHost();
+                txtIP.setText(myHost.getHostAddress());
+//                txtIP.setEnabled(false);
+                lblClientHint.setVisible(false);
+                btnLogin.setEnabled(true);
+                btnQR.setEnabled(true);
+            } catch (UnknownHostException ex) {
+                System.out.println("Khong tim thay may chu!");
+            }
+        } else {
+            txtIP.setText("");
+//            txtIP.setEnabled(true);
+            lblClientHint.setVisible(true);
+            btnLogin.setEnabled(false);
+            btnQR.setEnabled(false);
+        }
+    }//GEN-LAST:event_rdoServerItemStateChanged
+
+    private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
+        if (btnConnect.isSelected()) {
+            rdoServer.setEnabled(true);
+            rdoServer.setSelected(true);
+            rdoClient.setEnabled(true);
+            txtIP.setEnabled(true);
+            cboPort.setEnabled(true);
+            btnConnect.setText("Có kết nối");
+        } else {
+            rdoServer.setEnabled(false);
+            rdoServer.setSelected(false);
+            rdoClient.setEnabled(false);
+            txtIP.setEnabled(false);
+            cboPort.setEnabled(false);
+            lblClientHint.setVisible(false);
+            btnLogin.setEnabled(true);
+            btnQR.setEnabled(true);
+            btnConnect.setText("Không kết nối");
+        }
+    }//GEN-LAST:event_btnConnectActionPerformed
+
+    private void txtIPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIPKeyReleased
+        if (txtIP.getText().equals("")) {
+            btnLogin.setEnabled(false);
+            btnQR.setEnabled(false);
+        } else {
+            btnLogin.setEnabled(true);
+            btnQR.setEnabled(true);
+        }
+    }//GEN-LAST:event_txtIPKeyReleased
 
     /**
      * @param args the command line arguments
@@ -215,65 +388,80 @@ public class DangNhap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnConnect;
     private javax.swing.JButton btnLogin;
+    private ui.LabelRound btnQR;
     private javax.swing.JButton btnQuenPass;
-    private javax.swing.JToggleButton btnShowPass;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cboPort;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblPass;
-    private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JSeparator jSeparator1;
+    private ui.LabelRound labelRound2;
+    private javax.swing.JLabel lblClientHint;
+    private ui.PanelRound panelRound1;
+    private javax.swing.JRadioButton rdoClient;
+    private javax.swing.JRadioButton rdoServer;
+    private javax.swing.ButtonGroup socket;
+    private javax.swing.JTextField txtIP;
+    private ui.field.TextField txtName;
+    private ui.field.PasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 
-    void init(){
-        txtPass.setEchoChar('\u25cf');
+    void init() {
+        setBackground(new Color(1, 1, 1, 1));
+        lblClientHint.setVisible(false);
+//        setOpacity(0.9f);
         setLocationRelativeTo(null);
         XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
         setTitle("HỆ THỐNG RẠP CHIẾU PHIM DO 6 ANH ĐẸP TRAI LÀM ");
         new ManHinhChao(this, true).setVisible(true);
     }
-    
+
     NhanVienDAO dao = new NhanVienDAO();
-    void dangNhap(){
+
+    void dangNhap() {
+        //set up ket noi
+        if (btnConnect.isSelected()) {
+            Auth.connectSocket = true;
+            Auth.ip = txtIP.getText();
+            Auth.port = Integer.parseInt(cboPort.getSelectedItem() + "");
+        }
         String manv = txtName.getText();
         String matKhau = new String(txtPass.getPassword());
         NhanVien nhanVien = dao.selectById(manv);
-        if(nhanVien == null){
+        if (nhanVien == null) {
             MsgBox.alert(this, "Sai tên đăng nhập!");
-        }
-        else if(!matKhau.equals(nhanVien.getMatKhau())){
+        } else if (!matKhau.equals(nhanVien.getMatKhau())) {
             MsgBox.alert(this, "Sai mật khẩu!");
-        }
-        else{
-           if(nhanVien.getChucVu() == 1){
-           this.dispose();
-           new QuanLy().setVisible(rootPaneCheckingEnabled);
-           }
-           if(nhanVien.getChucVu() == 2){
-           this.dispose();
-           new BanHang().setVisible(rootPaneCheckingEnabled);
-           }
-           if(nhanVien.getChucVu() == 3){
-           this.dispose();
-           new DatVe().setVisible(rootPaneCheckingEnabled);
-           }
-           if(nhanVien.getChucVu() == 4){
-           this.dispose();
-           new QLPhim().setVisible(rootPaneCheckingEnabled);
-           }
-           if(nhanVien.getChucVu() == 5){
-           this.dispose();
-           new SoatVe().setVisible(rootPaneCheckingEnabled);
-           }
+        } else {
+            Auth.user = nhanVien;
+            if (nhanVien.getChucVu() == 1) {
+                this.dispose();
+                new QuanLy().setVisible(rootPaneCheckingEnabled);
+            }
+            if (nhanVien.getChucVu() == 2) {
+                this.dispose();
+                new BanHang().setVisible(rootPaneCheckingEnabled);
+            }
+            if (nhanVien.getChucVu() == 3) {
+                this.dispose();
+                new DatVe().setVisible(rootPaneCheckingEnabled);
+            }
+            if (nhanVien.getChucVu() == 4) {
+                this.dispose();
+                new QLPhim().setVisible(rootPaneCheckingEnabled);
+            }
+            if (nhanVien.getChucVu() == 5) {
+                this.dispose();
+                new SoatVe().setVisible(rootPaneCheckingEnabled);
+            }
         }
     }
-    void ketThuc(){
-        if(MsgBox.confirm(this, "Bạn muốn kết thúc ứng dụng?")){
+
+    void ketThuc() {
+        if (MsgBox.confirm(this, "Bạn muốn kết thúc ứng dụng?")) {
             System.exit(0);
         }
     }
-    
-   
+
 }

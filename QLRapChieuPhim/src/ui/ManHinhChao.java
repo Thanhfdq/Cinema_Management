@@ -5,6 +5,7 @@
  */
 package ui;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -25,7 +26,7 @@ public class ManHinhChao extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        
+        setBackground(new Color(0,0,0,0));
         new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -51,30 +52,110 @@ public class ManHinhChao extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblLogo = new javax.swing.JLabel();
+        curvesPanel1 = new ui.splashScreen.CurvesPanel();
+        panelRound3 = new ui.PanelRound();
+        panelRound4 = new ui.PanelRound();
+        jLabel1 = new javax.swing.JLabel();
+        labelRound1 = new ui.LabelRound();
         progress = new javax.swing.JProgressBar();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        labelRound2 = new ui.LabelRound();
+        panelRound2 = new ui.PanelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
 
-        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/chao.png"))); // NOI18N
+        curvesPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelRound3.setBackground(new java.awt.Color(255, 51, 153));
+        panelRound3.setRoundBottomLeft(120);
+        panelRound3.setRoundBottomRight(120);
+        panelRound3.setRoundTopLeft(120);
+        panelRound3.setRoundTopRight(120);
+
+        javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
+        panelRound3.setLayout(panelRound3Layout);
+        panelRound3Layout.setHorizontalGroup(
+            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+        panelRound3Layout.setVerticalGroup(
+            panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 120, Short.MAX_VALUE)
+        );
+
+        curvesPanel1.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 200, 120, 120));
+
+        panelRound4.setBackground(new java.awt.Color(153, 51, 0));
+        panelRound4.setPreferredSize(new java.awt.Dimension(360, 360));
+        panelRound4.setRoundBottomLeft(360);
+        panelRound4.setRoundBottomRight(360);
+        panelRound4.setRoundTopLeft(360);
+        panelRound4.setRoundTopRight(360);
+        panelRound4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cinesys_round_logo.png"))); // NOI18N
+        panelRound4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, -1, -1));
+
+        labelRound1.setBackground(new java.awt.Color(51, 51, 51));
+        labelRound1.setForeground(new java.awt.Color(255, 255, 255));
+        labelRound1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelRound1.setText("CineSys");
+        labelRound1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        panelRound4.add(labelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 189, 70));
 
         progress.setStringPainted(true);
+        panelRound4.add(progress, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 220, -1));
+
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("BanBiuTeam 2022 ℗");
+        panelRound4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 250, -1));
+
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Cinema management system");
+        panelRound4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 250, -1));
+
+        labelRound2.setBackground(new java.awt.Color(51, 51, 51));
+        labelRound2.setPreferredSize(new java.awt.Dimension(360, 360));
+        labelRound2.setRoundBottomLeft(360);
+        labelRound2.setRoundBottomRight(360);
+        labelRound2.setRoundTopLeft(360);
+        labelRound2.setRoundTopRight(360);
+        panelRound4.add(labelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 330, 320));
+
+        curvesPanel1.add(panelRound4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 360));
+
+        panelRound2.setBackground(new java.awt.Color(153, 153, 153));
+        panelRound2.setRoundBottomLeft(100);
+        panelRound2.setRoundBottomRight(100);
+        panelRound2.setRoundTopLeft(100);
+        panelRound2.setRoundTopRight(100);
+
+        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
+        panelRound2.setLayout(panelRound2Layout);
+        panelRound2Layout.setHorizontalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panelRound2Layout.setVerticalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        curvesPanel1.add(panelRound2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(progress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblLogo)
+            .addComponent(curvesPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(lblLogo)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(progress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(curvesPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
         );
 
         pack();
@@ -126,7 +207,15 @@ public class ManHinhChao extends javax.swing.JDialog {
     }
      
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel lblLogo;
+    private ui.splashScreen.CurvesPanel curvesPanel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private ui.LabelRound labelRound1;
+    private ui.LabelRound labelRound2;
+    private ui.PanelRound panelRound2;
+    private ui.PanelRound panelRound3;
+    private ui.PanelRound panelRound4;
     private javax.swing.JProgressBar progress;
     // End of variables declaration//GEN-END:variables
 }

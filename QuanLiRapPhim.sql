@@ -841,5 +841,153 @@ begin
 
 end
 
+-- insert HÌNH trong bảng phim 
+Update Phim
+SET Hinh = 'bongdungts.png'
+Where MaPhim = 'P001';
+Update Phim
+SET Hinh = 'gianglongds.png'
+Where MaPhim = 'P002';
+Update Phim
+SET Hinh = 'blackadam.png'
+Where MaPhim = 'P003'
+Update Phim
+SET Hinh = 'bandao.png'
+Where MaPhim = 'P004';
+Update Phim
+SET Hinh = 'tinhyeutienty.png'
+Where MaPhim = 'P005';
+Update Phim
+SET Hinh = 'congchuacuaba.png'
+Where MaPhim = 'P006';
+Update Phim
+SET Hinh = 'thiennuuhon.png'
+Where MaPhim = 'P007';
+Update Phim
+SET Hinh = 'linhthu.png'
+Where MaPhim = 'P008';
+Update Phim
+SET Hinh = 'lienminhclbd.png'
+Where MaPhim = 'P009';
+Update Phim
+SET Hinh = 'phapsumu.png'
+Where MaPhim = 'P010';
+Update Phim
+SET Hinh = 'moclantruyenky.png'
+Where MaPhim = 'P011';
+Update Phim
+SET Hinh = 'thamhoanuibaedu.png'
+Where MaPhim = 'P012';
+Update Phim
+SET Hinh = 'chongcutinhmoi.png'
+Where MaPhim = 'P013';
+Update Phim
+SET Hinh = 'omhoyeuthat.png'
+Where MaPhim = 'P014';
+Update Phim
+SET Hinh = 'backimthang.png'
+Where MaPhim = 'P015';
+Update Phim
+SET Hinh = 'cogaituquakhu.png'
+Where MaPhim = 'P016';
+Update Phim
+SET Hinh = 'dacvuxuyenqg.png'
+Where MaPhim = 'P017';
+Update Phim
+SET Hinh = 'nghithuccam.png'
+Where MaPhim = 'P018';
+Update Phim
+SET Hinh = 'khiconlontontg.png'
+Where MaPhim = 'P019';
+Update Phim
+SET Hinh = 'thethan.png'
+Where MaPhim = 'P020';
+Update Phim
+SET Hinh = 'yeukosohai.png'
+Where MaPhim = 'P021';
+Update Phim
+SET Hinh = 'harrypotter.png'
+Where MaPhim = 'P022';
+Update Phim
+SET Hinh = 'thucdonbian.png'
+Where MaPhim = 'P023';
+Update Phim
+SET Hinh = 'blackpantherwakandabatdiet.png'
+Where MaPhim = 'P024';
+Update Phim
+SET Hinh = 'chucaxaubiethat.png'
+Where MaPhim = 'P025';
+Update Phim
+SET Hinh = 'doraemon.png'
+Where MaPhim = 'P026';
+Update Phim
+SET Hinh = 'hodentuthan.png'
+Where MaPhim = 'P027';
+Update Phim
+SET Hinh = 'phicongsieudang.png'
+Where MaPhim = 'P028';
+Update Phim
+SET Hinh = 'dieuuoccuoi.png'
+Where MaPhim = 'P029';
+Update Phim
+SET Hinh = 'tinhnguoiduyenma.png'
+Where MaPhim = 'P030';
+Update Phim
+SET Hinh = 'amhontrongtranh.png'
+Where MaPhim = 'P031';
+Update Phim
+SET Hinh = 'dongmaudaccanh.png'
+Where MaPhim = 'P032';
+Update Phim
+SET Hinh = 'ganhnangngancan.png'
+Where MaPhim = 'P033';
+Update Phim
+SET Hinh = 'minion.png'
+Where MaPhim = 'P034';
+Update Phim
+SET Hinh = 'ngoaivongpl2.png'
+Where MaPhim = 'P035';
+Update Phim
+SET Hinh = 'bantinchet.png'
+Where MaPhim = 'P036';
+Update Phim
+SET Hinh = 'ngoidenkiquai3.png'
+Where MaPhim = 'P037';
+Update Phim
+SET Hinh = 'satthunhantao2.png'
+Where MaPhim = 'P038';
+Update Phim
+SET Hinh = 'canhsatvutru.png'
+Where MaPhim = 'P040';
+Update Phim
+SET Hinh = 'dienthoaiden.png'
+Where MaPhim = 'P041';
+Update Phim
+SET Hinh = 'nguoimoigioi.png'
+Where MaPhim = 'P042';
+Update Phim
+SET Hinh = 'tangtocvephiaem.png'
+Where MaPhim = 'P043';
+Update Phim
+SET Hinh = 'thegioikhunglong.png'
+Where MaPhim = 'P044';
+Update Phim
+SET Hinh = 'moicamap.png'
+Where MaPhim = 'P045';
+Update Phim
+SET Hinh = 'nguoikhoilua.png'
+Where MaPhim = 'P046';
+Update Phim
+SET Hinh = 'cuocchiendavutru.png'
+Where MaPhim = 'P047';
+Update Phim
+SET Hinh = 'macarong.png'
+Where MaPhim = 'P048';
+Update Phim
+SET Hinh = 'nhimsonic2.png'
+Where MaPhim = 'P049';
+Update Phim
+SET Hinh = 'batman.png'
+Where MaPhim = 'P050';
 
 

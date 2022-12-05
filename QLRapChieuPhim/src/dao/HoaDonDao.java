@@ -18,14 +18,9 @@ import until.XJdbc;
  */
 public class HoaDonDao {
 
-    public int demHoaDon() throws SQLException {
-        int dem = 0;
-        String sql = "SELECT COUNT(*) AS 'COUNT' FROM HoaDon";
-        ResultSet rs = XJdbc.query(sql);
-        while (rs.next()) {
-            dem = rs.getInt("COUNT");
-        }
-        return dem;
+    public int maHoaDon() {
+        String sql = "SELECT Max(MaHD) FROM HoaDon";
+        return Integer.parseInt(XJdbc.value(sql).toString());
     }
 
     public void themHoaDon(HoaDon model) {
@@ -33,7 +28,6 @@ public class HoaDonDao {
         XJdbc.update(sql,
                 model.getMaUser(),
                 model.getNgayLap());
-
     }
 
     protected List<HoaDon> selectBySql(String sql, Object... args) {

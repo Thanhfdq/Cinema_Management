@@ -22,10 +22,13 @@ public class Auth {
     public static void clear() {
         Auth.user = null;
     }
-     public static HoaDon HoaDonGiaoDich = null;
+    public static HoaDon HoaDonGiaoDich = null;
 
     public static boolean themSua;
     
     public static PhongChieu pc = null;
     
+    public static boolean connectSocket = false;
+    public static String ip;
+    public static int port;
 }
