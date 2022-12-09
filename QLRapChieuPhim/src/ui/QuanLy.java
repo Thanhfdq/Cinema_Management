@@ -28,6 +28,11 @@ import java.net.Socket;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -73,7 +78,7 @@ public class QuanLy extends javax.swing.JFrame {
 
     public QuanLy() {
         initComponents();
-        mKDatabase();
+//        mKDatabase();
         init();
         initResize();
 
@@ -3716,6 +3721,15 @@ public class QuanLy extends javax.swing.JFrame {
                     tinhieu = new DataInputStream(in).readUTF();
                     System.out.println("2");
                     System.out.println(tinhieu);
+                    //tieng thong bao
+                    try {
+                        AudioInputStream audioInput = AudioSystem.getAudioInputStream(getClass().getResource("/until/ThongBao.wav"));
+                        Clip clip = AudioSystem.getClip();
+                        clip.open(audioInput);
+                        clip.start();
+                    } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    }
                     //Hien thong bao
                     hientb(tinhieu);
                     System.out.println("3");
@@ -4368,11 +4382,10 @@ public class QuanLy extends javax.swing.JFrame {
             fc.setDialogTitle("Export as");
             fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
             fc.setCurrentDirectory(new File("D:/"));
-            
 
             int c = fc.showSaveDialog(this);
             if (c == JFileChooser.APPROVE_OPTION) {
-                File f = new File(fc.getSelectedFile().getAbsolutePath()+".xlsx");
+                File f = new File(fc.getSelectedFile().getAbsolutePath() + ".xlsx");
                 FileOutputStream fos = new FileOutputStream(f);
                 workbook.write(fos);
                 fos.close();
