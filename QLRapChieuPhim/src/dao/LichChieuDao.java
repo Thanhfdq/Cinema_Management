@@ -10,21 +10,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import until.XJdbc;
 
 public class LichChieuDao {
-        public void insert(LichChieu model){
-        String sql="INSERT INTO LichChieu (MaLichChieu, MaPhim, GioChieu, NgayChieu, MaPhong) VALUES (?, ?, ?, ?, ?)";
-            XJdbc.update(sql, 
-                model.getMaLichChieu(),
+
+    public void insert(LichChieu model) {
+        String sql = "INSERT INTO LichChieu (MaPhim, GioChieu, NgayChieu, MaPhong) VALUES (?, ?, ?, ?)";
+        XJdbc.update(sql,
                 model.getMaPhim(),
                 model.getGioChieu(),
                 model.getNgayChieu(),
                 model.getMaPhong());
     }
-    
-    public void update(LichChieu model){
-        String sql="UPDATE LichChieu SET MaPhim=?, GioChieu=?, NgayChieu=?, MaPhong=? WHERE MaLichChieu=?";
+
+    public void update(LichChieu model) {
+        String sql = "UPDATE LichChieu SET MaPhim=?, GioChieu=?, NgayChieu=?, MaPhong=? WHERE MaLichChieu=?";
         XJdbc.update(sql,
                 model.getMaPhim(),
                 model.getGioChieu(),
@@ -32,37 +34,36 @@ public class LichChieuDao {
                 model.getMaPhong(),
                 model.getMaLichChieu());
     }
-    
-    public void delete(String MaLichChieu){
-        String sql="DELETE FROM LichChieu WHERE MaLichChieu=?";
+
+    public void delete(String MaLichChieu) {
+        String sql = "DELETE FROM LichChieu WHERE MaLichChieu=?";
         XJdbc.update(sql, MaLichChieu);
     }
-    
-    public List<LichChieu> selectAll(){
-        String sql="SELECT * FROM LichChieu";
+
+    public List<LichChieu> selectAll() {
+        String sql = "SELECT * FROM LichChieu";
         return this.selectBySql(sql);
     }
-    
-    public LichChieu selectMaPhim(String maphim) {
-        String sql = "SELECT MaLichChieu, GioChieu, NgayChieu, MaPhong FROM LichChieu WHERE MaPhim='?'";
-        List<LichChieu> list = this.selectBySql(sql, maphim);
-        return list.size() > 0 ? list.get(0) : null;
-    }    
-    
-    public LichChieu selectById(String malichchieu){
-        String sql="SELECT * FROM LichChieu WHERE MaLichChieu=?";
+
+//    public LichChieu selectMaPhim(String maphim) {
+//        String sql = "SELECT MaLichChieu, GioChieu, NgayChieu, MaPhong FROM LichChieu WHERE MaPhim='?'";
+//        List<LichChieu> list = this.selectBySql(sql, maphim);
+//        return list.size() > 0 ? list.get(0) : null;
+//    }    
+    public LichChieu selectById(String malichchieu) {
+        String sql = "SELECT * FROM LichChieu WHERE MaLichChieu=?";
         List<LichChieu> list = this.selectBySql(sql, malichchieu);
         return list.size() > 0 ? list.get(0) : null;
     }
-    
-    protected List<LichChieu> selectBySql(String sql, Object...args){
-        List<LichChieu> list=new ArrayList<>();
+
+    protected List<LichChieu> selectBySql(String sql, Object... args) {
+        List<LichChieu> list = new ArrayList<>();
         try {
             ResultSet rs = null;
             try {
                 rs = XJdbc.query(sql, args);
-                while(rs.next()){
-                    LichChieu entity=new LichChieu();
+                while (rs.next()) {
+                    LichChieu entity = new LichChieu();
                     entity.setMaLichChieu(rs.getInt("MaLichChieu"));
                     entity.setMaPhim(rs.getString("MaPhim"));
                     entity.setGioChieu(rs.getInt("GioChieu"));
@@ -70,15 +71,28 @@ public class LichChieuDao {
                     entity.setMaPhong(rs.getString("MaPhong"));
                     list.add(entity);
                 }
-            } 
-            finally{
+            } finally {
                 rs.getStatement().getConnection().close();
             }
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
         return list;
-    } 
+    }
+
+    public List<Integer> getDsGioChieuTrong(String ngayChieu, String maPhong) {
+        List<Integer> dsGioChieu = new ArrayList<>();
+        try {
+            String sql = "select giochieu from LichChieu where NgayChieu = ? and MaPhong = ?";
+            ResultSet rs = XJdbc.query(sql, ngayChieu, maPhong);
+            while (rs.next()) {
+                System.out.println(rs.getInt(1));
+                dsGioChieu.add(rs.getInt(1));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return dsGioChieu;
+    }
 }

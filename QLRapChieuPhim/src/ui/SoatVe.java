@@ -35,12 +35,12 @@ public class SoatVe extends javax.swing.JFrame {
     public SoatVe() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
-        if (MsgBox.confirm(this, "Chọn dùng Localhost")) {
-            XJdbc.setHost("Localhost");
-        } else {
-            XJdbc.setHost("192.168.1.0");
-        }
-        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
+//        if (MsgBox.confirm(this, "Chọn dùng Localhost")) {
+//            XJdbc.setHost("Localhost");
+//        } else {
+//            XJdbc.setHost("192.168.1.0");
+//        }
+//        XJdbc.setPassword(MsgBox.prompt(this, "Mời bạn nhập mật khẩu Database!!"));
 
         loadCboNgayChieu();
         veconlai = new DefaultListModel();
@@ -216,14 +216,14 @@ public class SoatVe extends javax.swing.JFrame {
         lblVeDaBan.setBackground(new java.awt.Color(72, 72, 72));
         lblVeDaBan.setForeground(new java.awt.Color(153, 153, 153));
         lblVeDaBan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblVeDaBan.setText("300");
+        lblVeDaBan.setText("0");
         lblVeDaBan.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         lblVeDaBan.setRoundBottomRight(30);
         lblVeDaBan.setRoundTopRight(30);
 
         labelRound13.setBackground(new java.awt.Color(51, 51, 51));
         labelRound13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRound13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Logo_48px.png"))); // NOI18N
+        labelRound13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cinesys_round_logo_24px.png"))); // NOI18N
         labelRound13.setRoundBottomLeft(50);
         labelRound13.setRoundBottomRight(50);
         labelRound13.setRoundTopLeft(50);
@@ -296,7 +296,7 @@ public class SoatVe extends javax.swing.JFrame {
         labelRound2.setRoundTopRight(20);
 
         lblVeDaSoat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblVeDaSoat.setText("300");
+        lblVeDaSoat.setText("0");
         lblVeDaSoat.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
 
         lstVeConLai.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
@@ -380,7 +380,7 @@ public class SoatVe extends javax.swing.JFrame {
         labelRound3.setRoundTopRight(20);
 
         lblVeConLai.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblVeConLai.setText("300");
+        lblVeConLai.setText("0");
         lblVeConLai.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
