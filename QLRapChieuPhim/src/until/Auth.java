@@ -15,7 +15,7 @@ public class Auth {
     /**
      * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
      */
-    public static NhanVien user = new NhanVienDAO().selectById("US001");
+    public static NhanVien user;
     /**
      * Xóa thông tin của người sử dụng khi có yêu cầu đăng xuất
      */

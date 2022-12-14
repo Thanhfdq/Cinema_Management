@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -78,6 +80,7 @@ public class QuanLy extends javax.swing.JFrame {
 
     public QuanLy() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        mKDatabase();
         init();
         initResize();
@@ -306,7 +309,6 @@ public class QuanLy extends javax.swing.JFrame {
         pnlMoving = new ui.PanelRound();
         lblNgay = new ui.LabelRound();
         lblDongHo = new ui.LabelRound();
-        lblDangXuat = new ui.LabelRound();
         btnMinimize = new ui.LabelRound();
         btnResize = new ui.LabelRound();
         btnExit = new ui.LabelRound();
@@ -331,6 +333,7 @@ public class QuanLy extends javax.swing.JFrame {
         btnPhim = new ui.LabelRound();
         pnldt = new ui.PanelRound();
         btnThongKe = new ui.LabelRound();
+        lblDangXuat = new ui.LabelRound();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản Lý");
@@ -510,14 +513,16 @@ public class QuanLy extends javax.swing.JFrame {
         );
         panelRound19Layout.setVerticalGroup(
             panelRound19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+            .addComponent(NV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
         );
 
-        panelRound4.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound4.setBackground(new java.awt.Color(51, 51, 51));
         panelRound4.setRoundBottomLeft(30);
         panelRound4.setRoundBottomRight(30);
         panelRound4.setRoundTopLeft(30);
         panelRound4.setRoundTopRight(30);
+
+        pieChartNV.setBackground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
@@ -935,7 +940,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addGroup(panelRound21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel49)
                     .addComponent(lblMucLuongHienTai))
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         panelRound22.setBackground(new java.awt.Color(255, 255, 255));
@@ -1362,7 +1367,7 @@ public class QuanLy extends javax.swing.JFrame {
         );
         panelRound15Layout.setVerticalGroup(
             panelRound15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
+            .addComponent(TD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout pnlDanhSachTDLayout = new javax.swing.GroupLayout(pnlDanhSachTD);
@@ -1605,7 +1610,7 @@ public class QuanLy extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel50)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1850,7 +1855,7 @@ public class QuanLy extends javax.swing.JFrame {
         );
         panelRound28Layout.setVerticalGroup(
             panelRound28Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
+            .addComponent(PC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
         );
 
         panelRound40.setRoundBottomLeft(20);
@@ -2560,7 +2565,7 @@ public class QuanLy extends javax.swing.JFrame {
         );
         pnlPhimLayout.setVerticalGroup(
             pnlPhimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 863, Short.MAX_VALUE)
+            .addGap(0, 862, Short.MAX_VALUE)
         );
 
         pnlGroupPnl.add(pnlPhim, "card8");
@@ -2636,7 +2641,7 @@ public class QuanLy extends javax.swing.JFrame {
         );
         panelRound34Layout.setVerticalGroup(
             panelRound34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NV1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+            .addComponent(NV1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
         );
 
         panelRound5.setBackground(new java.awt.Color(255, 255, 255));
@@ -2738,7 +2743,7 @@ public class QuanLy extends javax.swing.JFrame {
             pnlChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChinhLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(pnlGroupPnl, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(pnlGroupPnl, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(12, 12, 12))
         );
         pnlChinhLayout.setVerticalGroup(
@@ -2785,28 +2790,6 @@ public class QuanLy extends javax.swing.JFrame {
         lblDongHo.setRoundBottomRight(30);
         lblDongHo.setRoundTopLeft(30);
         lblDongHo.setRoundTopRight(30);
-
-        lblDangXuat.setBackground(new java.awt.Color(51, 51, 51));
-        lblDangXuat.setForeground(new java.awt.Color(255, 255, 255));
-        lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_logout_24px.png"))); // NOI18N
-        lblDangXuat.setToolTipText("Đăng xuất");
-        lblDangXuat.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lblDangXuat.setRoundBottomLeft(50);
-        lblDangXuat.setRoundBottomRight(50);
-        lblDangXuat.setRoundTopLeft(50);
-        lblDangXuat.setRoundTopRight(50);
-        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblDangXuatMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblDangXuatMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblDangXuatMouseExited(evt);
-            }
-        });
 
         btnMinimize.setBackground(new java.awt.Color(204, 204, 204));
         btnMinimize.setForeground(new java.awt.Color(51, 51, 51));
@@ -2885,44 +2868,42 @@ public class QuanLy extends javax.swing.JFrame {
         pnlMovingLayout.setHorizontalGroup(
             pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMovingLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 840, Short.MAX_VALUE)
+                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 917, Short.MAX_VALUE)
                 .addComponent(lblSocketState, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
         );
         pnlMovingLayout.setVerticalGroup(
             pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMovingLayout.createSequentialGroup()
-                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMovingLayout.createSequentialGroup()
+                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMovingLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(12, 12, 12))
-            .addGroup(pnlMovingLayout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(lblSocketState, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlMovingLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMovingLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblSocketState, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -3276,6 +3257,28 @@ public class QuanLy extends javax.swing.JFrame {
             .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
         );
 
+        lblDangXuat.setBackground(new java.awt.Color(51, 51, 51));
+        lblDangXuat.setForeground(new java.awt.Color(255, 255, 255));
+        lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_logout_24px.png"))); // NOI18N
+        lblDangXuat.setToolTipText("Đăng xuất");
+        lblDangXuat.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lblDangXuat.setRoundBottomLeft(50);
+        lblDangXuat.setRoundBottomRight(50);
+        lblDangXuat.setRoundTopLeft(50);
+        lblDangXuat.setRoundTopRight(50);
+        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
         panelRound3Layout.setHorizontalGroup(
@@ -3287,13 +3290,15 @@ public class QuanLy extends javax.swing.JFrame {
                     .addComponent(pnltd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlpc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelRound6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlphim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnldt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelRound3Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addGroup(panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(pnlphim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnldt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btnAbout, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                                .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGap(0, 0, 0)
                 .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -3321,7 +3326,9 @@ public class QuanLy extends javax.swing.JFrame {
                         .addComponent(btnAbout, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -4133,6 +4140,25 @@ public class QuanLy extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     void init() {
+        //set day time
+        lblNgay.setText(XDate.toString(new Date(), "dd/MM/YYYY"));
+        Calendar c = Calendar.getInstance();
+        int h = c.get(Calendar.HOUR_OF_DAY);
+//        Admin a = new Admin();
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    lblDongHo.setText(XDate.curTime());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+        };
+        t.start();
         setBackground(new Color(0, 0, 0, 0));
         fillTablePC();
         fillTableNV();

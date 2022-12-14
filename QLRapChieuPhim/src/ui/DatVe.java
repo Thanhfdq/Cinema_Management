@@ -29,6 +29,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -61,7 +62,7 @@ import until.XJdbc;
  * @author quoct
  */
 public class DatVe extends javax.swing.JFrame {
-    
+
     boolean batdau = true;
     //lay thong tin
     String phimCur, ngayChieuCur, gioChieuCur, soGheCur, soPhongCur, maLichChieuCur, anhCur;
@@ -70,13 +71,13 @@ public class DatVe extends javax.swing.JFrame {
     Color chon = Color.GREEN;
     Color trong = new Color(51, 51, 51);
     Color sai = new Color(139, 0, 0);
-    
+
     List<String[]> dsMaLichChieu = new ArrayList();
 
     //don dat ve
     List<Object[]> dsDatVe = new ArrayList(); //dsDatVe tam bao gom : NguoiLap,NgayLap,MaGhe,MaPhong,MaLichChieu, gia ve
     int tongTien = 0;
-    
+
     Socket clientSocket;
 
     /**
@@ -84,8 +85,28 @@ public class DatVe extends javax.swing.JFrame {
      */
     public DatVe() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         initResize();
-        mKDatabase();
+        //set day time
+        lblNgay.setText(XDate.toString(new Date(), "dd/MM/YYYY"));
+        Calendar c = Calendar.getInstance();
+        int h = c.get(Calendar.HOUR_OF_DAY);
+//        Admin a = new Admin();
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    lblDongHo.setText(XDate.curTime());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+        };
+        t.start();
+//        mKDatabase();
         setBackground(new Color(0, 0, 0, 0));
         lblThemVe.setBackground(sai);
         lblThanhToan.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -101,11 +122,11 @@ public class DatVe extends javax.swing.JFrame {
         model.getColumn(2).setMinWidth(100);
         model.getColumn(3).setMaxWidth(100);
         model.getColumn(3).setMinWidth(100);
-        
+
         model.getColumn(1).setCellRenderer(render);
         model.getColumn(2).setCellRenderer(render);
         model.getColumn(3).setCellRenderer(render);
-        
+
         dtcChonNgay.setDate(new Date());
         lblNgayLap.setText(XDate.toString(new Date(), "dd-MM-YYYY"));
         lblSoLuong.setText("0");
@@ -115,7 +136,7 @@ public class DatVe extends javax.swing.JFrame {
         jScrollPane1.getColumnHeader().setVisible(false);
         jScrollPane1.getViewport().setBackground(new Color(102, 102, 102));
         scrChonPhim.getColumnHeader().setVisible(false);
-        scrChonPhim.getViewport().setBackground(new Color(255,218,234));
+        scrChonPhim.getViewport().setBackground(new Color(255, 218, 234));
 
         //Neu co yeu cau ket noi thi mo ket noi
         if (Auth.connectSocket) {
@@ -130,7 +151,7 @@ public class DatVe extends javax.swing.JFrame {
             }
         }
     }
-    
+
     void mKDatabase() {
         if (MsgBox.confirm(this, "Chọn dùng Localhost")) {
             XJdbc.setHost("Localhost");
@@ -266,13 +287,12 @@ public class DatVe extends javax.swing.JFrame {
         pnlMoving = new ui.PanelRound();
         lblNgay = new ui.LabelRound();
         lblDongHo = new ui.LabelRound();
-        labelRound4 = new ui.LabelRound();
-        lblDangXuat = new ui.LabelRound();
         btnMinimize = new ui.LabelRound();
         btnResize = new ui.LabelRound();
         btnExit = new ui.LabelRound();
         labelRound13 = new ui.LabelRound();
         lblSocketState = new javax.swing.JLabel();
+        lblDangXuat = new ui.LabelRound();
 
         pmnXoa.setBackground(new java.awt.Color(51, 51, 51));
         pmnXoa.setForeground(new java.awt.Color(255, 255, 255));
@@ -1923,38 +1943,6 @@ public class DatVe extends javax.swing.JFrame {
         lblDongHo.setRoundTopLeft(30);
         lblDongHo.setRoundTopRight(30);
 
-        labelRound4.setBackground(new java.awt.Color(139, 0, 0));
-        labelRound4.setForeground(new java.awt.Color(255, 255, 255));
-        labelRound4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRound4.setText("Xin chào nhân viên đặt vé");
-        labelRound4.setFont(new java.awt.Font("Calibri", 2, 18)); // NOI18N
-        labelRound4.setRoundBottomLeft(30);
-        labelRound4.setRoundBottomRight(30);
-        labelRound4.setRoundTopLeft(30);
-        labelRound4.setRoundTopRight(30);
-
-        lblDangXuat.setBackground(new java.awt.Color(51, 51, 51));
-        lblDangXuat.setForeground(new java.awt.Color(255, 255, 255));
-        lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_logout_24px.png"))); // NOI18N
-        lblDangXuat.setToolTipText("Đăng xuất");
-        lblDangXuat.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lblDangXuat.setRoundBottomLeft(50);
-        lblDangXuat.setRoundBottomRight(50);
-        lblDangXuat.setRoundTopLeft(50);
-        lblDangXuat.setRoundTopRight(50);
-        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblDangXuatMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblDangXuatMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblDangXuatMouseExited(evt);
-            }
-        });
-
         btnMinimize.setBackground(new java.awt.Color(204, 204, 204));
         btnMinimize.setForeground(new java.awt.Color(51, 51, 51));
         btnMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -2032,21 +2020,17 @@ public class DatVe extends javax.swing.JFrame {
         pnlMovingLayout.setHorizontalGroup(
             pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMovingLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblSocketState, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2055,27 +2039,46 @@ public class DatVe extends javax.swing.JFrame {
         pnlMovingLayout.setVerticalGroup(
             pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMovingLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlMovingLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblSocketState, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlMovingLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlMovingLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnResize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        lblDangXuat.setBackground(new java.awt.Color(51, 51, 51));
+        lblDangXuat.setForeground(new java.awt.Color(255, 255, 255));
+        lblDangXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDangXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_logout_24px.png"))); // NOI18N
+        lblDangXuat.setToolTipText("Đăng xuất");
+        lblDangXuat.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lblDangXuat.setRoundBottomLeft(50);
+        lblDangXuat.setRoundBottomRight(50);
+        lblDangXuat.setRoundTopLeft(50);
+        lblDangXuat.setRoundTopRight(50);
+        lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRound10Layout = new javax.swing.GroupLayout(panelRound10);
         panelRound10.setLayout(panelRound10Layout);
@@ -2094,7 +2097,8 @@ public class DatVe extends javax.swing.JFrame {
                             .addComponent(btnAbout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAction, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
                             .addComponent(btnHelp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblDangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
                         .addComponent(pnlChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -2118,6 +2122,8 @@ public class DatVe extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
@@ -2150,7 +2156,7 @@ public class DatVe extends javax.swing.JFrame {
             lblGioChieuCur.setText((gioChieuCur = tblChonPhim.getValueAt(phim, 3).toString().replace(":00", "")) + ":00");
             lblSoPhongCur.setText(soPhongCur = tblChonPhim.getValueAt(phim, 4).toString().replace("Phòng ", ""));
             lblAnhPhimCur.setIcon(XImage.resizeImg(new ImageIcon(getClass().getResource("/images/" + anhCur)), lblAnhPhimCur.getWidth(), lblAnhPhimCur.getHeight()));
-            
+
             pnlChonPhim.setVisible(false);
             pnlChonGhe.setVisible(true);
             //set trang thai cac ghe
@@ -2638,9 +2644,9 @@ public class DatVe extends javax.swing.JFrame {
     private void btnMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseExited
         btnMinimize.setIcon(null);
     }//GEN-LAST:event_btnMinimizeMouseExited
-    
+
     int chucnang = 2;
-    
+
     void stateFunction() {
         if (chucnang == 1) {
             btnAccount.setIcon(new ImageIcon(getClass().getResource("/icons/" + "icons8_account_32px_1.png")));
@@ -2809,7 +2815,6 @@ public class DatVe extends javax.swing.JFrame {
     private ui.LabelRound labelRound2;
     private ui.LabelRound labelRound20;
     private ui.LabelRound labelRound3;
-    private ui.LabelRound labelRound4;
     private ui.LabelRound labelRound5;
     private ui.LabelRound labelRound6;
     private ui.LabelRound labelRound7;
@@ -2859,7 +2864,7 @@ public class DatVe extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private ComponentResizer resize;
-    
+
     public void initResize() {
         resize = new ComponentResizer();
         resize.setSnapSize(new Dimension(10, 10));
@@ -2870,7 +2875,7 @@ public class DatVe extends javax.swing.JFrame {
     VeDao daov = new VeDao();
     List<Object[]> listVeDaDatTrongNgay;
     List<Object[]> listDsPhimChieuTrongNgay;
-    
+
     void doDuLieuPhim() {
         anhCur = null;
         lblAnhPhimCur.setIcon(null);
@@ -2895,7 +2900,7 @@ public class DatVe extends javax.swing.JFrame {
             }
         };
         dtm.setRowCount(0);
-        
+
         int STT = 0;
         dsMaLichChieu = new ArrayList();
         for (Object[] ph : listDsPhimChieuTrongNgay) {
@@ -2924,7 +2929,7 @@ public class DatVe extends javax.swing.JFrame {
         render.setHorizontalAlignment(JLabel.CENTER);
         render.setBackground(new Color(255, 218, 234));
         render.setFont(new Font("Arial", Font.ITALIC, 25));
-        
+
         TableColumnModel model = tblChonPhim.getColumnModel();
         model.getColumn(0).setMaxWidth(40);
         model.getColumn(1).setMaxWidth(200);
@@ -2932,17 +2937,17 @@ public class DatVe extends javax.swing.JFrame {
         model.getColumn(3).setMaxWidth(100);
         model.getColumn(4).setMaxWidth(200);
         model.getColumn(4).setMinWidth(200);
-        
+
         model.getColumn(0).setCellRenderer(render);
         model.getColumn(3).setCellRenderer(render);
         model.getColumn(4).setCellRenderer(render);
     }
-    
+
     void timPhimTrongNgay() {
         DefaultTableModel model = (DefaultTableModel) tblChonPhim.getModel();
         model.setRowCount(0);
         dsMaLichChieu = new ArrayList();
-        
+
         String keyWord = txtTimPhim.getText();
         int STT = 0;
         for (Object[] ob : listDsPhimChieuTrongNgay) {
@@ -2965,7 +2970,7 @@ public class DatVe extends javax.swing.JFrame {
         }
         lblDongChon.setText(tblChonPhim.getRowCount() + " dòng");
     }
-    
+
     Color danhDauGhe(String ghe) {
         Color color = trong;
 
@@ -2989,12 +2994,12 @@ public class DatVe extends javax.swing.JFrame {
         }
         return color;
     }
-    
+
     boolean coGhe(JButton button) {
         GheDao daogh = new GheDao();
         return daogh.selectById(button.getText(), soPhongCur) != null;
     }
-    
+
     void setTrangThaiGhe() {
         jButton1.setBackground(danhDauGhe("A1"));
         jButton2.setBackground(danhDauGhe("A2"));
@@ -3002,94 +3007,94 @@ public class DatVe extends javax.swing.JFrame {
         jButton4.setBackground(danhDauGhe("A4"));
         jButton5.setBackground(danhDauGhe("A5"));
         jButton6.setBackground(danhDauGhe("A6"));
-        
+
         jButton7.setBackground(danhDauGhe("B1"));
         jButton8.setBackground(danhDauGhe("B2"));
         jButton9.setBackground(danhDauGhe("B3"));
         jButton10.setBackground(danhDauGhe("B4"));
         jButton11.setBackground(danhDauGhe("B5"));
         jButton12.setBackground(danhDauGhe("B6"));
-        
+
         jButton13.setBackground(danhDauGhe("C1"));
         jButton14.setBackground(danhDauGhe("C2"));
         jButton15.setBackground(danhDauGhe("C3"));
         jButton16.setBackground(danhDauGhe("C4"));
         jButton17.setBackground(danhDauGhe("C5"));
         jButton18.setBackground(danhDauGhe("C6"));
-        
+
         jButton19.setBackground(danhDauGhe("D1"));
         jButton20.setBackground(danhDauGhe("D2"));
         jButton21.setBackground(danhDauGhe("D3"));
         jButton22.setBackground(danhDauGhe("D4"));
         jButton23.setBackground(danhDauGhe("D5"));
         jButton24.setBackground(danhDauGhe("D6"));
-        
+
         jButton25.setBackground(danhDauGhe("E1"));
         jButton26.setBackground(danhDauGhe("E2"));
         jButton27.setBackground(danhDauGhe("E3"));
         jButton28.setBackground(danhDauGhe("E4"));
         jButton29.setBackground(danhDauGhe("E5"));
         jButton30.setBackground(danhDauGhe("E6"));
-        
+
         jButton31.setBackground(danhDauGhe("F1"));
         jButton32.setBackground(danhDauGhe("F2"));
         jButton33.setBackground(danhDauGhe("F3"));
         jButton34.setBackground(danhDauGhe("F4"));
         jButton35.setBackground(danhDauGhe("F5"));
         jButton36.setBackground(danhDauGhe("F6"));
-        
+
         jButton37.setBackground(danhDauGhe("G1&G2"));
         jButton38.setBackground(danhDauGhe("G3&G4"));
         jButton39.setBackground(danhDauGhe("G5&G6"));
-        
+
         jButton1.setVisible(coGhe(jButton1));
         jButton2.setVisible(coGhe(jButton2));
         jButton3.setVisible(coGhe(jButton3));
         jButton4.setVisible(coGhe(jButton4));
         jButton5.setVisible(coGhe(jButton5));
         jButton6.setVisible(coGhe(jButton6));
-        
+
         jButton7.setVisible(coGhe(jButton7));
         jButton8.setVisible(coGhe(jButton8));
         jButton9.setVisible(coGhe(jButton9));
         jButton10.setVisible(coGhe(jButton10));
         jButton11.setVisible(coGhe(jButton11));
         jButton12.setVisible(coGhe(jButton12));
-        
+
         jButton13.setVisible(coGhe(jButton13));
         jButton14.setVisible(coGhe(jButton14));
         jButton15.setVisible(coGhe(jButton15));
         jButton16.setVisible(coGhe(jButton16));
         jButton17.setVisible(coGhe(jButton17));
         jButton18.setVisible(coGhe(jButton18));
-        
+
         jButton19.setVisible(coGhe(jButton19));
         jButton20.setVisible(coGhe(jButton20));
         jButton21.setVisible(coGhe(jButton21));
         jButton22.setVisible(coGhe(jButton22));
         jButton23.setVisible(coGhe(jButton23));
         jButton24.setVisible(coGhe(jButton24));
-        
+
         jButton25.setVisible(coGhe(jButton25));
         jButton26.setVisible(coGhe(jButton26));
         jButton27.setVisible(coGhe(jButton27));
         jButton28.setVisible(coGhe(jButton28));
         jButton29.setVisible(coGhe(jButton29));
         jButton30.setVisible(coGhe(jButton30));
-        
+
         jButton31.setVisible(coGhe(jButton31));
         jButton32.setVisible(coGhe(jButton32));
         jButton33.setVisible(coGhe(jButton33));
         jButton34.setVisible(coGhe(jButton34));
         jButton35.setVisible(coGhe(jButton35));
         jButton36.setVisible(coGhe(jButton36));
-        
+
         jButton37.setVisible(coGhe(jButton37));
         jButton38.setVisible(coGhe(jButton38));
         jButton39.setVisible(coGhe(jButton39));
 //        System.out.println("da chay hamf set");
     }
-    
+
     void chonGhe(int c, JButton button) {
         //nut mat focus
         if (c == 1 && button.getBackground() != daDat && button.getBackground() != coTrongDon) {
@@ -3110,7 +3115,7 @@ public class DatVe extends javax.swing.JFrame {
             lblSoGheCur.setText("<Trống>");
         }
     }
-    
+
     void refreshDonMuaVe() {
         //hien thi len bang don mua ve
         fillTableDonMuaVe();
@@ -3121,11 +3126,11 @@ public class DatVe extends javax.swing.JFrame {
         //set trang thai ghe
         setTrangThaiGhe();
     }
-    
+
     void resetDonMuaVe() {
-        
+
     }
-    
+
     void xoaVe() {
         int[] ve = tblDonMuaVe.getSelectedRows();
         for (int i = ve.length - 1; i > -1; i--) {
@@ -3138,7 +3143,7 @@ public class DatVe extends javax.swing.JFrame {
         }
         refreshDonMuaVe();
     }
-    
+
     void themVe() {
         //luu vao danh sach tam
         dsDatVe.add(new Object[]{
@@ -3155,7 +3160,7 @@ public class DatVe extends javax.swing.JFrame {
         );
         refreshDonMuaVe();
     }
-    
+
     void fillTableDonMuaVe() {
         DefaultTableModel model = (DefaultTableModel) tblDonMuaVe.getModel();
         model.setRowCount(0);
@@ -3165,14 +3170,14 @@ public class DatVe extends javax.swing.JFrame {
             );
         }
     }
-    
+
     void tinhTongTien() {
         tongTien = 0;
         for (Object[] objects : dsDatVe) {
             tongTien += Integer.parseInt(objects[5].toString().substring(0, objects[5].toString().length() - 2));
         }
     }
-    
+
     void luuVe() {
         int soVe = 0;
         for (Object[] objects : dsDatVe) {
@@ -3188,7 +3193,7 @@ public class DatVe extends javax.swing.JFrame {
             System.out.println(pathMaVach);
             taoMaVach(pathMaVach, maVach);
             ++soVe;
-            
+
             try {
                 Hashtable map = new Hashtable();
                 String path = getClass().getResource("/ui/report/VeXemPhim.jrxml").toString().replace("file:/", "");
@@ -3207,7 +3212,7 @@ public class DatVe extends javax.swing.JFrame {
             }
         }
         MsgBox.alert(this, "Thanh toán " + soVe + " vé mới thành công!");
-        
+
         if (Auth.connectSocket) {
             try {
                 PrintStream ps = new PrintStream(clientSocket.getOutputStream());
@@ -3220,7 +3225,7 @@ public class DatVe extends javax.swing.JFrame {
             }
         }
     }
-    
+
     void taoMaVach(String path, String codeString) {
         try {
             Code128Writer writer = new Code128Writer();
@@ -3232,5 +3237,5 @@ public class DatVe extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+
 }

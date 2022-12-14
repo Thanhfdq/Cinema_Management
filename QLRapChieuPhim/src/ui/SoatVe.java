@@ -11,12 +11,15 @@ import entity.LichChieu;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import until.Auth;
 import until.MsgBox;
 import until.XDate;
 import until.XJdbc;
@@ -34,6 +37,24 @@ public class SoatVe extends javax.swing.JFrame {
      */
     public SoatVe() {
         initComponents();
+        //set day time
+        Calendar c = Calendar.getInstance();
+        int h = c.get(Calendar.HOUR_OF_DAY);
+//        Admin a = new Admin();
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    lblDongHo.setText(XDate.curTime());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+        };
+        t.start();
         setBackground(new Color(0, 0, 0, 0));
 //        if (MsgBox.confirm(this, "Chọn dùng Localhost")) {
 //            XJdbc.setHost("Localhost");
@@ -135,6 +156,9 @@ public class SoatVe extends javax.swing.JFrame {
         lblDangXuat.setRoundTopLeft(50);
         lblDangXuat.setRoundTopRight(50);
         lblDangXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDangXuatMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblDangXuatMouseEntered(evt);
             }
@@ -245,15 +269,15 @@ public class SoatVe extends javax.swing.JFrame {
             pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMovingLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(labelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblVeDaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -273,13 +297,14 @@ public class SoatVe extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMovingLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnMinimize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelRound1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDangXuat, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDongHo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblVeDaBan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblVeDaBan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnMinimize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
+                        .addComponent(btnExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(33, 33, 33)
                 .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,7 +352,6 @@ public class SoatVe extends javax.swing.JFrame {
 
         prg.setBackground(new java.awt.Color(255, 255, 255));
         prg.setForeground(new java.awt.Color(0, 204, 0));
-        prg.setValue(35);
         prg.setBorder(null);
         prg.setBorderPainted(false);
         prg.setStringPainted(true);
@@ -335,10 +359,10 @@ public class SoatVe extends javax.swing.JFrame {
         lblAction.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
         lblAction.setForeground(new java.awt.Color(102, 102, 102));
         lblAction.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAction.setText("Scanning...");
+        lblAction.setText("Đóng");
 
         lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_barcode_reader_96px.png"))); // NOI18N
+        lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8_shutdown_96px.png"))); // NOI18N
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
@@ -567,6 +591,12 @@ public class SoatVe extends javax.swing.JFrame {
             txtCodeScan.setEnabled(false);
         }
     }//GEN-LAST:event_onoffActionPerformed
+
+    private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
+        this.dispose();
+        Auth.clear();
+        new DangNhap().setVisible(true);
+    }//GEN-LAST:event_lblDangXuatMouseClicked
     boolean batdau = true;
 
     /**
@@ -656,6 +686,7 @@ public class SoatVe extends javax.swing.JFrame {
             lblStatus.setIcon(new ImageIcon(getClass().getResource("/icons/icons8_shutdown_96px.png")));
             lblAction.setText("Đóng");
             txtCodeScan.setText("");
+            timer.stop();
         }
     }
 

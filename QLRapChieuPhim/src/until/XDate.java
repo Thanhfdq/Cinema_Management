@@ -7,6 +7,7 @@ package until;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -53,5 +54,14 @@ public class XDate {
     }
     public static Date now() {
         return new Date();
+    }
+    
+    public static String curTime() {
+        Calendar c = Calendar.getInstance();
+        int h = c.get(Calendar.HOUR_OF_DAY);
+        int m = c.get(Calendar.MINUTE);
+        int s = c.get(Calendar.SECOND);
+        String ss = String.format("%02d:%02d:%02d", h, m, s);
+        return ss;
     }
 }

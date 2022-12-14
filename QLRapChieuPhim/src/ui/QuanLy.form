@@ -65,15 +65,18 @@
                       <Component id="pnltd" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="pnlpc" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="panelRound6" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnAbout" pref="144" max="32767" attributes="0"/>
-                              <Component id="btnHelp" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
                       <Component id="pnlphim" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="pnldt" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblDangXuat" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnAbout" pref="144" max="32767" attributes="0"/>
+                                  <Component id="btnHelp" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="pnlChinh" max="32767" attributes="0"/>
@@ -105,6 +108,8 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnHelp" min="-2" pref="53" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lblDangXuat" min="-2" pref="30" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -439,7 +444,7 @@
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="NV" alignment="1" pref="636" max="32767" attributes="0"/>
+                                      <Component id="NV" alignment="1" pref="635" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
@@ -485,7 +490,7 @@
                             <Container class="ui.PanelRound" name="panelRound4">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                                  <Color blue="33" green="33" red="33" type="rgb"/>
                                 </Property>
                                 <Property name="roundBottomLeft" type="int" value="30"/>
                                 <Property name="roundBottomRight" type="int" value="30"/>
@@ -511,6 +516,11 @@
                               </Layout>
                               <SubComponents>
                                 <Container class="ui.pieChart.PieChart" name="pieChartNV">
+                                  <Properties>
+                                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                                      <Color blue="33" green="33" red="33" type="rgb"/>
+                                    </Property>
+                                  </Properties>
 
                                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
                                     <Property name="useNullLayout" type="boolean" value="true"/>
@@ -1128,7 +1138,7 @@
                                               <Component id="jLabel49" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lblMucLuongHienTai" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace pref="186" max="32767" attributes="0"/>
+                                          <EmptySpace pref="185" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -1938,7 +1948,7 @@
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="TD" alignment="1" pref="732" max="32767" attributes="0"/>
+                                      <Component id="TD" alignment="1" pref="731" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
@@ -2350,7 +2360,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel50" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jScrollPane4" pref="259" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane4" pref="258" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -2741,7 +2751,7 @@
                                 </DimensionLayout>
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="PC" alignment="1" pref="635" max="32767" attributes="0"/>
+                                      <Component id="PC" alignment="1" pref="634" max="32767" attributes="0"/>
                                   </Group>
                                 </DimensionLayout>
                               </Layout>
@@ -3871,7 +3881,7 @@
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="863" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="862" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                   </Layout>
@@ -4022,7 +4032,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="NV1" alignment="1" pref="492" max="32767" attributes="0"/>
+                                  <Component id="NV1" alignment="1" pref="491" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>
@@ -4177,21 +4187,19 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="btnExit" min="-2" pref="29" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnExit" min="-2" pref="22" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnResize" min="-2" pref="29" max="-2" attributes="0"/>
+                      <Component id="btnResize" min="-2" pref="22" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnMinimize" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace pref="840" max="32767" attributes="0"/>
+                      <Component id="btnMinimize" min="-2" pref="22" max="-2" attributes="0"/>
+                      <EmptySpace pref="917" max="32767" attributes="0"/>
                       <Component id="lblSocketState" min="-2" pref="48" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="lblDongHo" min="-2" pref="63" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblDongHo" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblNgay" min="-2" pref="127" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblDangXuat" min="-2" pref="40" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="labelRound13" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   </Group>
@@ -4200,29 +4208,30 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnMinimize" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="btnResize" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="btnExit" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="btnMinimize" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="btnResize" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="btnExit" alignment="0" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="labelRound13" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="lblDangXuat" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="lblNgay" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Component id="lblDongHo" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace pref="3" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="lblDongHo" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                          <Component id="lblNgay" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Component id="lblSocketState" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="labelRound13" min="-2" pref="29" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                      <Component id="lblSocketState" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -4266,31 +4275,6 @@
                 <Property name="roundTopLeft" type="int" value="30"/>
                 <Property name="roundTopRight" type="int" value="30"/>
               </Properties>
-            </Component>
-            <Component class="ui.LabelRound" name="lblDangXuat">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="33" red="33" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/icons/icons8_logout_24px.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t"/>
-                <Property name="horizontalTextPosition" type="int" value="10"/>
-                <Property name="roundBottomLeft" type="int" value="50"/>
-                <Property name="roundBottomRight" type="int" value="50"/>
-                <Property name="roundTopLeft" type="int" value="50"/>
-                <Property name="roundTopRight" type="int" value="50"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDangXuatMouseClicked"/>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDangXuatMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDangXuatMouseExited"/>
-              </Events>
             </Component>
             <Component class="ui.LabelRound" name="btnMinimize">
               <Properties>
@@ -4862,6 +4846,31 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="ui.LabelRound" name="lblDangXuat">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icons/icons8_logout_24px.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="&#x110;&#x103;ng xu&#x1ea5;t"/>
+            <Property name="horizontalTextPosition" type="int" value="10"/>
+            <Property name="roundBottomLeft" type="int" value="50"/>
+            <Property name="roundBottomRight" type="int" value="50"/>
+            <Property name="roundTopLeft" type="int" value="50"/>
+            <Property name="roundTopRight" type="int" value="50"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDangXuatMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDangXuatMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblDangXuatMouseExited"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

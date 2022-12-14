@@ -22,6 +22,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -56,6 +58,26 @@ public class BanHang extends javax.swing.JFrame {
 
     public BanHang() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //set day time
+        lblNgay.setText(XDate.toString(new Date(), "dd/MM/YYYY"));
+        Calendar c = Calendar.getInstance();
+        int h = c.get(Calendar.HOUR_OF_DAY);
+//        Admin a = new Admin();
+
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    lblDongHo.setText(XDate.curTime());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+        };
+        t.start();
         setBackground(new Color(0, 0, 0, 0));
         initResize();
         doDuLieuSanPham();
@@ -85,6 +107,11 @@ public class BanHang extends javax.swing.JFrame {
                     return ImageIcon.class;
                 }
                 return Object.class;
+            }
+            // ghi đè không cho edit cell khi click vào dòng
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
             }
         };
         dtm.setRowCount(0);
@@ -145,7 +172,6 @@ public class BanHang extends javax.swing.JFrame {
         pnlMoving = new ui.PanelRound();
         lblNgay = new ui.LabelRound();
         lblDongHo = new ui.LabelRound();
-        labelRound4 = new ui.LabelRound();
         btnMinimize = new ui.LabelRound();
         btnResize = new ui.LabelRound();
         btnExit = new ui.LabelRound();
@@ -167,7 +193,7 @@ public class BanHang extends javax.swing.JFrame {
         pnlChinh.setRoundBottomRight(50);
         pnlChinh.setRoundTopLeft(50);
 
-        panelRound1.setBackground(new java.awt.Color(51, 51, 51));
+        panelRound1.setBackground(new java.awt.Color(255, 255, 255));
         panelRound1.setRoundBottomRight(20);
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
@@ -175,6 +201,7 @@ public class BanHang extends javax.swing.JFrame {
         jLabel6.setText("Tổng tiền:");
 
         txtKhachTra.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtKhachTra.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txtKhachTra.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtKhachTraKeyPressed(evt);
@@ -186,6 +213,7 @@ public class BanHang extends javax.swing.JFrame {
         jLabel7.setText("Khách trả:");
 
         txtTienThua.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtTienThua.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         txtTienThua.setEnabled(false);
         txtTienThua.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -228,7 +256,10 @@ public class BanHang extends javax.swing.JFrame {
             }
         });
 
-        txtTongTien.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtTongTien.setFont(new java.awt.Font("SansSerif", 0, 24)); // NOI18N
+        txtTongTien.setForeground(new java.awt.Color(0, 204, 0));
+        txtTongTien.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+        txtTongTien.setText("tryutyu");
         txtTongTien.setEnabled(false);
         txtTongTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,6 +267,7 @@ public class BanHang extends javax.swing.JFrame {
             }
         });
 
+        tblThucDon.setBackground(new java.awt.Color(255, 255, 255));
         tblThucDon.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         tblThucDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -325,10 +357,14 @@ public class BanHang extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tbldanhsachsanpham.setBackground(new java.awt.Color(0, 0, 0));
         tbldanhsachsanpham.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        tbldanhsachsanpham.setForeground(new java.awt.Color(204, 204, 204));
         tbldanhsachsanpham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {" 23", " ryiryu", " 8768", " ryuirtyu", " r678r", null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Mã món", "Tên món", "Đơn giá", "Đơn vị tính", "Loại", "Hình "
@@ -344,6 +380,9 @@ public class BanHang extends javax.swing.JFrame {
         });
         tbldanhsachsanpham.setRowHeight(100);
         tbldanhsachsanpham.setRowMargin(3);
+        tbldanhsachsanpham.setRowSelectionAllowed(false);
+        tbldanhsachsanpham.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        tbldanhsachsanpham.setSelectionForeground(new java.awt.Color(255, 255, 255));
         tbldanhsachsanpham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbldanhsachsanphamMouseClicked(evt);
@@ -591,16 +630,6 @@ public class BanHang extends javax.swing.JFrame {
         lblDongHo.setRoundTopLeft(30);
         lblDongHo.setRoundTopRight(30);
 
-        labelRound4.setBackground(new java.awt.Color(139, 0, 0));
-        labelRound4.setForeground(new java.awt.Color(255, 255, 255));
-        labelRound4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelRound4.setText("Xin chào nhân viên bán hàng");
-        labelRound4.setFont(new java.awt.Font("SansSerif", 2, 14)); // NOI18N
-        labelRound4.setRoundBottomLeft(30);
-        labelRound4.setRoundBottomRight(30);
-        labelRound4.setRoundTopLeft(30);
-        labelRound4.setRoundTopRight(30);
-
         btnMinimize.setBackground(new java.awt.Color(204, 204, 204));
         btnMinimize.setForeground(new java.awt.Color(51, 51, 51));
         btnMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -685,12 +714,10 @@ public class BanHang extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(lblSocketState, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -713,7 +740,6 @@ public class BanHang extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlMovingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(labelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblDongHo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(labelRound13, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -1114,7 +1140,6 @@ public class BanHang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private ui.LabelRound labelRound1;
     private ui.LabelRound labelRound13;
-    private ui.LabelRound labelRound4;
     private ui.LabelRound lblDangXuat;
     private javax.swing.JLabel lblDongChon;
     private ui.LabelRound lblDongHo;
